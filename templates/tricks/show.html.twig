@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nom du tricks{% endblock %}
+
+{% block body %}
+    <header class="headtricks">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12 text-center">
+                    <h1 class="font-weight-bold text-white text-shadow">
+                        <span class="text-danger">Nom</span>
+                        du
+                        <span class="text-primary">tricks</span>
+                        !
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {% include 'tricks/partials/carousel.html.twig' %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h2 class="display-4 text-primary">Description du tricks!</h2>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tincidunt felis eget rutrum pellentesque. Ut ornare vitae justo quis blandit. Pellentesque nulla massa, congue nec dictum non, commodo vitae nisi. Praesent ut tortor ut nulla dapibus feugiat. Pellentesque non dui posuere, sagittis ligula quis, faucibus nisi. Etiam convallis vehicula nibh, a egestas metus commodo ac. Nulla mi nulla, commodo sit amet tortor nec, consequat mattis nibh. Aliquam ut viverra eros, in tempus mauris. Aliquam vitae porttitor nunc.</p>
+            <hr>
+            <p class="mb-0">le 05/09/20 à 10:55
+                <span class="badge badge-primary float-right">Catégorie</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        {% include 'tricks/partials/new_comment.html.twig' %}
+
+        <h3 class="mb-4">Tous les commentaires</h3>
+        <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+        </div>
+        <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+        </div>
+        <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+        </div>
+        <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+

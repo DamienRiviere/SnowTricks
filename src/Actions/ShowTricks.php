@@ -7,12 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class Home
+ * Class ShowTricks
  * @package App\Actions
  *
- * @Route("/", name="home")
+ * @Route("/tricks", name="tricks_show")
  */
-class Home
+class ShowTricks
 {
 
     /**
@@ -22,7 +22,7 @@ class Home
     public function __invoke(ViewResponder $responder)
     {
         return $responder(
-            'home/index.html.twig'
+            'tricks/show.html.twig'
         );
     }
 }
