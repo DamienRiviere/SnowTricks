@@ -1,29 +1,39 @@
 <div class="container-fluid py-5">
     <div id="carouselExample" class="carousel" data-ride="carousel" data-interval="9000">
         <div class="carousel-inner row w-100 mx-auto" role="listbox">
+            {% for picture in trick.pictures %}
             <div class="carousel-item col-md-3 active">
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
                         <a href="#" title="image 1" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="//via.placeholder.com/600x400?text=1" alt="slide 1">
+                            <img class="img-fluid mx-auto d-block img-carousel" src="{{ picture.link }}" alt="{{ picture.alt }}">
                         </a>
                     </div>
                 </div>
             </div>
+            {% endfor %}
+            {% for video in trick.videos %}
             <div class="carousel-item col-md-3 ">
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
-                        <a href="#" title="image 3" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="//via.placeholder.com/600x400?text=2" alt="slide 2">
-                        </a>
+                        <iframe
+                                width="440"
+                                height="280"
+                                src="{{ video.link }}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                        >
+                        </iframe>
                     </div>
                 </div>
             </div>
+            {% endfor %}
             <div class="carousel-item col-md-3 ">
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
                         <a href="#" title="image 4" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="//via.placeholder.com/600x400?text=3" alt="slide 3">
+                            <img class="img-fluid mx-auto d-block img-carousel" src="//via.placeholder.com/600x400?text=3" alt="slide 3">
                         </a>
                     </div>
                 </div>
@@ -32,7 +42,7 @@
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
                         <a href="#" title="image 5" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="//via.placeholder.com/600x400?text=4" alt="slide 4">
+                            <img class="img-fluid mx-auto d-block img-carousel" src="//via.placeholder.com/600x400?text=4" alt="slide 4">
                         </a>
                     </div>
                 </div>
@@ -41,7 +51,7 @@
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
                         <a href="#" title="image 6" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="//via.placeholder.com/600x400?text=5" alt="slide 5">
+                            <img class="img-fluid mx-auto d-block img-carousel" src="//via.placeholder.com/600x400?text=5" alt="slide 5">
                         </a>
                     </div>
                 </div>
@@ -50,7 +60,7 @@
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
                         <a href="#" title="image 7" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="//via.placeholder.com/600x400?text=6" alt="slide 6">
+                            <img class="img-fluid mx-auto d-block img-carousel" src="//via.placeholder.com/600x400?text=6" alt="slide 6">
                         </a>
                     </div>
                 </div>
@@ -59,7 +69,7 @@
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
                         <a href="#" title="image 8" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="//via.placeholder.com/600x400?text=7" alt="slide 7">
+                            <img class="img-fluid mx-auto d-block img-carousel" src="//via.placeholder.com/600x400?text=7" alt="slide 7">
                         </a>
                     </div>
                 </div>
@@ -68,7 +78,7 @@
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
                         <a href="#" title="image 2" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="//via.placeholder.com/600x400?text=8" alt="slide 8">
+                            <img class="img-fluid mx-auto d-block img-carousel" src="//via.placeholder.com/600x400?text=8" alt="slide 8">
                         </a>
                     </div>
 

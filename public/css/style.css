@@ -26,6 +26,11 @@ body {
     background-repeat: no-repeat;
 }
 
+.section-title {
+    margin-top: 55px;
+}
+
+/* Header trick */
 .headtricks {
     margin-top: 58px;
     height: 50vh;
@@ -43,6 +48,10 @@ body {
 /* CAROUSEL */
 .carousel-item {
     margin-right: auto !important;
+}
+
+.img-carousel {
+    height: 280px !important;
 }
 
 @media (min-width: 768px) {
