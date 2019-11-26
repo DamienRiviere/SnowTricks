@@ -32,7 +32,7 @@ class ShowTrick
     public function __invoke(ViewResponder $responder, Trick $trick)
     {
         return $responder(
-            'tricks/show.html.twig',
+            'trick/show.html.twig',
             [
                 'trick' => $trick
             ]

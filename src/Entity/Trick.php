@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Domain\Trick\CreateTrick\CreateTrickDTO;
+use App\Domain\Trick\TrickDTO;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -30,11 +30,6 @@ class Trick
      * @ORM\Column(type="text")
      */
     private $description;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $coverPicture;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -67,13 +62,12 @@ class Trick
      */
     private $style;
 
-    public static function create(CreateTrickDTO $dto): Trick
+    public static function create(TrickDTO $dto): Trick
     {
         $trick = new self();
         $trick
             ->setName($dto->getName())
             ->setDescription($dto->getDescription())
-            ->setCoverPicture($dto->getCoverPicture())
             ->setStyle($dto->getStyle());
 
         return $trick;
@@ -138,18 +132,6 @@ class Trick
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getCoverPicture(): ?string
-    {
-        return $this->coverPicture;
-    }
-
-    public function setCoverPicture(string $coverPicture): self
-    {
-        $this->coverPicture = $coverPicture;
 
         return $this;
     }

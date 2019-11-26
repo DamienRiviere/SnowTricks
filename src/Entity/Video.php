@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Domain\Trick\CreateTrick\CreateTrickDTO;
+use App\Domain\Trick\TrickDTO;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,14 +28,20 @@ class Video
      */
     private $trick;
 
-    public static function create(CreateTrickDTO $dto, Trick $trick)
+    public static function create(TrickDTO $dto, Trick $trick)
     {
-        $video = new Video();
-        $video
-            ->setLink($dto->getVideoLink())
-            ->setTrick($trick);
+        $videos = [];
 
-        return $video;
+        foreach ($dto->getVideos() as $item) {
+            $video = new Video();
+            $video
+                ->setLink($item->getLink())
+                ->setTrick($trick);
+
+            $videos[] = $video;
+        }
+
+        return $videos;
     }
 
     public function getId(): ?int

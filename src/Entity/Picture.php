@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Domain\Trick\CreateTrick\CreateTrickDTO;
+use App\Domain\Trick\TrickDTO;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,15 +33,21 @@ class Picture
      */
     private $trick;
 
-    public static function create(CreateTrickDTO $dto, Trick $trick)
+    public static function create(TrickDTO $dto, Trick $trick)
     {
-        $picture = new self();
-        $picture
-            ->setLink($dto->getPictureLink())
-            ->setAlt($dto->getPictureAlt())
-            ->setTrick($trick);
+        $pictures = [];
 
-        return $picture;
+        foreach ($dto->getPictures() as $item) {
+            $picture = new self();
+            $picture
+                ->setLink($item->getLink())
+                ->setAlt($item->getAlt())
+                ->setTrick($trick);
+
+            $pictures[] = $picture;
+        }
+
+        return $pictures;
     }
 
     public function getId(): ?int
@@ -54,7 +60,7 @@ class Picture
         return $this->link;
     }
 
-    public function setLink(string $link): self
+    public function setLink(?string $link): self
     {
         $this->link = $link;
 
@@ -66,7 +72,7 @@ class Picture
         return $this->alt;
     }
 
-    public function setAlt(string $alt): self
+    public function setAlt(?string $alt): self
     {
         $this->alt = $alt;
 

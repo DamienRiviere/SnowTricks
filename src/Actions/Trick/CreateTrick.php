@@ -2,8 +2,7 @@
 
 namespace App\Actions\Trick;
 
-use App\Domain\Trick\CreateTrick\CreateTrickDTO;
-use App\Domain\Trick\CreateTrick\Resolver;
+use App\Domain\Trick\Resolver;
 use App\Responders\ViewResponder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +39,7 @@ class CreateTrick
         }
 
         return $responder(
-            'tricks/new.html.twig',
+            'trick/new.html.twig',
             [
                 'form' => $form->createView()
             ]

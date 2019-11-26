@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Trick\CreateTrick;
+namespace App\Domain\Trick;
 
 use App\Entity\Picture;
 use App\Entity\Trick;
@@ -31,20 +31,34 @@ final class Resolver
 
     public function getFormType(Request $request)
     {
-        return $this->formFactory->create(CreateTrickType::class)
+        return $this->formFactory->create(TrickType::class)
                                  ->handleRequest($request);
     }
 
-    public function save(CreateTrickDTO $dto)
+    public function save(TrickDTO $dto)
     {
         $trick = Trick::create($dto);
-        $picture = Picture::create($dto, $trick);
-        $video = Video::create($dto, $trick);
+        $pictures = Picture::create($dto, $trick);
+        $videos = Video::create($dto, $trick);
 
         $this->em->persist($trick);
-        $this->em->persist($picture);
-        $this->em->persist($video);
+        $this->savePicture($pictures);
+        $this->saveVideo($videos);
 
         $this->em->flush();
+    }
+
+    public function savePicture(array $pictures)
+    {
+        foreach ($pictures as $picture) {
+            $this->em->persist($picture);
+        }
+    }
+
+    public function saveVideo(array $videos)
+    {
+        foreach ($videos as $video) {
+            $this->em->persist($video);
+        }
     }
 }

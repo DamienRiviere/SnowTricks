@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Domain\Trick\CreateTrick;
+namespace App\Domain\Trick;
 
 use App\Entity\Style;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class CreateTrickType extends AbstractType
+final class TrickType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,21 +20,20 @@ final class CreateTrickType extends AbstractType
                 'name',
                 TextType::class,
                 [
-                    'label' => 'Nom du trick'
+                    'label' => 'Nom',
+                    'attr' => [
+                        'placeholder' => 'Nom du trick'
+                    ]
                 ]
             )
             ->add(
                 'description',
                 TextareaType::class,
                 [
-                    'label' => 'Description du trick'
-                ]
-            )
-            ->add(
-                'coverPicture',
-                TextType::class,
-                [
-                    'label' => 'Image de couverture du trick'
+                    'label' => 'Description',
+                    'attr' => [
+                        'placeholder' => 'Description du trick'
+                    ]
                 ]
             )
             ->add(
@@ -47,33 +47,31 @@ final class CreateTrickType extends AbstractType
                 ]
             )
             ->add(
-                'pictureLink',
-                TextType::class,
+                'pictures',
+                CollectionType::class,
                 [
-                    'label' => 'Lien de l\'image'
+                    'entry_type' => PictureType::class,
+                    'allow_add' => true,
+                    'label' => false
                 ]
             )
             ->add(
-                'pictureAlt',
-                TextType::class,
+                'videos',
+                CollectionType::class,
                 [
-                    'label' => 'Description de l\'image'
+                    'entry_type' => VideoType::class,
+                    'allow_add' => true,
+                    'label' => false
                 ]
             )
-            ->add(
-                'videoLink',
-                TextType::class,
-                [
-                    'label' => 'Lien de la vidéo'
-                ]
-            );
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                'data_class' => CreateTrickDTO::class,
+                'data_class' => TrickDTO::class,
             ]
         );
     }
