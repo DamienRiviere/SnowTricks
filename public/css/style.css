@@ -26,11 +26,16 @@ body {
     background-repeat: no-repeat;
 }
 
+.section-title {
+    margin-top: 55px;
+}
+
+/* Header trick */
 .headtricks {
     margin-top: 58px;
     height: 50vh;
     min-height: 500px;
-    background-image: url('https://i.pinimg.com/originals/ff/f7/3e/fff73ed3e6305072636cef58c7ecf1e7.jpg');
+    background-image: url('https://i.pinimg.com/originals/a7/e4/be/a7e4be9aa6ba57563e6b95f3654815a4.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -43,6 +48,10 @@ body {
 /* CAROUSEL */
 .carousel-item {
     margin-right: auto !important;
+}
+
+.img-carousel {
+    height: 280px !important;
 }
 
 @media (min-width: 768px) {
