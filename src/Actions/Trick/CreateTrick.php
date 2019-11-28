@@ -5,7 +5,6 @@ namespace App\Actions\Trick;
 use App\Domain\Trick\Resolver;
 use App\Responders\ViewResponder;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -25,11 +24,6 @@ class CreateTrick
         $this->resolver = $resolver;
     }
 
-    /**
-     * @param Request $request
-     * @param ViewResponder $responder
-     * @return Response
-     */
     public function __invoke(Request $request, ViewResponder $responder)
     {
         $form = $this->resolver->getFormType($request);

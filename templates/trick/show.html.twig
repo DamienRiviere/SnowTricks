@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nom du tricks{% endblock %}
+{% block title %}{{ trick.name }}{% endblock %}
 
 {% block body %}
     <header class="headtricks">
@@ -62,9 +62,10 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
-
-
+{% block javascripts %}
+    <script src="{{ asset('js/carousel.js') }}"></script>
 {% endblock %}
 
 

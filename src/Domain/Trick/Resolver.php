@@ -18,11 +18,11 @@ final class Resolver
     /** @var EntityManagerInterface */
     protected $em;
 
-    /**
-     * Resolver constructor.
-     * @param FormFactoryInterface $formFactory
-     * @param EntityManagerInterface $em
-     */
+	/**
+	 * Resolver constructor.
+	 * @param FormFactoryInterface $formFactory
+	 * @param EntityManagerInterface $em
+	 */
     public function __construct(FormFactoryInterface $formFactory, EntityManagerInterface $em)
     {
         $this->formFactory = $formFactory;

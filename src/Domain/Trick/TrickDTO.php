@@ -26,7 +26,12 @@ final class TrickDTO
      * )
      */
     protected $description;
-    
+
+	/**
+	 * @Assert\NotBlank(
+	 *     message="Vous devez choisir un style !"
+	 * )
+	 */
     protected $style;
 
     /**
