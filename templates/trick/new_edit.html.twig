@@ -1,12 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un nouveau tricks{% endblock %}
+{% set route =  app.request.get('_route') %}
+
+{% block title %}
+    {% if route == 'trick_new' %}
+        Créer un nouveau trick
+    {% elseif route == 'trick_edit' %}
+        Modification de {{ trick.name }}
+    {% endif %}
+{% endblock %}
 
 {% form_theme form 'trick/_collection.html.twig' %}
 
 {% block body %}
     <div class="container-fluid bg-light py-5 text-center section-title">
-        <h2 class="text-primary">Créer un nouveau trick</h2>
+        <h2 class="text-primary">
+            {% if route == 'trick_new' %}
+                Créer un nouveau trick
+            {% elseif route == 'trick_edit' %}
+                Modification de {{ trick.name }}
+            {% endif %}
+        </h2>
         <p class="font-weight-bold mb-0">Entrer votre trick préféré !</p>
     </div>
 
@@ -67,7 +81,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/newTrickAjax.js') }}"></script>
+    <script src="{{ asset('js/trickAjax.js') }}"></script>
     <script src="{{ asset('js/trick_picture.js') }}"></script>
     <script src="{{ asset('js/trick_video.js') }}"></script>
 {% endblock %}

@@ -47,12 +47,12 @@ class Trick
     private $modifiedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick", orphanRemoval=true, cascade={"persist"})
      */
     private $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", orphanRemoval=true, cascade={"persist"})
      */
     private $videos;
 
@@ -62,9 +62,18 @@ class Trick
      */
     private $style;
 
-    public static function create(TrickDTO $dto): Trick
+	/**
+	 * Create a new trick from the dto
+	 * @param TrickDTO $dto
+	 * @param Trick|null $trick
+	 * @return Trick
+	 */
+    public static function create(TrickDTO $dto, Trick $trick = null): Trick
     {
-        $trick = new self();
+    	if ($dto->getId() === null) {
+			$trick = new self();
+		}
+
         $trick
             ->setName($dto->getName())
             ->setDescription($dto->getDescription())
@@ -73,17 +82,15 @@ class Trick
         return $trick;
     }
 
-    /**
+	/**
      * Initialize slug when the trick is created
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
     public function initializeSlug()
     {
-        if (empty($this->slug)) {
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->name);
-        }
+    	$slugify = new Slugify();
+    	$this->slug = $slugify->slugify($this->name);
     }
 
     /**

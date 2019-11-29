@@ -23,7 +23,7 @@
                         <h5 class="card-title mb-0">
                             <a href="/trick/{{ trick.slug }}" class="text-decoration-none">{{ trick.name }}</a>
                             <div class="float-right">
-                                <a href="#" title="Modifier le tricks" class="text-decoration-none">
+                                <a href="{{ path('trick_edit', {slug: trick.slug}) }}" title="Modifier le tricks" class="text-decoration-none">
                                     <i class="fas fa-edit text-primary"></i>
                                 </a>
                                 <a href="#" title="Supprimer le tricks" class="text-decoration-none">

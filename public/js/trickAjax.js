@@ -14,8 +14,8 @@ document.querySelector("button[type='submit']").addEventListener("click", (e) =>
 
             const errors = document.getElementsByClassName("form-error-message").length;
             const name = document.getElementById("trick_name").value;
-            const str = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-            const slug = str.replace(" ", "-");
+            const str = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s]/gi, '').toLowerCase();
+            const slug = str.split(" ").join("-");
 
             if (errors === 0) {
                 window.location.replace("/trick/" + slug);
