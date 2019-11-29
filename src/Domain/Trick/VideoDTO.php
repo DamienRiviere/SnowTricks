@@ -7,6 +7,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class VideoDTO
 {
 
+	/**
+	 * @var integer
+	 */
+	protected $id;
+
     /**
      * @var string
      * @Assert\NotBlank(
@@ -17,6 +22,21 @@ final class VideoDTO
      * )
      */
     protected $link;
+
+	/**
+	 * @return mixed
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	public function setId(int $id): self
+	{
+		$this->id = $id;
+
+		return $this;
+	}
 
     /**
      * @return string

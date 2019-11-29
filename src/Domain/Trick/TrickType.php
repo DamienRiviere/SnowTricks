@@ -52,6 +52,7 @@ final class TrickType extends AbstractType
                 [
                     'entry_type' => PictureType::class,
                     'allow_add' => true,
+                    'allow_delete' => true,
                     'label' => false
                 ]
             )
@@ -61,6 +62,7 @@ final class TrickType extends AbstractType
                 [
                     'entry_type' => VideoType::class,
                     'allow_add' => true,
+					'allow_delete' => true,
                     'label' => false
                 ]
             )

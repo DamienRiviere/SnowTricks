@@ -33,7 +33,7 @@ class CreateTrick
         }
 
         return $responder(
-            'trick/new.html.twig',
+            'trick/new_edit.html.twig',
             [
                 'form' => $form->createView()
             ]
