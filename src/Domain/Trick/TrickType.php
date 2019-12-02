@@ -2,6 +2,7 @@
 
 namespace App\Domain\Trick;
 
+use App\Domain\Common\Validators\UniqueEntityInput;
 use App\Entity\Style;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -62,7 +63,7 @@ final class TrickType extends AbstractType
                 [
                     'entry_type' => VideoType::class,
                     'allow_add' => true,
-					'allow_delete' => true,
+                    'allow_delete' => true,
                     'label' => false
                 ]
             )

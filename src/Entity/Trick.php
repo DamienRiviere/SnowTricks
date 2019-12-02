@@ -62,17 +62,17 @@ class Trick
      */
     private $style;
 
-	/**
-	 * Create a new trick from the dto
-	 * @param TrickDTO $dto
-	 * @param Trick|null $trick
-	 * @return Trick
-	 */
+    /**
+     * Create a new trick from the dto
+     * @param TrickDTO $dto
+     * @param Trick|null $trick
+     * @return Trick
+     */
     public static function create(TrickDTO $dto, Trick $trick = null): Trick
     {
-    	if ($dto->getId() === null) {
-			$trick = new self();
-		}
+        if ($dto->getId() === null) {
+            $trick = new self();
+        }
 
         $trick
             ->setName($dto->getName())
@@ -82,15 +82,15 @@ class Trick
         return $trick;
     }
 
-	/**
+    /**
      * Initialize slug when the trick is created
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
     public function initializeSlug()
     {
-    	$slugify = new Slugify();
-    	$this->slug = $slugify->slugify($this->name);
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->name);
     }
 
     /**

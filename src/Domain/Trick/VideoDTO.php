@@ -7,10 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class VideoDTO
 {
 
-	/**
-	 * @var integer
-	 */
-	protected $id;
+    /**
+     * @var integer
+     */
+    protected $id;
 
     /**
      * @var string
@@ -23,20 +23,20 @@ final class VideoDTO
      */
     protected $link;
 
-	/**
-	 * @return mixed
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setId(int $id): self
-	{
-		$this->id = $id;
+    public function setId(int $id): self
+    {
+        $this->id = $id;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * @return string
