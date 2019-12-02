@@ -36,24 +36,23 @@ final class Resolver
     /** @var ResolverHelper */
     protected $helper;
 
-	/**
-	 * Resolver constructor.
-	 * @param FormFactoryInterface $formFactory
-	 * @param EntityManagerInterface $em
-	 * @param TrickRepository $trickRepo
-	 * @param PictureRepository $pictureRepo
-	 * @param VideoRepository $videoRepository
-	 * @param ResolverHelper $helper
-	 */
+    /**
+     * Resolver constructor.
+     * @param FormFactoryInterface $formFactory
+     * @param EntityManagerInterface $em
+     * @param TrickRepository $trickRepo
+     * @param PictureRepository $pictureRepo
+     * @param VideoRepository $videoRepository
+     * @param ResolverHelper $helper
+     */
     public function __construct(
-    	FormFactoryInterface $formFactory,
-		EntityManagerInterface $em,
-		TrickRepository $trickRepo,
-		PictureRepository $pictureRepo,
-		VideoRepository $videoRepository,
-		ResolverHelper $helper
-	)
-    {
+        FormFactoryInterface $formFactory,
+        EntityManagerInterface $em,
+        TrickRepository $trickRepo,
+        PictureRepository $pictureRepo,
+        VideoRepository $videoRepository,
+        ResolverHelper $helper
+    ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->trickRepo = $trickRepo;
@@ -62,26 +61,26 @@ final class Resolver
         $this->helper = $helper;
     }
 
-	/**
-	 * Display the form for new trick and edit trick
-	 * @param Request $request
-	 * @param null $trick
-	 * @return FormInterface
-	 */
+    /**
+     * Display the form for new trick and edit trick
+     * @param Request $request
+     * @param null $trick
+     * @return FormInterface
+     */
     public function getFormType(Request $request, $trick = null): FormInterface
     {
-    	$trickDto = null;
-    	if ($request->attributes->get('slug')) {
-			$trickDto = TrickDTO::updateToDto($trick);
-		}
+        $trickDto = null;
+        if ($request->attributes->get('slug')) {
+            $trickDto = TrickDTO::updateToDto($trick);
+        }
         return $this->formFactory->create(TrickType::class, $trickDto)
                                  ->handleRequest($request);
     }
 
-	/**
-	 * Save the data from new trick in database
-	 * @param TrickDTO $dto
-	 */
+    /**
+     * Save the data from new trick in database
+     * @param TrickDTO $dto
+     */
     public function save(TrickDTO $dto)
     {
         $trick = Trick::create($dto);
@@ -89,31 +88,31 @@ final class Resolver
         $videos = Video::addVideos($dto, $trick);
 
         $this->em->persist($trick);
-		$this->helper->saveItems($pictures);
-		$this->helper->saveItems($videos);
+        $this->helper->saveItems($pictures);
+        $this->helper->saveItems($videos);
 
         $this->em->flush();
     }
 
-	/**
-	 * Update the trick
-	 * @param TrickDTO $dto
-	 * @param Trick $trick
-	 */
-	public function update(TrickDTO $dto, Trick $trick)
-	{
-		$trick = Trick::create($dto, $trick);
-		$editPictures = Picture::editPictures($dto, $trick);
-		$picturesToRemove = UpdateTrick::getItemsToRemove($dto->getPictures(), $trick->getPictures());
-		$editVideos = Video::editVideos($dto, $trick);
-		$videosToRemove = UpdateTrick::getItemsToRemove($dto->getVideos(), $trick->getVideos());
+    /**
+     * Update the trick
+     * @param TrickDTO $dto
+     * @param Trick $trick
+     */
+    public function update(TrickDTO $dto, Trick $trick)
+    {
+        $trick = Trick::create($dto, $trick);
+        $editPictures = Picture::editPictures($dto, $trick);
+        $picturesToRemove = UpdateTrick::getItemsToRemove($dto->getPictures(), $trick->getPictures());
+        $editVideos = Video::editVideos($dto, $trick);
+        $videosToRemove = UpdateTrick::getItemsToRemove($dto->getVideos(), $trick->getVideos());
 
-		$this->em->persist($trick);
-		$this->helper->saveItems($editPictures);
-		$this->helper->saveItems($editVideos);
-		$this->helper->checkIfNotEmptyAndRemove($videosToRemove);
-		$this->helper->checkIfNotEmptyAndRemove($picturesToRemove);
+        $this->em->persist($trick);
+        $this->helper->saveItems($editPictures);
+        $this->helper->saveItems($editVideos);
+        $this->helper->checkIfNotEmptyAndRemove($videosToRemove);
+        $this->helper->checkIfNotEmptyAndRemove($picturesToRemove);
 
-		$this->em->flush();
-	}
+        $this->em->flush();
+    }
 }

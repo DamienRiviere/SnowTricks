@@ -29,83 +29,83 @@ class Video
      */
     private $trick;
 
-	/**
-	 * Get videos from the dto and create a new Video entity
-	 * @param TrickDTO $dto
-	 * @param Trick $trick
-	 * @return array
-	 */
-	public static function addVideos(TrickDTO $dto, Trick $trick)
-	{
-		$videos = [];
+    /**
+     * Get videos from the dto and create a new Video entity
+     * @param TrickDTO $dto
+     * @param Trick $trick
+     * @return array
+     */
+    public static function addVideos(TrickDTO $dto, Trick $trick)
+    {
+        $videos = [];
 
-		foreach($dto->getVideos() as $item) {
-			$video = new self();
-			$video
-				->setLink($item->getLink())
-				->setTrick($trick);
+        foreach ($dto->getVideos() as $item) {
+            $video = new self();
+            $video
+                ->setLink($item->getLink())
+                ->setTrick($trick);
 
-			$videos[] = $video;
-		}
+            $videos[] = $video;
+        }
 
-		return $videos;
-	}
+        return $videos;
+    }
 
-	/**
-	 * Edit pictures and add new pictures
-	 * @param TrickDTO $dto
-	 * @param Trick $trick
-	 * @return array
-	 */
-	public static function editVideos(TrickDTO $dto, Trick $trick)
-	{
-		$editVideos = [];
+    /**
+     * Edit pictures and add new pictures
+     * @param TrickDTO $dto
+     * @param Trick $trick
+     * @return array
+     */
+    public static function editVideos(TrickDTO $dto, Trick $trick)
+    {
+        $editVideos = [];
 
-		$videos = UpdateTrick::getItems($trick->getVideos());
-		$videosDto = UpdateTrick::getItems($dto->getVideos());
-		$newVideos = self::getNewVideos($videosDto, $trick);
+        $videos = UpdateTrick::getItems($trick->getVideos());
+        $videosDto = UpdateTrick::getItems($dto->getVideos());
+        $newVideos = self::getNewVideos($videosDto, $trick);
 
-		foreach ($videos as $video) {
-			foreach ($videosDto as $videoDto) {
-				if ($video->getId() === $videoDto->getId()) {
-					$video
-						->setLink($videoDto->getLink());
+        foreach ($videos as $video) {
+            foreach ($videosDto as $videoDto) {
+                if ($video->getId() === $videoDto->getId()) {
+                    $video
+                        ->setLink($videoDto->getLink());
 
-					$editVideos[] = $video;
-				}
-			}
-		}
+                    $editVideos[] = $video;
+                }
+            }
+        }
 
-		$editVideos = UpdateTrick::addNewItemToEditItems($newVideos, $editVideos);
+        $editVideos = UpdateTrick::addNewItemToEditItems($newVideos, $editVideos);
 
-		return $editVideos;
-	}
+        return $editVideos;
+    }
 
-	/**
-	 * Get all videos to create when the form is edited
-	 * @param array $videos
-	 * @param Trick $trick
-	 * @return array
-	 */
-	public static function getNewVideos(array $videos, Trick $trick)
-	{
-		$newVideos = [];
+    /**
+     * Get all videos to create when the form is edited
+     * @param array $videos
+     * @param Trick $trick
+     * @return array
+     */
+    public static function getNewVideos(array $videos, Trick $trick)
+    {
+        $newVideos = [];
 
-		foreach ($videos as $video) {
-			if ($video->getId() === null) {
-				$newVideo = new self();
-				$newVideo
-					->setLink($video->getLink())
-					->setTrick($trick);
+        foreach ($videos as $video) {
+            if ($video->getId() === null) {
+                $newVideo = new self();
+                $newVideo
+                    ->setLink($video->getLink())
+                    ->setTrick($trick);
 
-				$newVideos[] = $newVideo;
-			}
-		}
+                $newVideos[] = $newVideo;
+            }
+        }
 
-		return $newVideos;
-	}
+        return $newVideos;
+    }
 
-	public function getId(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }

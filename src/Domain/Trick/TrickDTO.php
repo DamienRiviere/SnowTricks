@@ -2,17 +2,26 @@
 
 namespace App\Domain\Trick;
 
-use App\Entity\Picture;
 use App\Entity\Trick;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Domain\Common\Validators\UniqueEntityInput;
 
+/**
+ * Class TrickDTO
+ * @package App\Domain\Trick
+ * @UniqueEntityInput(
+ *     class="App\Entity\Trick",
+ *     fields={"name"},
+ *     message="Ce trick est déjà existant, veuillez choisir un autre nom !"
+ * )
+ */
 final class TrickDTO
 {
 
-	/**
-	 * @var integer
-	 */
-	protected $id;
+    /**
+     * @var integer
+     */
+    protected $id;
 
     /**
      * @var string
@@ -34,114 +43,117 @@ final class TrickDTO
      */
     protected $description;
 
-	/**
-	 * @Assert\NotBlank(
-	 *     message="Vous devez choisir un style !"
-	 * )
-	 */
+    /**
+     * @Assert\NotBlank(
+     *     message="Vous devez choisir un style !"
+     * )
+     */
     protected $style;
 
     /**
      * @Assert\Valid()
-	 * @Assert\NotBlank(
-	 *     message="Le trick doit contenir au moins une image !"
-	 * )
+     * @Assert\NotBlank(
+     *     message="Le trick doit contenir au moins une image !"
+     * )
      */
     protected $pictures;
 
     /**
      * @Assert\Valid()
+     * @Assert\NotBlank(
+     *     message="Le trick doit contenir au moins une vidéo !"
+     * )
      */
     protected $videos;
 
-	/**
-	 * Change Trick to TrickDTO
-	 * @param Trick $trick
-	 * @return TrickDTO
-	 */
-	public static function updateToDto(Trick $trick)
-	{
-		$trickDto = new self();
-		$trickDto
-			->setId($trick->getId())
-			->setName($trick->getName())
-			->setDescription($trick->getDescription())
-			->setStyle($trick->getStyle());
+    /**
+     * Change Trick to TrickDTO
+     * @param Trick $trick
+     * @return TrickDTO
+     */
+    public static function updateToDto(Trick $trick)
+    {
+        $trickDto = new self();
+        $trickDto
+            ->setId($trick->getId())
+            ->setName($trick->getName())
+            ->setDescription($trick->getDescription())
+            ->setStyle($trick->getStyle());
 
-		$pictures = self::getPicturesDto($trick);
+        $pictures = self::getPicturesDto($trick);
 
-		foreach ($pictures as $picture) {
-			$trickDto->addPicture($picture);
-		}
+        foreach ($pictures as $picture) {
+            $trickDto->addPicture($picture);
+        }
 
-		$videos = self::getVideosDto($trick);
+        $videos = self::getVideosDto($trick);
 
-		foreach($videos as $video) {
-			$trickDto->addVideo($video);
-		}
+        foreach ($videos as $video) {
+            $trickDto->addVideo($video);
+        }
 
-		return $trickDto;
-	}
+        return $trickDto;
+    }
 
-	/**
-	 * Get PictureDTO from Trick
-	 * @param Trick $trick
-	 * @return array
-	 */
-	public static function getPicturesDto(Trick $trick)
-	{
-		$pictures = [];
+    /**
+     * Get PictureDTO from Trick
+     * @param Trick $trick
+     * @return array
+     */
+    public static function getPicturesDto(Trick $trick)
+    {
+        $pictures = [];
 
-		foreach ($trick->getPictures() as $picture) {
-			$pictureDto = new PictureDTO();
-			$pictureDto
-				->setId($picture->getId())
-				->setLink($picture->getLink())
-				->setAlt($picture->getAlt());
+        foreach ($trick->getPictures() as $picture) {
+            $pictureDto = new PictureDTO();
+            $pictureDto
+                ->setId($picture->getId())
+                ->setLink($picture->getLink())
+                ->setAlt($picture->getAlt());
 
-			$pictures[] = $pictureDto;
-		}
+            $pictures[] = $pictureDto;
+        }
 
-		return $pictures;
-	}
+        return $pictures;
+    }
 
-	/**
-	 * Get VideoDTO from Trick
-	 * @param Trick $trick
-	 * @return array
-	 */
-	public static function getVideosDto(Trick $trick)
-	{
-		$videos = [];
+    /**
+     * Get VideoDTO from Trick
+     * @param Trick $trick
+     * @return array
+     */
+    public static function getVideosDto(Trick $trick)
+    {
+        $videos = [];
 
-		foreach ($trick->getVideos() as $video) {
-			$videoDto = new VideoDTO();
-			$videoDto
-				->setId($video->getId())
-				->setLink($video->getLink());
+        foreach ($trick->getVideos() as $video) {
+            $videoDto = new VideoDTO();
+            $videoDto
+                ->setId($video->getId())
+                ->setLink($video->getLink());
 
-			$videos[] = $videoDto;
-		}
+            $videos[] = $videoDto;
+        }
 
-		return $videos;
-	}
+        return $videos;
+    }
 
-	/**
-	 * @return mixed
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setId(int $id): self
-	{
-		$this->id = $id;
+    public function setId(int $id): self
+    {
+        $this->id = $id;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
+    /**
      * @return string
      */
     public function getName(): ?string
@@ -149,12 +161,12 @@ final class TrickDTO
         return $this->name;
     }
 
-	public function setName(string $name): self
-	{
-		$this->name = $name;
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * @return string
@@ -164,12 +176,12 @@ final class TrickDTO
         return $this->description;
     }
 
-	public function setDescription(string $description): self
-	{
-		$this->description = $description;
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -187,12 +199,12 @@ final class TrickDTO
         $this->style = $style;
     }
 
-	public function addPicture(PictureDTO $picture): self
-	{
-		$this->pictures[] = $picture;
+    public function addPicture(PictureDTO $picture): self
+    {
+        $this->pictures[] = $picture;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -210,12 +222,12 @@ final class TrickDTO
         $this->pictures = $pictures;
     }
 
-	public function addVideo(VideoDTO $video): self
-	{
-		$this->videos[] = $video;
+    public function addVideo(VideoDTO $video): self
+    {
+        $this->videos[] = $video;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * @return mixed

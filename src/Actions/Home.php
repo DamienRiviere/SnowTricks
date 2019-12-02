@@ -16,15 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class Home
 {
 
-	/** @var TrickRepository */
-	protected $trickRepo;
+    /** @var TrickRepository */
+    protected $trickRepo;
 
-	public function __construct(TrickRepository $trickRepo)
-	{
-		$this->trickRepo = $trickRepo;
-	}
+    public function __construct(TrickRepository $trickRepo)
+    {
+        $this->trickRepo = $trickRepo;
+    }
 
-	/**
+    /**
      * @param ViewResponder $responder
      * @return Response
      */
@@ -32,9 +32,9 @@ class Home
     {
         return $responder(
             'home/index.html.twig',
-			[
-				'tricks' => $this->trickRepo->findBy([], ['createdAt' => 'DESC'])
-			]
+            [
+                'tricks' => $this->trickRepo->findBy([], ['createdAt' => 'DESC'])
+            ]
         );
     }
 }

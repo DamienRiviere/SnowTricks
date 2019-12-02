@@ -41,7 +41,6 @@
             </div>
         </div>
 
-
         <div class="card mt-5">
             <div class="card-header">
                 <h4 class="mb-0">
@@ -51,6 +50,7 @@
             </div>
             <div class="card-body">
                 {{ form_row(form.pictures) }}
+                {{ form_errors(form.pictures) }}
             </div>
         </div>
 
@@ -63,6 +63,7 @@
             </div>
             <div class="card-body">
                 {{ form_row(form.videos) }}
+                {{ form_errors(form.videos) }}
             </div>
         </div>
 

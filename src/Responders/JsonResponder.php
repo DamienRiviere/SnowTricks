@@ -5,7 +5,7 @@ namespace App\Responders;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class JsonResponder
+final class JsonResponder
 {
 
     public function __invoke(?array $data, int $statusCode = Response::HTTP_OK, array $addHeaders = [])

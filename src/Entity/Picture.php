@@ -34,89 +34,87 @@ class Picture
      */
     private $trick;
 
-	/**
-	 * Get pictures from the dto and create a new Picture entity
-	 * @param TrickDTO $dto
-	 * @param Trick $trick
-	 * @return array
-	 */
-	public static function addPictures(TrickDTO $dto, Trick $trick)
-	{
-		$pictures = [];
+    /**
+     * Get pictures from the dto and create a new Picture entity
+     * @param TrickDTO $dto
+     * @param Trick $trick
+     * @return array
+     */
+    public static function addPictures(TrickDTO $dto, Trick $trick)
+    {
+        $pictures = [];
 
-		foreach ($dto->getPictures() as $item) {
-			$picture = new self();
-			$picture
-				->setLink($item->getLink())
-				->setAlt($item->getAlt())
-				->setTrick($trick);
+        foreach ($dto->getPictures() as $item) {
+            $picture = new self();
+            $picture
+                ->setLink($item->getLink())
+                ->setAlt($item->getAlt())
+                ->setTrick($trick);
 
-			$pictures[] = $picture;
-		}
+            $pictures[] = $picture;
+        }
 
-		return $pictures;
-	}
+        return $pictures;
+    }
 
-	/**
-	 * Edit pictures and add new pictures
-	 * @param TrickDTO $dto
-	 * @param Trick $trick
-	 * @return array
-	 */
-	public static function editPictures(TrickDTO $dto, Trick $trick)
-	{
-		$editPictures = [];
+    /**
+     * Edit pictures and add new pictures
+     * @param TrickDTO $dto
+     * @param Trick $trick
+     * @return array
+     */
+    public static function editPictures(TrickDTO $dto, Trick $trick)
+    {
+        $editPictures = [];
 
-		$pictures = UpdateTrick::getItems($trick->getPictures());
-		$picturesDto = UpdateTrick::getItems($dto->getPictures());
+        $pictures = UpdateTrick::getItems($trick->getPictures());
+        $picturesDto = UpdateTrick::getItems($dto->getPictures());
 
-		$newPictures = self::getNewPictures($picturesDto, $trick);
+        $newPictures = self::getNewPictures($picturesDto, $trick);
 
-		foreach ($pictures as $picture) {
+        foreach ($pictures as $picture) {
+            foreach ($picturesDto as $pictureDto) {
+                if ($picture->getId() === $pictureDto->getId()) {
+                    $picture
+                        ->setLink($pictureDto->getLink())
+                        ->setAlt($pictureDto->getAlt());
 
-			foreach ($picturesDto as $pictureDto) {
+                    $editPictures[] = $picture;
+                }
+            }
+        }
 
-				if ($picture->getId() === $pictureDto->getId()) {
-					$picture
-						->setLink($pictureDto->getLink())
-						->setAlt($pictureDto->getAlt());
+        $editPictures = UpdateTrick::addNewItemToEditItems($newPictures, $editPictures);
 
-					$editPictures[] = $picture;
-				}
-			}
-		}
+        return $editPictures;
+    }
 
-		$editPictures = UpdateTrick::addNewItemToEditItems($newPictures, $editPictures);
+    /**
+     * Get new pictures from the PictureDTO and created the entity
+     * @param array $pictures
+     * @param Trick $trick
+     * @return array
+     */
+    public static function getNewPictures(array $pictures, Trick $trick)
+    {
+        $newPictures = [];
 
-		return $editPictures;
-	}
+        foreach ($pictures as $picture) {
+            if ($picture->getId() === null) {
+                $newPicture = new self();
+                $newPicture
+                    ->setLink($picture->getLink())
+                    ->setAlt($picture->getAlt())
+                    ->setTrick($trick);
 
-	/**
-	 * Get new pictures from the PictureDTO and created the entity
-	 * @param array $pictures
-	 * @param Trick $trick
-	 * @return array
-	 */
-	public static function getNewPictures(array $pictures, Trick $trick)
-	{
-		$newPictures = [];
+                $newPictures[] = $newPicture;
+            }
+        }
 
-		foreach ($pictures as $picture) {
-			if ($picture->getId() === null) {
-				$newPicture = new self();
-				$newPicture
-					->setLink($picture->getLink())
-					->setAlt($picture->getAlt())
-					->setTrick($trick);
+        return $newPictures;
+    }
 
-				$newPictures[] = $newPicture;
-			}
-		}
-
-		return $newPictures;
-	}
-
-	public function getId(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -12,6 +12,7 @@
     </div>
 
     <div class="container-fluid">
+        {% include 'partials/alert.html.twig' %}
         <div class="row">
             {% for trick in tricks %}
             <div class="col-2 py-4">
@@ -23,10 +24,10 @@
                         <h5 class="card-title mb-0">
                             <a href="/trick/{{ trick.slug }}" class="text-decoration-none">{{ trick.name }}</a>
                             <div class="float-right">
-                                <a href="{{ path('trick_edit', {slug: trick.slug}) }}" title="Modifier le tricks" class="text-decoration-none">
+                                <a href="{{ path('trick_edit', {slug: trick.slug}) }}" title="Modifier le trick" class="text-decoration-none">
                                     <i class="fas fa-edit text-primary"></i>
                                 </a>
-                                <a href="#" title="Supprimer le tricks" class="text-decoration-none">
+                                <a href="#" class="text-decoration-none deleteTrick" title="Supprimer le trick" data-toggle="modal" data-target="#deleteTrickModal" data-id="{{ trick.id }}">
                                     <i class="fas fa-trash-alt text-danger"></i>
                                 </a>
                             </div>
@@ -43,4 +44,30 @@
             Afficher plus
         </a>
     </div>
+
+    <!-- Modal Delete Trick -->
+    <div class="modal fade" id="deleteTrickModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Supprimer le trick</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Êtes-vous sur de vouloir supprimer le trick ?
+                </div>
+                <div class="modal-footer text-white">
+                    <a href="#" class="btn btn-danger modal-delete-trick text-white" data-id="">Oui</a>
+                    <a class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/modal_delete.js') }}"></script>
 {% endblock %}

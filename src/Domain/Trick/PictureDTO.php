@@ -7,10 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class PictureDTO
 {
 
-	/**
-	 * @var integer
-	 */
-	protected $id;
+    /**
+     * @var integer
+     */
+    protected $id;
 
     /**
      * @var string
@@ -31,22 +31,22 @@ final class PictureDTO
      */
     protected $alt;
 
-	/**
-	 * @return mixed
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	public function setId(int $id): self
-	{
-		$this->id = $id;
+    public function setId(int $id): self
+    {
+        $this->id = $id;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
+    /**
      * @return mixed
      */
     public function getLink()
@@ -54,12 +54,12 @@ final class PictureDTO
         return $this->link;
     }
 
-	public function setLink(?string $link): self
-	{
-		$this->link = $link;
+    public function setLink(?string $link): self
+    {
+        $this->link = $link;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -69,10 +69,10 @@ final class PictureDTO
         return $this->alt;
     }
 
-	public function setAlt(?string $alt): self
-	{
-		$this->alt = $alt;
+    public function setAlt(?string $alt): self
+    {
+        $this->alt = $alt;
 
-		return $this;
-	}
+        return $this;
+    }
 }
