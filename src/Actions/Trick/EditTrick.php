@@ -5,6 +5,7 @@ namespace App\Actions\Trick;
 use App\Domain\Trick\Resolver;
 use App\Repository\TrickRepository;
 use App\Responders\ViewResponder;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,8 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Actions\Trick
  *
  * @Route("/trick/edit/{slug}", name="trick_edit")
+ * @IsGranted("ROLE_USER")
  */
-class EditTrick
+final class EditTrick
 {
 
     /** @var Resolver */

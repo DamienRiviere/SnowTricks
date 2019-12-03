@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/", name="home")
  */
-class Home
+final class Home
 {
 
     /** @var TrickRepository */

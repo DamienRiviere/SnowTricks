@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/trick/{slug}", name="trick_show")
  */
-class ShowTrick
+final class ShowTrick
 {
     /** @var TrickRepository */
     protected $trickRepo;

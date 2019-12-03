@@ -23,6 +23,7 @@
                     <div class="card-body">
                         <h5 class="card-title mb-0">
                             <a href="/trick/{{ trick.slug }}" class="text-decoration-none">{{ trick.name }}</a>
+                            {% if is_granted('ROLE_USER') %}
                             <div class="float-right">
                                 <a href="{{ path('trick_edit', {slug: trick.slug}) }}" title="Modifier le trick" class="text-decoration-none">
                                     <i class="fas fa-edit text-primary"></i>
@@ -31,6 +32,7 @@
                                     <i class="fas fa-trash-alt text-danger"></i>
                                 </a>
                             </div>
+                            {% endif %}
                         </h5>
                     </div>
                 </div>
