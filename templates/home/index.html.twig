@@ -18,7 +18,7 @@
             <div class="col-2 py-4">
                 <div class="card" style="width: 18rem;">
                     {% for picture in trick.pictures | slice(0, 1) %}
-                        <img src="{{ picture.link }}" class="card-img-top" alt="{{ picture.alt }}">
+                        <img src="{{ asset('uploads/') }}{{picture.picture}}" class="card-img-top" alt="{{ picture.title }}">
                     {% endfor %}
                     <div class="card-body">
                         <h5 class="card-title mb-0">

@@ -52,9 +52,6 @@ final class TrickDTO
 
     /**
      * @Assert\Valid()
-     * @Assert\NotBlank(
-     *     message="Le trick doit contenir au moins une image !"
-     * )
      */
     protected $pictures;
 
@@ -138,9 +135,6 @@ final class TrickDTO
         return $videos;
     }
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
@@ -153,9 +147,6 @@ final class TrickDTO
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): ?string
     {
         return $this->name;
@@ -168,9 +159,6 @@ final class TrickDTO
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): ?string
     {
         return $this->description;
@@ -183,17 +171,11 @@ final class TrickDTO
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getStyle()
     {
         return $this->style;
     }
 
-    /**
-     * @param mixed $style
-     */
     public function setStyle($style): void
     {
         $this->style = $style;
@@ -206,17 +188,11 @@ final class TrickDTO
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPictures()
     {
         return $this->pictures;
     }
 
-    /**
-     * @param mixed $pictures
-     */
     public function setPictures($pictures): void
     {
         $this->pictures = $pictures;
@@ -229,17 +205,11 @@ final class TrickDTO
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getVideos()
     {
         return $this->videos;
     }
 
-    /**
-     * @param mixed $videos
-     */
     public function setVideos($videos): void
     {
         $this->videos = $videos;

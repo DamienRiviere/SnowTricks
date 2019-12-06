@@ -36,6 +36,8 @@ final class Resolver
     /** @var ResolverHelper */
     protected $helper;
 
+    protected $uploadDir;
+
     /**
      * Resolver constructor.
      * @param FormFactoryInterface $formFactory
@@ -44,6 +46,7 @@ final class Resolver
      * @param PictureRepository $pictureRepo
      * @param VideoRepository $videoRepository
      * @param ResolverHelper $helper
+     * @param string $uploadDir
      */
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -51,7 +54,8 @@ final class Resolver
         TrickRepository $trickRepo,
         PictureRepository $pictureRepo,
         VideoRepository $videoRepository,
-        ResolverHelper $helper
+        ResolverHelper $helper,
+        string $uploadDir
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
@@ -59,6 +63,7 @@ final class Resolver
         $this->pictureRepo = $pictureRepo;
         $this->videoRepo = $videoRepository;
         $this->helper = $helper;
+        $this->uploadDir = $uploadDir;
     }
 
     /**
@@ -84,7 +89,7 @@ final class Resolver
     public function save(TrickDTO $dto)
     {
         $trick = Trick::create($dto);
-        $pictures = Picture::create($dto, $trick);
+        $pictures = Picture::create($dto, $trick, $this->uploadDir);
         $videos = Video::create($dto, $trick);
 
         $this->em->persist($trick);

@@ -19,14 +19,14 @@ class Picture
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
-    private $link;
+    private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
-    private $alt;
+    private $picture;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="pictures")
@@ -38,17 +38,29 @@ class Picture
      * Get pictures from the dto and create a new Picture entity
      * @param TrickDTO $dto
      * @param Trick $trick
+     * @param $uploadDir
      * @return array
      */
-    public static function create(TrickDTO $dto, Trick $trick)
+    public static function create(TrickDTO $dto, Trick $trick, string $uploadDir)
     {
         $pictures = [];
 
         foreach ($dto->getPictures() as $item) {
+            $originFilename = pathinfo($item->getPicture()->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = transliterator_transliterate(
+                'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
+                $originFilename
+            );
+            $newFilename = $safeFilename . '-' . uniqid() . '.' . $item->getPicture()->guessExtension();
+            $item->getPicture()->move(
+                $uploadDir,
+                $newFilename
+            );
+
             $picture = new self();
             $picture
-                ->setLink($item->getLink())
-                ->setAlt($item->getAlt())
+                ->setPicture($newFilename)
+                ->setTitle($item->getTitle())
                 ->setTrick($trick);
 
             $pictures[] = $picture;
@@ -119,26 +131,26 @@ class Picture
         return $this->id;
     }
 
-    public function getLink(): ?string
+    public function getTitle()
     {
-        return $this->link;
+        return $this->title;
     }
 
-    public function setLink(?string $link): self
+    public function setTitle(?string $title): self
     {
-        $this->link = $link;
+        $this->title = $title;
 
         return $this;
     }
-
-    public function getAlt(): ?string
+    
+    public function getPicture()
     {
-        return $this->alt;
+        return $this->picture;
     }
 
-    public function setAlt(?string $alt): self
+    public function setPicture(string $picture): self
     {
-        $this->alt = $alt;
+        $this->picture = $picture;
 
         return $this;
     }
