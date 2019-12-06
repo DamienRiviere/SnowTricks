@@ -44,6 +44,8 @@
                             </h5>
                             {{ form_start(form) }}
 
+                            {% include 'partials/alert.html.twig' %}
+
                             {% if error %}
                                 <div class="alert alert-danger">
                                     {{ error.messageKey|trans(error.messageData, 'security') }}
@@ -58,7 +60,7 @@
 
                             <hr>
 
-                            <p class="mb-0 small">Vous n'êtes pas encore inscrit ?! <a href="#">Inscrivez-vous ici !</a></p>
+                            <p class="mb-0 small">Vous n'êtes pas encore inscrit ?! <a href="{{ path('register_index') }}">Inscrivez-vous ici !</a></p>
 
                             {{ form_end(form) }}
                         </div>

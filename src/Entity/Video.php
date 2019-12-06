@@ -35,7 +35,7 @@ class Video
      * @param Trick $trick
      * @return array
      */
-    public static function addVideos(TrickDTO $dto, Trick $trick)
+    public static function create(TrickDTO $dto, Trick $trick)
     {
         $videos = [];
 

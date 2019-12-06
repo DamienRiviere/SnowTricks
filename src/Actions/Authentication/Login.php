@@ -3,7 +3,6 @@
 namespace App\Actions\Authentication;
 
 use App\Domain\Authentication\Login\LoginType;
-use App\Repository\UserRepository;
 use App\Responders\ViewResponder;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +13,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  * @package App\Actions\Authentication
  * @Route("/login", name="auth_login")
  */
-class Login
+final class Login
 {
 
     /** @var FormFactoryInterface */

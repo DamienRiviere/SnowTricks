@@ -84,8 +84,8 @@ final class Resolver
     public function save(TrickDTO $dto)
     {
         $trick = Trick::create($dto);
-        $pictures = Picture::addPictures($dto, $trick);
-        $videos = Video::addVideos($dto, $trick);
+        $pictures = Picture::create($dto, $trick);
+        $videos = Video::create($dto, $trick);
 
         $this->em->persist($trick);
         $this->helper->saveItems($pictures);
