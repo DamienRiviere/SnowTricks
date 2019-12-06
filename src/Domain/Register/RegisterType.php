@@ -1,18 +1,30 @@
 <?php
 
-namespace App\Domain\Authentication\Login;
+namespace App\Domain\Register;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LoginType extends AbstractType
+final class RegisterType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'label' => 'Nom de l\'utilisateur',
+                    'attr' => [
+                        'placeholder' => 'Entrez votre nom d\'utilsateur ...'
+                    ]
+                ]
+            )
             ->add(
                 'email',
                 EmailType::class,
@@ -39,7 +51,7 @@ class LoginType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => LoginDTO::class
+                'data_class' => RegisterDTO::class
             ]
         );
     }

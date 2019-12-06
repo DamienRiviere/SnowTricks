@@ -35,6 +35,7 @@
                 </h4>
             </div>
             <div class="card-body">
+                {{ form_errors(form) }}
                 {{ form_row(form.name) }}
                 {{ form_row(form.description) }}
                 {{ form_row(form.style) }}

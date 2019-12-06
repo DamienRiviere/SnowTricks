@@ -2,11 +2,12 @@
 
 namespace App\Actions\Trick;
 
+use App\Domain\Trick\Helpers\TrickFlashMessage;
+use App\Domain\Trick\Resolver;
 use App\Entity\Trick;
 use App\Responders\RedirectResponder;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -22,10 +23,10 @@ final class DeleteTrick
     /** @var EntityManagerInterface */
     protected $em;
 
-    /** @var FlashBagInterface */
+    /** @var TrickFlashMessage */
     protected $flash;
 
-    public function __construct(EntityManagerInterface $em, FlashBagInterface $flash)
+    public function __construct(EntityManagerInterface $em, TrickFlashMessage $flash)
     {
         $this->em = $em;
         $this->flash = $flash;
@@ -36,10 +37,7 @@ final class DeleteTrick
         $this->em->remove($trick);
         $this->em->flush();
 
-        $this->flash->add(
-            "bg-danger",
-            "Le trick a bien été supprimer !"
-        );
+        $this->flash->getFlashMessageDelete();
 
         return $responder(
             "home"

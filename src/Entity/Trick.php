@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
+use App\Domain\Common\Entity\Initialize;
 use App\Domain\Trick\TrickDTO;
-use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -89,8 +89,8 @@ class Trick
      */
     public function initializeSlug()
     {
-        $slugify = new Slugify();
-        $this->slug = $slugify->slugify($this->name);
+        $slug = Initialize::initializeSlug($this->getName());
+        $this->setSlug($slug);
     }
 
     /**

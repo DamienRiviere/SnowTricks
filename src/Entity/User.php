@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+use App\Domain\Common\Entity\Initialize;
+use App\Domain\Register\RegisterDTO;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class User implements UserInterface
 {
@@ -52,6 +55,40 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    public static function create(RegisterDTO $dto, $encoder)
+    {
+        $user = new User();
+        $user
+            ->setName($dto->getName())
+            ->setEmail($dto->getEmail())
+            ->setPassword($encoder->encodePassword($user, $dto->getPassword()))
+            ->setPicture("http://image.jeuxvideo.com/avatar-md/default.jpg")
+            ->setRoles("ROLE_USER");
+
+        return $user;
+    }
+
+    /**
+     * Initialize slug when the trick is created
+     * @ORM\PrePersist
+     */
+    public function initializeSlug()
+    {
+        $slug = Initialize::initializeSlug($this->getName());
+        $this->setSlug($slug);
+    }
+
+    /**
+     * Initialize date when the trick is created
+     * @ORM\PrePersist
+     * @throws \Exception
+     */
+    public function initializeDate()
+    {
+        $date = Initialize::initializeDate($this->getCreatedAt());
+        $this->setCreatedAt($date);
+    }
 
     public function getId(): ?int
     {
