@@ -13,23 +13,20 @@ final class PictureDTO
     protected $id;
 
     /**
-     * @var string
+     * @var string|null
      * @Assert\NotBlank(
-     *     message="Le lien de l'image ne doit pas être vide !"
-     * )
-     * @Assert\Url(
-     *     message="Le lien de l'image doit être une URL !"
+     *     message = "Le titre de l'image ne doit pas être vide"
      * )
      */
-    protected $link;
+    protected $title;
 
     /**
-     * @var string
-     * @Assert\NotBlank(
-     *     message="La description de l'image ne doit pas être vide !"
+     * @Assert\File(
+     *     mimeTypes = {"image/jpeg", "image/jpg", "image/png"},
+     *     mimeTypesMessage = "Le format de l'image doit être du JPEG, JPG ou PNG !"
      * )
      */
-    protected $alt;
+    protected $picture;
 
     /**
      * @return mixed
@@ -38,7 +35,7 @@ final class PictureDTO
     {
         return $this->id;
     }
-
+    
     public function setId(int $id): self
     {
         $this->id = $id;
@@ -46,32 +43,26 @@ final class PictureDTO
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLink()
+    public function getTitle(): ?string
     {
-        return $this->link;
+        return $this->title;
     }
 
-    public function setLink(?string $link): self
+    public function setTitle(string $title): self
     {
-        $this->link = $link;
+        $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAlt()
+    public function getPicture()
     {
-        return $this->alt;
+        return $this->picture;
     }
-
-    public function setAlt(?string $alt): self
+    
+    public function setPicture($picture): self
     {
-        $this->alt = $alt;
+        $this->picture = $picture;
 
         return $this;
     }

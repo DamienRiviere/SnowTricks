@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 
 final class Resolver
 {
@@ -36,6 +37,11 @@ final class Resolver
     /** @var ResolverHelper */
     protected $helper;
 
+    protected $uploadDir;
+
+    /** @var \Security */
+    protected $security;
+
     /**
      * Resolver constructor.
      * @param FormFactoryInterface $formFactory
@@ -44,6 +50,8 @@ final class Resolver
      * @param PictureRepository $pictureRepo
      * @param VideoRepository $videoRepository
      * @param ResolverHelper $helper
+     * @param string $uploadDir
+     * @param Security $security
      */
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -51,7 +59,9 @@ final class Resolver
         TrickRepository $trickRepo,
         PictureRepository $pictureRepo,
         VideoRepository $videoRepository,
-        ResolverHelper $helper
+        ResolverHelper $helper,
+        string $uploadDir,
+        Security $security
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
@@ -59,6 +69,8 @@ final class Resolver
         $this->pictureRepo = $pictureRepo;
         $this->videoRepo = $videoRepository;
         $this->helper = $helper;
+        $this->uploadDir = $uploadDir;
+        $this->security = $security;
     }
 
     /**
@@ -80,11 +92,12 @@ final class Resolver
     /**
      * Save the data from new trick in database
      * @param TrickDTO $dto
+     * @return Trick
      */
     public function save(TrickDTO $dto)
     {
-        $trick = Trick::create($dto);
-        $pictures = Picture::create($dto, $trick);
+        $trick = Trick::create($dto, $this->security);
+        $pictures = Picture::create($dto, $trick, $this->uploadDir);
         $videos = Video::create($dto, $trick);
 
         $this->em->persist($trick);
@@ -92,17 +105,20 @@ final class Resolver
         $this->helper->saveItems($videos);
 
         $this->em->flush();
+
+        return $trick;
     }
 
     /**
      * Update the trick
      * @param TrickDTO $dto
      * @param Trick $trick
+     * @return Trick
      */
     public function update(TrickDTO $dto, Trick $trick)
     {
-        $trick = Trick::create($dto, $trick);
-        $editPictures = Picture::editPictures($dto, $trick);
+        $trick = Trick::create($dto, $this->security, $trick);
+        $editPictures = Picture::editPictures($dto, $trick, $this->uploadDir);
         $picturesToRemove = UpdateTrick::getItemsToRemove($dto->getPictures(), $trick->getPictures());
         $editVideos = Video::editVideos($dto, $trick);
         $videosToRemove = UpdateTrick::getItemsToRemove($dto->getVideos(), $trick->getVideos());
@@ -114,5 +130,7 @@ final class Resolver
         $this->helper->checkIfNotEmptyAndRemove($picturesToRemove);
 
         $this->em->flush();
+
+        return $trick;
     }
 }

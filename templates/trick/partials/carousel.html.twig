@@ -5,8 +5,8 @@
             <div class="carousel-item col-md-3 active">
                 <div class="panel panel-default">
                     <div class="panel-thumbnail">
-                        <a href="#" title="{{ picture.alt }}" class="thumb">
-                            <img class="img-fluid mx-auto d-block img-carousel" src="{{ picture.link }}" alt="{{ picture.alt }}">
+                        <a href="#" title="{{ picture.title }}" class="thumb">
+                            <img class="img-fluid mx-auto d-block img-carousel" src="{{ asset('uploads/') }}{{ picture.picture }}" alt="{{ picture.title }}">
                         </a>
                     </div>
                 </div>

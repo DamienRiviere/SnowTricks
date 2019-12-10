@@ -63,12 +63,19 @@ class Trick
     private $style;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tricks")
+     * @ORM\JoinColumn(nullable=false, name="user_id")
+     */
+    private $user;
+
+    /**
      * Create a new trick from the dto
      * @param TrickDTO $dto
+     * @param $security
      * @param Trick|null $trick
      * @return Trick
      */
-    public static function create(TrickDTO $dto, Trick $trick = null): Trick
+    public static function create(TrickDTO $dto, $security, Trick $trick = null): Trick
     {
         if ($dto->getId() === null) {
             $trick = new self();
@@ -77,7 +84,8 @@ class Trick
         $trick
             ->setName($dto->getName())
             ->setDescription($dto->getDescription())
-            ->setStyle($dto->getStyle());
+            ->setStyle($dto->getStyle())
+            ->setUser($security->getUser());
 
         return $trick;
     }
@@ -249,6 +257,18 @@ class Trick
     public function setStyle(?Style $style): self
     {
         $this->style = $style;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

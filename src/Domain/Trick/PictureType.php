@@ -3,8 +3,8 @@
 namespace App\Domain\Trick;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,20 +15,24 @@ final class PictureType extends AbstractType
     {
         $builder
             ->add(
-                'link',
-                UrlType::class,
+                'title',
+                TextType::class,
                 [
+                    'label' => false,
                     'attr' => [
-                        'placeholder' => 'URL de l\'image'
+                        'placeholder' => 'Titre de l\'image'
                     ]
                 ]
             )
             ->add(
-                'alt',
-                TextType::class,
+                'picture',
+                FileType::class,
                 [
+                    'label' => false,
+                    'required' => false,
+                    'data_class' => null,
                     'attr' => [
-                        'placeholder' => 'Description de l\'image'
+                        'placeholder' => 'Image à upload'
                     ]
                 ]
             )

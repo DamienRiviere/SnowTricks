@@ -4,6 +4,7 @@ namespace App\Actions\Trick;
 
 use App\Domain\Trick\Resolver;
 use App\Repository\TrickRepository;
+use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,13 +32,20 @@ final class EditTrick
         $this->trickRepo = $trickRepo;
     }
 
-    public function __invoke(Request $request, ViewResponder $responder)
+    public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
     {
         $trick = $this->trickRepo->findOneBy(['slug' => $request->attributes->get('slug')]);
         $form = $this->resolver->getFormType($request, $trick);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->resolver->update($form->getData(), $trick);
+            $trick = $this->resolver->update($form->getData(), $trick);
+
+            return $redirectResponder(
+                'trick_show',
+                [
+                    'slug'  =>  $trick->getSlug()
+                ]
+            );
         }
 
         return $responder(
