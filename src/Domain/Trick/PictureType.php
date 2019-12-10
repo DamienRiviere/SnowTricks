@@ -30,6 +30,7 @@ final class PictureType extends AbstractType
                 [
                     'label' => false,
                     'required' => false,
+                    'data_class' => null,
                     'attr' => [
                         'placeholder' => 'Image à upload'
                     ]

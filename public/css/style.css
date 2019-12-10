@@ -1,6 +1,6 @@
 body {
     margin: 0 auto;
-    font-family: 'Montserrat Alternates', sans-serif !important;
+    font-family: 'Noto Sans', sans-serif !important;
 }
 
 /* Logo Navbar */
@@ -32,7 +32,7 @@ body {
 
 /* Header trick */
 .headtricks {
-    margin-top: 57px;
+    margin-top: 55px;
     height: 50vh;
     min-height: 500px;
     background-image: url('https://i.pinimg.com/originals/a7/e4/be/a7e4be9aa6ba57563e6b95f3654815a4.jpg');

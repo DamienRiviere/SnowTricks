@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Domain\Services\FileUploader;
 use App\Domain\Trick\Helpers\UpdateTrick;
 use App\Domain\Trick\TrickDTO;
 use Doctrine\ORM\Mapping as ORM;
@@ -46,16 +47,8 @@ class Picture
         $pictures = [];
 
         foreach ($dto->getPictures() as $item) {
-            $originFilename = pathinfo($item->getPicture()->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = transliterator_transliterate(
-                'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
-                $originFilename
-            );
-            $newFilename = $safeFilename . '-' . uniqid() . '.' . $item->getPicture()->guessExtension();
-            $item->getPicture()->move(
-                $uploadDir,
-                $newFilename
-            );
+            $upload = new FileUploader($uploadDir);
+            $newFilename = $upload->upload($item->getPicture());
 
             $picture = new self();
             $picture
@@ -73,23 +66,27 @@ class Picture
      * Edit pictures and add new pictures
      * @param TrickDTO $dto
      * @param Trick $trick
+     * @param string $uploadDir
      * @return array
      */
-    public static function editPictures(TrickDTO $dto, Trick $trick)
+    public static function editPictures(TrickDTO $dto, Trick $trick, string $uploadDir)
     {
         $editPictures = [];
 
         $pictures = UpdateTrick::getItems($trick->getPictures());
         $picturesDto = UpdateTrick::getItems($dto->getPictures());
 
-        $newPictures = self::getNewPictures($picturesDto, $trick);
+        $newPictures = self::getNewPictures($picturesDto, $trick, $uploadDir);
 
         foreach ($pictures as $picture) {
             foreach ($picturesDto as $pictureDto) {
                 if ($picture->getId() === $pictureDto->getId()) {
+                    $upload = new FileUploader($uploadDir);
+                    $newFilename = $upload->upload($pictureDto->getPicture());
+
                     $picture
-                        ->setLink($pictureDto->getLink())
-                        ->setAlt($pictureDto->getAlt());
+                        ->setTitle($pictureDto->getTitle())
+                        ->setPicture($newFilename);
 
                     $editPictures[] = $picture;
                 }
@@ -105,18 +102,22 @@ class Picture
      * Get new pictures from the PictureDTO and created the entity
      * @param array $pictures
      * @param Trick $trick
+     * @param string $uploadDir
      * @return array
      */
-    public static function getNewPictures(array $pictures, Trick $trick)
+    public static function getNewPictures(array $pictures, Trick $trick, string $uploadDir)
     {
         $newPictures = [];
 
         foreach ($pictures as $picture) {
             if ($picture->getId() === null) {
+                $upload = new FileUploader($uploadDir);
+                $newFilename = $upload->upload($picture->getPicture());
+
                 $newPicture = new self();
                 $newPicture
-                    ->setLink($picture->getLink())
-                    ->setAlt($picture->getAlt())
+                    ->setTitle($picture->getTitle())
+                    ->setPicture($newFilename)
                     ->setTrick($trick);
 
                 $newPictures[] = $newPicture;
@@ -148,7 +149,7 @@ class Picture
         return $this->picture;
     }
 
-    public function setPicture(string $picture): self
+    public function setPicture($picture): self
     {
         $this->picture = $picture;
 

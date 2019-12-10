@@ -21,9 +21,6 @@ final class PictureDTO
     protected $title;
 
     /**
-     * @Assert\NotBlank(
-     *     message = "Le titre de l'image ne doit pas être vide !"
-     * )
      * @Assert\File(
      *     mimeTypes = {"image/jpeg", "image/jpg", "image/png"},
      *     mimeTypesMessage = "Le format de l'image doit être du JPEG, JPG ou PNG !"
@@ -51,9 +48,11 @@ final class PictureDTO
         return $this->title;
     }
 
-    public function setTitle(?string $title): void
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
     public function getPicture()
@@ -61,8 +60,10 @@ final class PictureDTO
         return $this->picture;
     }
     
-    public function setPicture($picture)
+    public function setPicture($picture): self
     {
         $this->picture = $picture;
+
+        return $this;
     }
 }

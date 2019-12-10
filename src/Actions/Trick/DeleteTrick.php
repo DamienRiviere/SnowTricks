@@ -3,11 +3,10 @@
 namespace App\Actions\Trick;
 
 use App\Domain\Trick\Helpers\TrickFlashMessage;
-use App\Domain\Trick\Resolver;
 use App\Entity\Trick;
 use App\Responders\RedirectResponder;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -15,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Actions\Trick
  *
  * @Route("/trick/delete/{id}", name="trick_delete")
- * @IsGranted("ROLE_USER")
+ * @Security("is_granted('ROLE_USER') and user === trick.getUser()")
  */
 final class DeleteTrick
 {
