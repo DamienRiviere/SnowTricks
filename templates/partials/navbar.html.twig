@@ -29,6 +29,7 @@
                                 {{ app.user.name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
+                                <a href="{{ path('account_index') }}" class="dropdown-item">Mon profil</a>
                                 <a href="{{ path('auth_logout') }}" class="dropdown-item">Déconnexion</a>
                             </div>
                         </div>
