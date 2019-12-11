@@ -11,48 +11,57 @@
         <p class="font-weight-bold mb-0">L'annuaire de toutes les figures entré par les utilisateurs</p>
     </div>
 
-    <div class="container">
-        <div class="row">
-            {% for trick in tricks %}
-            <div class="col-4 py-4">
-                <div class="card shadow" style="width: 18rem;">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">
-                            <a href="/trick/{{ trick.slug }}" class="text-decoration-none">{{ trick.name }}</a>
-                            {% if is_granted('ROLE_USER') %}
-                                <div class="float-right">
-                                    <a href="{{ path('trick_edit', {slug: trick.slug}) }}" title="Modifier le trick" class="text-decoration-none">
-                                        <i class="fas fa-edit text-primary"></i>
+    <div class="container-fluid bg-tricks">
+        <div class="container">
+            <div class="row">
+                {% for trick in tricks %}
+                    <div class="col-4 py-4">
+                        <div class="card shadow" style="width: 18rem;">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    <a href="/trick/{{ trick.slug }}" class="text-decoration-none">
+                                        <i class="fas fa-snowboarding mr-1 text-danger"></i>
+                                        <span class="text-dark">|</span>
+                                        {{ trick.name }}
                                     </a>
-                                    {% if app.user == trick.user %}
-                                        <a href="#" class="text-decoration-none deleteTrick" title="Supprimer le trick" data-toggle="modal" data-target="#deleteTrickModal" data-id="{{ trick.id }}">
-                                            <i class="fas fa-trash-alt text-danger"></i>
-                                        </a>
+                                    {% if is_granted('ROLE_USER') %}
+                                        <div class="float-right">
+                                            <a href="{{ path('trick_edit', {slug: trick.slug}) }}" title="Modifier le trick" class="text-decoration-none">
+                                                <i class="fas fa-edit text-primary"></i>
+                                            </a>
+                                            {% if app.user == trick.user %}
+                                                <a href="#" class="text-decoration-none deleteTrick" title="Supprimer le trick" data-toggle="modal" data-target="#deleteTrickModal" data-id="{{ trick.id }}">
+                                                    <i class="fas fa-trash-alt text-danger"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
                                     {% endif %}
-                                </div>
-                            {% endif %}
-                        </h5>
-                    </div>
+                                </h5>
+                            </div>
 
-                    {% for picture in trick.pictures | slice(0, 1) %}
-                        <img src="{{ asset('uploads/') }}{{picture.picture}}" class="card-img-top" alt="{{ picture.title }}">
-                    {% endfor %}
+                            {% for picture in trick.pictures | slice(0, 1) %}
+                                <img src="{{ asset('uploads/') }}{{ picture.picture }}" class="card-img-top" alt="{{ picture.title }}">
+                            {% endfor %}
 
-                    <div class="card-footer">
-                        <p class="small mb-0 text-muted">Par {{ trick.user.name }} le {{ trick.createdAt | date('d/m/y') }}</p>
+                            <div class="card-footer">
+                                <p class="small mb-0 text-muted">
+                                    <img src="{{ trick.user.picture }}" alt="Avatar de {{ trick.user.name }}" class="avatar-mini mr-1">
+                                    Par <span class="text-danger">{{ trick.user.name }}</span> le {{ trick.createdAt | date('d/m/y') }}
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            {% include 'partials/alert.html.twig' %}
         </div>
-        {% include 'partials/alert.html.twig' %}
-    </div>
 
-    <div class="d-flex justify-content-center my-4">
-        <a href="#" class="btn btn-primary">
-            <i class="fas fa-spinner mr-1"></i>
-            Afficher plus
-        </a>
+        <div class="d-flex justify-content-center py-4">
+            <a href="#" class="btn btn-primary">
+                <i class="fas fa-spinner mr-1"></i>
+                Afficher plus
+            </a>
+        </div>
     </div>
 
     <!-- Modal Delete Trick -->

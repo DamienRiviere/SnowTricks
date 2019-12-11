@@ -4,7 +4,9 @@
 }
 
 body {
-    font-family: 'Noto Sans', sans-serif !important;
+    font-family: 'Ubuntu', sans-serif !important;
+    background-image: url("../img/minimalist-blue-mountains.jpg");
+    background-position: center;
 }
 
 .card-signin {
@@ -23,7 +25,7 @@ body {
 .card-signin .card-img-left {
     width: 45%;
     /* Link to your background image using in the property below! */
-    background: scroll center url('https://wallpaperplay.com/walls/full/f/9/a/87850.jpg');
+    background: scroll center url('../img/snowboard_evening_snow_light_trick.jpg');
     background-size: cover;
 }
 
