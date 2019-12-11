@@ -1,6 +1,6 @@
 body {
     margin: 0 auto;
-    font-family: 'Noto Sans', sans-serif !important;
+    font-family: 'Ubuntu', sans-serif !important;
 }
 
 /* Logo Navbar */
@@ -12,6 +12,10 @@ body {
     background: rgba(0,0,0,0.8);
 }
 
+.bg-tricks {
+    background-image: url("../img/minimalist-mountains-black-and-white.jpg");
+}
+
 .text-shadow {
     text-shadow: 2px 2px #000000;
 }
@@ -20,7 +24,7 @@ body {
 .masthead {
     height: 100vh;
     min-height: 500px;
-    background-image: url('https://wallpaperplay.com/walls/full/f/9/a/87850.jpg');
+    background-image: url('../img/snowboard_evening_snow_light_trick.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -35,14 +39,14 @@ body {
     margin-top: 55px;
     height: 50vh;
     min-height: 500px;
-    background-image: url('https://i.pinimg.com/originals/a7/e4/be/a7e4be9aa6ba57563e6b95f3654815a4.jpg');
+    background-image: url('../img/minimalist-blue-mountains.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .bg-footer {
-    background-color: #f5f5f7;
+    background: rgba(0,0,0,0.8);
 }
 
 /* CAROUSEL */
@@ -133,3 +137,33 @@ body {
 #profile-grid .panel-thumbnail { overflow: hidden; }
 #profile-grid .img-rounded { border-radius: 4px 4px 0 0;}
 /* END CAROUSEL */
+
+/** PROFIL  */
+.avatar {
+    max-width: 128px;
+    max-height: 128px;
+    border-radius: 50%;
+}
+
+.avatar-profil {
+    max-width: 128px;
+    max-height: 128px;
+    border-radius: 50%;
+}
+
+.avatar-medium {
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.avatar-mini {
+    max-width: 25px;
+    max-height: 25px;
+    border-radius: 50%;
+}
+
+.avatar-micro {
+    max-width: 35px;
+    max-height: 35px;
+}
+/** END PROFIL */

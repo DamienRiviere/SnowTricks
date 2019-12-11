@@ -19,52 +19,52 @@
 
     <div class="jumbotron">
         <div class="container">
-            <h2 class="display-4 text-primary">Description du tricks!</h2>
+            <h2 class="display-4 text-primary">{{ trick.name }}</h2>
             <p class="lead">{{ trick.description }}</p>
             <hr>
             <p class="mb-0">
-                Publié le {{ trick.createdAt | date("d/m/Y") }} à {{ trick.createdAt | date("H:i") }}
+                <img src="{{ trick.user.picture }}" alt="Avatar de {{ trick.user.name }}" class="avatar-mini mr-1">
+                Par <span class="text-danger">{{ trick.user.name }}</span> le {{ trick.createdAt | date('d/m/y') }}
                 <span class="badge badge-primary float-right">{{ trick.style.name }}</span>
             </p>
         </div>
     </div>
 
-    <div class="container">
+
+    <div class="container mb-4">
         {% include 'trick/partials/new_comment.html.twig' %}
 
         <h3 class="mb-4">Tous les commentaires</h3>
-        <div class="media mb-4">
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+        {% if trick.getComments() | length == 0 %}
+            <div class="alert alert-danger py-4 my-4">
+                Il n'y a encore aucun commentaire sur ce trick !
             </div>
-        </div>
-        <div class="media mb-4">
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-            </div>
-        </div>
-        <div class="media mb-4">
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-            </div>
-        </div>
-        <div class="media mb-4">
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-            <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-            </div>
-        </div>
+        {% else %}
+            {% for comment in trick.getComments() %}
+                {% set user = comment.user %}
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body py-3">
+                        <div class="media">
+                            <img class="d-flex mr-3 rounded-circle avatar-medium" src="{{ user.picture }}" alt="Avatar de {{ user.name }}">
+                            <div class="media-body">
+                                <h5 class="mt-0">
+                                    <span class="text-danger">{{ user.name }}</span>
+                                    <span class="small text-muted">le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i') }}</span>
+                                </h5>
+                                {{ comment.content }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
+
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('js/comment_ajax.js') }}"></script>
     <script src="{{ asset('js/carousel.js') }}"></script>
 {% endblock %}
 
