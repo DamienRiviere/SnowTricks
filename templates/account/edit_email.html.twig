@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Changement d'adresse email{% endblock %}
+
+{% block body %}
+    {% set user = app.user %}
+    {% include 'account/partials/title_section.html.twig' %}
+
+    <div class="container py-5">
+        {% include 'account/partials/profile.html.twig' %}
+
+        <div class="card mt-4 shadow">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-envelope text-primary mr-1"></i>
+                    Changement d'adresse email
+                </h4>
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+
+                {{ form_row(form.email) }}
+
+                {{ form_errors(form) }}
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check mr-1"></i>
+                    Valider
+                </button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        {% include 'account/partials/description.html.twig' %}
+
+        {% include 'account/partials/trick.html.twig' %}
+
+        {% include 'account/partials/like.html.twig' %}
+    </div>
+
+    {% include 'account/partials/modal_delete.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/modal_delete.js') }}"></script>
+{% endblock %}

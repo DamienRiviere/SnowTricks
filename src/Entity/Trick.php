@@ -300,7 +300,7 @@ class Trick
     {
         if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
-// set the owning side to null (unless already changed)
+            // set the owning side to null (unless already changed)
             if ($comment->getTrick() === $this) {
                 $comment->setTrick(null);
             }

@@ -1,137 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ app.user.name }}{% endblock %}
+{% block title %}Profil de {{ app.user.name }}{% endblock %}
 
 {% block body %}
     {% set user = app.user %}
-    <div class="container-fluid bg-light py-5 text-center section-title">
-        <h2 class="text-primary">
-            Profil de {{ user.name }}
-        </h2>
-        <p class="font-weight-bold mb-0">Gestion du compte</p>
-    </div>
+    {% include 'account/partials/title_section.html.twig' %}
 
     <div class="container py-5">
-        <div class="row align-items-center pt-3 pb-3 ">
-            <div class="col-lg-3 text-center">
-                <img src="{{ user.picture }}" class="avatar-profil mb-3" alt="Avatar de {{ user.username }}">
-            </div>
-            <div class="col-lg-9">
-                <h2 class="mb-0 pl-1 text-danger">{{ user.username }}</h2>
-                <p class="text-muted pl-1 profil-center">Inscrit depuis le {{ user.createdAt | date('d/m/Y') }}</p>
-                {% if user is same as(app.user) %}
-                    <div class="mt-3">
-                        <a href="#" class="btn btn-primary">
-                            <i class="fas fa-envelope text-white mr-1"></i>
-                            Modifier mon email
-                        </a>
-                        <a href="#" class="btn btn-primary">
-                            <i class="fas fa-lock text-white mr-1"></i>
-                            Modifier mon mot de passe
-                        </a>
-                        <a href="#" class="btn btn-primary">
-                            <i class="far fa-image text-white mr-1"></i>
-                            Modifier mon image
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-
-        {# Ma Description #}
-        <div class="card mt-4 shadow">
-            <div class="card-header">
-                <h4 class="mb-0">
-                    <i class="fas fa-id-card mr-1 text-primary"></i>
-                    Ma description
-                </h4>
-            </div>
-            <div class="card-body">
-                Pas de description
-            </div>
-        </div>
-
-        {# Mes tricks #}
-        <div class="card mt-4 shadow">
-            <div class="card-header">
-                <h4 class="mb-0">
-                    <i class="fas fa-pen text-primary mr-1"></i>
-                    Mes tricks
-                </h4>
-            </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    {% for trick in user.tricks %}
-                    <li class="list-group-item">
-                        <i class="fas fa-snowboarding text-danger mr-1"></i>
-                        {{ trick.style.name }} |
-                        <a href="{{ path('trick_show', {'slug': trick.slug}) }}">
-                            {{ trick.name }}
-                        </a>
-                        <div class="float-right">
-                            <a href="{{ path('trick_edit', {'slug': trick.slug}) }}" title="Modifier le trick" class="text-decoration-none mr-2">
-                                <i class="fas fa-edit text-primary"></i>
-                            </a>
-                            <a href="" class="text-decoration-none deleteTrick mr-2" title="Supprimer le trick" data-toggle="modal" data-target="#deleteTrickModal" data-id="{{ trick.id }}">
-                                <i class="fas fa-trash-alt text-danger"></i>
-                            </a>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+        {% include 'account/partials/profile.html.twig' %}
 
         {% include 'partials/alert.html.twig' %}
 
-        {# Ma sélection de tricks #}
-        <div class="card mt-4 shadow">
-            <div class="card-header">
-                <h4 class="mb-0">
-                    <i class="fas fa-thumbs-up mr-1 text-primary"></i>
-                    Ma sélection de tricks
-                </h4>
-            </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <i class="fas fa-snowboarding text-danger mr-1"></i>
-                        <a href="">Mon premier trick</a>
-                        <div class="float-right">
-                            <a href="" title="Modifier le trick" class="text-decoration-none mr-2">
-                                <i class="fas fa-edit text-primary"></i>
-                            </a>
-                            <a href="" class="text-danger">
-                                Supprimer de la liste
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {% include 'account/partials/description.html.twig' %}
+
+        {% include 'account/partials/trick.html.twig' %}
+
+        {% include 'account/partials/like.html.twig' %}
     </div>
 
-    <!-- Modal Delete Trick -->
-    <div class="modal fade" id="deleteTrickModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Supprimer le trick</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Êtes-vous sur de vouloir supprimer le trick ?
-                </div>
-                <div class="modal-footer text-white">
-                    <a href="#" class="btn btn-danger modal-delete-trick text-white" data-id="">Oui</a>
-                    <a class="btn btn-secondary" data-dismiss="modal">Annuler</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'account/partials/modal_delete.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
