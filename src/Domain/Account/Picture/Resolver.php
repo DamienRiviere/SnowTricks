@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Domain\Account\Password;
+namespace App\Domain\Account\Picture;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class Resolver
+final class Resolver
 {
 
     /** @var FormFactoryInterface */
     protected $formFactory;
 
-    /** @var UserPasswordEncoderInterface */
-    protected $encoder;
+    protected $uploadDir;
 
     /** @var EntityManagerInterface */
     protected $em;
@@ -27,25 +25,25 @@ class Resolver
 
     public function __construct(
         FormFactoryInterface $formFactory,
-        UserPasswordEncoderInterface $encoder,
+        string $uploadDir,
         EntityManagerInterface $em,
         FlashBagInterface $flash
     ) {
         $this->formFactory = $formFactory;
-        $this->encoder = $encoder;
+        $this->uploadDir = $uploadDir;
         $this->em = $em;
         $this->flash = $flash;
     }
 
-    public function getFormType(Request $request): FormInterface
+    public function getFormType(Request $request)
     {
-        return $this->formFactory->create(PasswordType::class)
+        return $this->formFactory->create(PictureType::class)
                                  ->handleRequest($request);
     }
 
-    public function update(PasswordDTO $dto, User $user)
+    public function update(UploadedFile $dto, User $user)
     {
-        $user = User::updatePassword($dto, $user, $this->encoder);
+        $user = User::updatePicture($dto, $user, $this->uploadDir);
 
         $this->em->persist($user);
         $this->em->flush();
@@ -55,7 +53,7 @@ class Resolver
     {
         return $this->flash->add(
             'bg-success',
-            'Votre mot de passe a bien été modifier !'
+            'Votre image de profil a bien été mise à jour !'
         );
     }
 }
