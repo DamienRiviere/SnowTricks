@@ -45,7 +45,7 @@
 
                             <div class="card-footer">
                                 <p class="small mb-0 text-muted">
-                                    <img src="{{ trick.user.picture }}" alt="Avatar de {{ trick.user.name }}" class="avatar-mini mr-1">
+                                    <img src="{{ asset('uploads/') }}{{ trick.user.picture }}" alt="Avatar de {{ trick.user.name }}" class="avatar-mini mr-1">
                                     Par <span class="text-danger">{{ trick.user.name }}</span> le {{ trick.createdAt | date('d/m/y') }}
                                 </p>
                             </div>

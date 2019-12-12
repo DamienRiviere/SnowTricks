@@ -23,7 +23,7 @@
             <p class="lead">{{ trick.description }}</p>
             <hr>
             <p class="mb-0">
-                <img src="{{ trick.user.picture }}" alt="Avatar de {{ trick.user.name }}" class="avatar-mini mr-1">
+                <img src="{{ asset('uploads/') }}{{ trick.user.picture }}" alt="Avatar de {{ trick.user.name }}" class="avatar-mini mr-1">
                 Par <span class="text-danger">{{ trick.user.name }}</span> le {{ trick.createdAt | date('d/m/y') }}
                 <span class="badge badge-primary float-right">{{ trick.style.name }}</span>
             </p>
