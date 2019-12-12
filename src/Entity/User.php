@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Domain\Account\Email\EmailDTO;
 use App\Domain\Common\Entity\Initialize;
 use App\Domain\Register\RegisterDTO;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -82,6 +83,13 @@ class User implements UserInterface
             ->setPassword($encoder->encodePassword($user, $dto->getPassword()))
             ->setPicture("http://image.jeuxvideo.com/avatar-md/default.jpg")
             ->setRoles("ROLE_USER");
+
+        return $user;
+    }
+
+    public static function editEmail(EmailDTO $dto, User $user)
+    {
+        $user->setEmail($dto->getEmail());
 
         return $user;
     }
