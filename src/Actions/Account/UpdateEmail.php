@@ -11,13 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
 /**
- * Class EditEmail
+ * Class UpdateEmail
  * @package App\Actions\Account
  *
  * @Route("/account/email", name="account_email")
  * @IsGranted("ROLE_USER")
  */
-final class EditEmail
+final class UpdateEmail
 {
 
     /** @var Resolver */

@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Domain\Account\Email;
+namespace App\Domain\Account\Password;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-final class Resolver
+class Resolver
 {
 
     /** @var FormFactoryInterface */
     protected $formFactory;
+
+    /** @var UserPasswordEncoderInterface */
+    protected $encoder;
 
     /** @var EntityManagerInterface */
     protected $em;
@@ -21,24 +24,27 @@ final class Resolver
     /** @var FlashBagInterface */
     protected $flash;
 
-    public function __construct(FormFactoryInterface $formFactory, EntityManagerInterface $em, FlashBagInterface $flash)
-    {
+    public function __construct(
+        FormFactoryInterface $formFactory,
+        UserPasswordEncoderInterface $encoder,
+        EntityManagerInterface $em,
+        FlashBagInterface $flash
+    ) {
         $this->formFactory = $formFactory;
+        $this->encoder = $encoder;
         $this->em = $em;
         $this->flash = $flash;
     }
 
-    public function getFormType(Request $request, string $email): FormInterface
+    public function getFormType(Request $request)
     {
-        $emailDto = EmailDTO::updateToDto($email);
-
-        return $this->formFactory->create(EmailType::class, $emailDto)
+        return $this->formFactory->create(PasswordType::class)
                                  ->handleRequest($request);
     }
 
-    public function update(EmailDTO $dto, User $user)
+    public function update(PasswordDTO $dto, User $user)
     {
-        $user = User::updateEmail($dto, $user);
+        $user = User::updatePassword($dto, $user, $this->encoder);
 
         $this->em->persist($user);
         $this->em->flush();
@@ -47,8 +53,8 @@ final class Resolver
     public function getFlashMessage()
     {
         return $this->flash->add(
-            "bg-success",
-            "Votre adresse email a bien été modifier !"
+            'bg-success',
+            'Votre mot de passe a bien été modifier !'
         );
     }
 }

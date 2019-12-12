@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Domain\Account\Email\EmailDTO;
+use App\Domain\Account\Password\PasswordDTO;
 use App\Domain\Common\Entity\Initialize;
 use App\Domain\Register\RegisterDTO;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -74,7 +76,7 @@ class User implements UserInterface
         $this->comments = new ArrayCollection();
     }
 
-    public static function create(RegisterDTO $dto, $encoder)
+    public static function create(RegisterDTO $dto, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $user
@@ -87,9 +89,16 @@ class User implements UserInterface
         return $user;
     }
 
-    public static function editEmail(EmailDTO $dto, User $user)
+    public static function updateEmail(EmailDTO $dto, User $user)
     {
         $user->setEmail($dto->getEmail());
+
+        return $user;
+    }
+
+    public static function updatePassword(PasswordDTO $dto, User $user, UserPasswordEncoderInterface $encoder)
+    {
+        $user->setPassword($encoder->encodePassword($user, $dto->getPassword()));
 
         return $user;
     }
