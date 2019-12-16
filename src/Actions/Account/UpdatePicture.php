@@ -2,7 +2,7 @@
 
 namespace App\Actions\Account;
 
-use App\Domain\Account\Picture\Resolver;
+use App\Domain\Account\Picture\ResolverPicture;
 use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -20,13 +20,13 @@ use Symfony\Component\Security\Core\Security;
 final class UpdatePicture
 {
 
-    /** @var Resolver */
+    /** @var ResolverPicture */
     protected $resolver;
 
     /** @var Security */
     protected $security;
 
-    public function __construct(Resolver $resolver, Security $security)
+    public function __construct(ResolverPicture $resolver, Security $security)
     {
         $this->resolver = $resolver;
         $this->security = $security;

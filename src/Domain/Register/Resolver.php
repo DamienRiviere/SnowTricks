@@ -42,18 +42,31 @@ final class Resolver
                                  ->handleRequest($request);
     }
 
+    public function save(RegisterDTO $dto)
+    {
+        $user = $this->create($dto);
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
+    public function create(RegisterDTO $dto)
+    {
+        $user = new User();
+        $user
+            ->setName($dto->getName())
+            ->setEmail($dto->getEmail())
+            ->setPassword($this->encoder->encodePassword($user, $dto->getPassword()))
+            ->setPicture("default.png")
+            ->setRoles("ROLE_USER");
+
+        return $user;
+    }
+
     public function getFlashMessage()
     {
         return $this->flash->add(
             'bg-success',
             'Votre compte a été créer avec succès, vous pouvez maintenant vous connecter avec vos identifiants !'
         );
-    }
-
-    public function save(RegisterDTO $dto)
-    {
-        $user = User::create($dto, $this->encoder);
-        $this->em->persist($user);
-        $this->em->flush();
     }
 }

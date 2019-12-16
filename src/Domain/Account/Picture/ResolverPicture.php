@@ -2,6 +2,7 @@
 
 namespace App\Domain\Account\Picture;
 
+use App\Domain\Services\FileUploader;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -9,13 +10,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
-final class Resolver
+final class ResolverPicture
 {
 
     /** @var FormFactoryInterface */
     protected $formFactory;
 
-    protected $uploadDir;
+    protected $uploadDirProfile;
 
     /** @var EntityManagerInterface */
     protected $em;
@@ -23,16 +24,20 @@ final class Resolver
     /** @var FlashBagInterface */
     protected $flash;
 
+    /** @var FileUploader  */
+    protected $upload;
+
     public function __construct(
         FormFactoryInterface $formFactory,
-        string $uploadDir,
+        string $uploadDirProfile,
         EntityManagerInterface $em,
         FlashBagInterface $flash
     ) {
         $this->formFactory = $formFactory;
-        $this->uploadDir = $uploadDir;
+        $this->uploadDirProfile = $uploadDirProfile;
         $this->em = $em;
         $this->flash = $flash;
+        $this->upload = new FileUploader($this->uploadDirProfile);
     }
 
     public function getFormType(Request $request)
@@ -43,10 +48,27 @@ final class Resolver
 
     public function update(UploadedFile $dto, User $user)
     {
-        $user = User::updatePicture($dto, $user, $this->uploadDir);
+        if ($user->getPicture() != "default.png") {
+            $this->deleteFile("uploads/profile/", $user);
+        }
+
+        $user = $this->updatePicture($dto, $user);
 
         $this->em->persist($user);
         $this->em->flush();
+    }
+
+    public function updatePicture(UploadedFile $dto, User $user)
+    {
+        $newFileName = $this->upload->upload($dto);
+        $user->setPicture($newFileName);
+
+        return $user;
+    }
+
+    public function deleteFile($path, $user)
+    {
+        unlink($path . $user->getPicture());
     }
 
     public function getFlashMessage()

@@ -40,13 +40,14 @@
                             </div>
 
                             {% for picture in trick.pictures | slice(0, 1) %}
-                                <img src="{{ asset('uploads/') }}{{ picture.picture }}" class="card-img-top" alt="{{ picture.title }}">
+                                <img src="{{ asset('uploads/trick/') }}{{ picture.picture }}" class="card-img-top" alt="{{ picture.title }}">
                             {% endfor %}
 
                             <div class="card-footer">
                                 <p class="small mb-0 text-muted">
-                                    <img src="{{ asset('uploads/') }}{{ trick.user.picture }}" alt="Avatar de {{ trick.user.name }}" class="avatar-mini mr-1">
-                                    Par <span class="text-danger">{{ trick.user.name }}</span> le {{ trick.createdAt | date('d/m/y') }}
+                                    {% set user = trick.user %}
+                                    <img src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}" class="avatar-mini mr-1">
+                                    Par <a href="{{ path('profile_index', {'slug': user.slug}) }}" class="text-danger">{{ user.name }}</a> le {{ trick.createdAt | date('d/m/y') }}
                                 </p>
                             </div>
                         </div>

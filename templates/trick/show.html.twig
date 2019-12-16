@@ -23,8 +23,9 @@
             <p class="lead">{{ trick.description }}</p>
             <hr>
             <p class="mb-0">
-                <img src="{{ asset('uploads/') }}{{ trick.user.picture }}" alt="Avatar de {{ trick.user.name }}" class="avatar-mini mr-1">
-                Par <span class="text-danger">{{ trick.user.name }}</span> le {{ trick.createdAt | date('d/m/y') }}
+                {% set user = trick.user %}
+                <img src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}" class="avatar-mini mr-1">
+                Par <a href="{{ path('profile_index', {'slug' : user.slug}) }}" class="text-danger">{{ user.name }}</a> le {{ trick.createdAt | date('d/m/y') }}
                 <span class="badge badge-primary float-right">{{ trick.style.name }}</span>
             </p>
         </div>
@@ -46,7 +47,7 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body py-3">
                         <div class="media">
-                            <img class="d-flex mr-3 rounded-circle avatar-medium" src="{{ user.picture }}" alt="Avatar de {{ user.name }}">
+                            <img class="d-flex mr-3 rounded-circle avatar-medium" src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}">
                             <div class="media-body">
                                 <h5 class="mt-0">
                                     <span class="text-danger">{{ user.name }}</span>

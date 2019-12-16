@@ -2,8 +2,7 @@
 
 namespace App\Actions\Trick;
 
-use App\Domain\Trick\Resolver;
-use App\Repository\TrickRepository;
+use App\Domain\Trick\ResolverTrick;
 use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -11,39 +10,34 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class EditTrick
+ * Class NewTrick
  * @package App\Actions\Trick
  *
- * @Route("/trick/edit/{slug}", name="trick_edit")
+ * @Route("/trick/new", name="trick_new")
  * @IsGranted("ROLE_USER")
  */
-final class EditTrick
+final class NewTrick
 {
 
-    /** @var Resolver */
+    /** @var ResolverTrick */
     protected $resolver;
 
-    /** @var TrickRepository */
-    protected $trickRepo;
-
-    public function __construct(Resolver $resolver, TrickRepository $trickRepo)
+    public function __construct(ResolverTrick $resolver)
     {
         $this->resolver = $resolver;
-        $this->trickRepo = $trickRepo;
     }
 
     public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
     {
-        $trick = $this->trickRepo->findOneBy(['slug' => $request->attributes->get('slug')]);
-        $form = $this->resolver->getFormType($request, $trick);
+        $form = $this->resolver->getFormType($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trick = $this->resolver->update($form->getData(), $trick);
+            $trick = $this->resolver->save($form->getData());
 
             return $redirectResponder(
                 'trick_show',
                 [
-                    'slug'  =>  $trick->getSlug()
+                    'slug'  =>   $trick->getSlug()
                 ]
             );
         }
@@ -51,8 +45,7 @@ final class EditTrick
         return $responder(
             'trick/new_edit.html.twig',
             [
-                'form' => $form->createView(),
-                'trick' => $trick
+                'form' => $form->createView()
             ]
         );
     }
