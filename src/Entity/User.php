@@ -2,16 +2,10 @@
 
 namespace App\Entity;
 
-use App\Domain\Account\Email\EmailDTO;
-use App\Domain\Account\Password\PasswordDTO;
 use App\Domain\Common\Entity\Initialize;
-use App\Domain\Register\RegisterDTO;
-use App\Domain\Services\FileUploader;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -76,43 +70,6 @@ class User implements UserInterface
     {
         $this->tricks = new ArrayCollection();
         $this->comments = new ArrayCollection();
-    }
-
-    public static function create(RegisterDTO $dto, UserPasswordEncoderInterface $encoder)
-    {
-        $user = new User();
-        $user
-            ->setName($dto->getName())
-            ->setEmail($dto->getEmail())
-            ->setPassword($encoder->encodePassword($user, $dto->getPassword()))
-            ->setPicture("default.webp")
-            ->setRoles("ROLE_USER");
-
-        return $user;
-    }
-
-    public static function updateEmail(EmailDTO $dto, User $user)
-    {
-        $user->setEmail($dto->getEmail());
-
-        return $user;
-    }
-
-    public static function updatePassword(PasswordDTO $dto, User $user, UserPasswordEncoderInterface $encoder)
-    {
-        $user->setPassword($encoder->encodePassword($user, $dto->getPassword()));
-
-        return $user;
-    }
-
-    public static function updatePicture(UploadedFile $dto, User $user, string $uploadDir)
-    {
-        $upload = new FileUploader($uploadDir);
-        $newFileName = $upload->upload($dto);
-
-        $user->setPicture($newFileName);
-
-        return $user;
     }
 
     /**

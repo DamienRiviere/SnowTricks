@@ -2,7 +2,7 @@
 
 namespace App\Actions\Account;
 
-use App\Domain\Account\Email\Resolver;
+use App\Domain\Account\Email\ResolverEmail;
 use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -20,13 +20,13 @@ use Symfony\Component\Security\Core\Security;
 final class UpdateEmail
 {
 
-    /** @var Resolver */
+    /** @var ResolverEmail */
     protected $resolver;
 
     /** @var Security */
     protected $security;
 
-    public function __construct(Resolver $resolver, Security $security)
+    public function __construct(ResolverEmail $resolver, Security $security)
     {
         $this->resolver = $resolver;
         $this->security = $security;

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ user.name }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid bg-light py-5 text-center section-title">
+        <h2 class="text-primary">
+            Profil de {{ user.name }}
+        </h2>
+        <p class="font-weight-bold mb-0">Création et tricks préférés de l'utilisateur</p>
+    </div>
+
+    <div class="container py-5">
+        <div class="row align-items-center pt-3 pb-3 ">
+            <div class="col-lg-3 text-center">
+                <img src="{{ asset('uploads/profile/') }}{{ user.picture }}" class="avatar-profil mb-3" alt="Avatar de {{ user.username }}">
+            </div>
+            <div class="col-lg-9">
+                <h2 class="mb-0 pl-1 text-danger">{{ user.username }}</h2>
+                <p class="mb-0 pl-1 text-primary">{{ user.email }}</p>
+                <p class="text-muted pl-1 profil-center">Inscrit depuis le {{ user.createdAt | date('d/m/Y') }}</p>
+            </div>
+        </div>
+
+        <div class="card mt-4 shadow">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="far fa-id-card mr-1 text-primary"></i>
+                    Ses tricks
+                </h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% if user.tricks |length == 0 %}
+                        <p class="mb-0 text-center">Cette utilisateur n'a créé aucun trick !</p>
+                    {% else %}
+                        {% for trick in user.tricks %}
+                            <li class="list-group-item">
+                                <i class="fas fa-snowboarding text-danger mr-1"></i>
+                                {{ trick.style.name }} |
+                                <a href="{{ path('trick_show', {'slug': trick.slug}) }}">
+                                    {{ trick.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mt-4 shadow">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-heart mr-1 text-primary"></i>
+                    Ses tricks préférés
+                </h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fas fa-snowboarding text-danger mr-1"></i>
+                        <a href="">Mon premier trick</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class Resolver
+final class ResolverPassword
 {
 
     /** @var FormFactoryInterface */
@@ -45,10 +45,17 @@ class Resolver
 
     public function update(PasswordDTO $dto, User $user)
     {
-        $user = User::updatePassword($dto, $user, $this->encoder);
+        $user = $this->updatePassword($dto, $user);
 
         $this->em->persist($user);
         $this->em->flush();
+    }
+
+    public function updatePassword(PasswordDTO $dto, User $user)
+    {
+        $user->setPassword($this->encoder->encodePassword($user, $dto->getPassword()));
+
+        return $user;
     }
 
     public function getFlashMessage()

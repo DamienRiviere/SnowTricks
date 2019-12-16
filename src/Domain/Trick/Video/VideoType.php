@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Trick;
+namespace App\Domain\Trick\Video;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;

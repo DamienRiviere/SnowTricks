@@ -2,7 +2,7 @@
 
 namespace App\Actions\Account;
 
-use App\Domain\Account\Password\Resolver;
+use App\Domain\Account\Password\ResolverPassword;
 use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -19,13 +19,13 @@ use Symfony\Component\Security\Core\Security;
  */
 final class UpdatePassword
 {
-    /** @var Resolver  */
+    /** @var ResolverPassword  */
     protected $resolver;
 
     /** @var Security */
     protected $security;
 
-    public function __construct(Resolver $resolver, Security $security)
+    public function __construct(ResolverPassword $resolver, Security $security)
     {
         $this->resolver = $resolver;
         $this->security = $security;

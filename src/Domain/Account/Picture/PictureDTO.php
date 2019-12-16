@@ -9,6 +9,7 @@ final class PictureDTO
 
     /**
      * @Assert\File(
+     *     maxSize = "3000k",
      *     mimeTypes = {"image/jpeg", "image/jpg", "image/png"},
      *     mimeTypesMessage = "Le format de l'image doit être du JPEG, JPG ou PNG !"
      * )

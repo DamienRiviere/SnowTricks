@@ -2,7 +2,8 @@
 
 namespace App\Actions\Trick;
 
-use App\Domain\Trick\Resolver;
+use App\Domain\Trick\ResolverTrick;
+use App\Repository\TrickRepository;
 use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -10,34 +11,39 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class CreateTrick
+ * Class UpdateTrick
  * @package App\Actions\Trick
  *
- * @Route("/trick/new", name="trick_new")
+ * @Route("/trick/edit/{slug}", name="trick_edit")
  * @IsGranted("ROLE_USER")
  */
-final class CreateTrick
+final class UpdateTrick
 {
 
-    /** @var Resolver */
+    /** @var ResolverTrick */
     protected $resolver;
 
-    public function __construct(Resolver $resolver)
+    /** @var TrickRepository */
+    protected $trickRepo;
+
+    public function __construct(ResolverTrick $resolver, TrickRepository $trickRepo)
     {
         $this->resolver = $resolver;
+        $this->trickRepo = $trickRepo;
     }
 
     public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
     {
-        $form = $this->resolver->getFormType($request);
+        $trick = $this->trickRepo->findOneBy(['slug' => $request->attributes->get('slug')]);
+        $form = $this->resolver->getFormType($request, $trick);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trick = $this->resolver->save($form->getData());
+            $trick = $this->resolver->update($form->getData(), $trick);
 
             return $redirectResponder(
                 'trick_show',
                 [
-                    'slug'  =>   $trick->getSlug()
+                    'slug'  =>  $trick->getSlug()
                 ]
             );
         }
@@ -45,7 +51,8 @@ final class CreateTrick
         return $responder(
             'trick/new_edit.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'trick' => $trick
             ]
         );
     }

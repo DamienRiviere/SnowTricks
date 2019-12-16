@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
-final class Resolver
+final class ResolverEmail
 {
 
     /** @var FormFactoryInterface */
@@ -38,10 +38,17 @@ final class Resolver
 
     public function update(EmailDTO $dto, User $user)
     {
-        $user = User::updateEmail($dto, $user);
+        $user = $this->updateEmail($dto, $user);
 
         $this->em->persist($user);
         $this->em->flush();
+    }
+
+    public function updateEmail(EmailDTO $dto, User $user)
+    {
+        $user->setEmail($dto->getEmail());
+
+        return $user;
     }
 
     public function getFlashMessage()

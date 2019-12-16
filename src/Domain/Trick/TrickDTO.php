@@ -2,6 +2,8 @@
 
 namespace App\Domain\Trick;
 
+use App\Domain\Trick\Picture\PictureDTO;
+use App\Domain\Trick\Video\VideoDTO;
 use App\Entity\Trick;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Domain\Common\Validators\UniqueEntityInput;
@@ -12,7 +14,8 @@ use App\Domain\Common\Validators\UniqueEntityInput;
  * @UniqueEntityInput(
  *     class="App\Entity\Trick",
  *     fields={"name"},
- *     message="Ce trick est déjà existant, veuillez choisir un autre nom !"
+ *     message="Ce trick est déjà existant, veuillez choisir un autre nom !",
+ *     groups={"newTrick"}
  * )
  */
 final class TrickDTO
@@ -27,6 +30,10 @@ final class TrickDTO
      * @var string
      * @Assert\NotBlank(
      *     message="Le nom du trick ne doit pas être vide !"
+     * )
+     * @Assert\Length(
+     *     min = "4",
+     *     minMessage = "Le nom du trick doit comporter plus de 4 caractères !"
      * )
      */
     protected $name;
@@ -52,6 +59,9 @@ final class TrickDTO
 
     /**
      * @Assert\Valid()
+     * @Assert\NotBlank(
+     *     message="Le trick doit contenir au moins une image !"
+     * )
      */
     protected $pictures;
 

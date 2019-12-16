@@ -4,9 +4,9 @@ namespace App\Domain\Trick;
 
 use App\Domain\Helpers\ResolverHelper;
 use App\Domain\Trick\Helpers\UpdateTrick;
-use App\Entity\Picture;
+use App\Domain\Trick\Picture\ResolverPicture;
+use App\Domain\Trick\Video\ResolverVideo;
 use App\Entity\Trick;
-use App\Entity\Video;
 use App\Repository\PictureRepository;
 use App\Repository\TrickRepository;
 use App\Repository\VideoRepository;
@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
-final class Resolver
+final class ResolverTrick
 {
 
     /** @var FormFactoryInterface */
@@ -37,21 +37,26 @@ final class Resolver
     /** @var ResolverHelper */
     protected $helper;
 
-    protected $uploadDir;
-
     /** @var \Security */
     protected $security;
 
+    /** @var ResolverPicture */
+    protected $resolverPicture;
+
+    /** @var ResolverVideo */
+    protected $resolverVideo;
+
     /**
-     * Resolver constructor.
+     * ResolverTrick constructor.
      * @param FormFactoryInterface $formFactory
      * @param EntityManagerInterface $em
      * @param TrickRepository $trickRepo
      * @param PictureRepository $pictureRepo
      * @param VideoRepository $videoRepository
      * @param ResolverHelper $helper
-     * @param string $uploadDir
      * @param Security $security
+     * @param ResolverPicture $resolverPicture
+     * @param ResolverVideo $resolverVideo
      */
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -60,8 +65,9 @@ final class Resolver
         PictureRepository $pictureRepo,
         VideoRepository $videoRepository,
         ResolverHelper $helper,
-        string $uploadDir,
-        Security $security
+        Security $security,
+        ResolverPicture $resolverPicture,
+        ResolverVideo $resolverVideo
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
@@ -69,8 +75,9 @@ final class Resolver
         $this->pictureRepo = $pictureRepo;
         $this->videoRepo = $videoRepository;
         $this->helper = $helper;
-        $this->uploadDir = $uploadDir;
         $this->security = $security;
+        $this->resolverPicture = $resolverPicture;
+        $this->resolverVideo = $resolverVideo;
     }
 
     /**
@@ -85,6 +92,7 @@ final class Resolver
         if ($request->attributes->get('slug')) {
             $trickDto = TrickDTO::updateToDto($trick);
         }
+
         return $this->formFactory->create(TrickType::class, $trickDto)
                                  ->handleRequest($request);
     }
@@ -97,8 +105,8 @@ final class Resolver
     public function save(TrickDTO $dto)
     {
         $trick = Trick::create($dto, $this->security);
-        $pictures = Picture::create($dto, $trick, $this->uploadDir);
-        $videos = Video::create($dto, $trick);
+        $pictures = $this->resolverPicture->create($dto->getPictures(), $trick);
+        $videos = $this->resolverVideo->create($dto->getVideos(), $trick);
 
         $this->em->persist($trick);
         $this->helper->saveItems($pictures);
@@ -118,14 +126,19 @@ final class Resolver
     public function update(TrickDTO $dto, Trick $trick)
     {
         $trick = Trick::create($dto, $this->security, $trick);
-        $editPictures = Picture::editPictures($dto, $trick, $this->uploadDir);
+        $updatePictures = $this->resolverPicture->update($dto, $trick);
+
+        // Contains pictures to remove from database
         $picturesToRemove = UpdateTrick::getItemsToRemove($dto->getPictures(), $trick->getPictures());
-        $editVideos = Video::editVideos($dto, $trick);
+        // File to remove in uploads/trick directory
+        $this->resolverPicture->deleteFiles("uploads/trick/", $picturesToRemove);
+
+        $updateVideos = $this->resolverVideo->update($dto, $trick);
         $videosToRemove = UpdateTrick::getItemsToRemove($dto->getVideos(), $trick->getVideos());
 
         $this->em->persist($trick);
-        $this->helper->saveItems($editPictures);
-        $this->helper->saveItems($editVideos);
+        $this->helper->saveItems($updatePictures);
+        $this->helper->saveItems($updateVideos);
         $this->helper->checkIfNotEmptyAndRemove($videosToRemove);
         $this->helper->checkIfNotEmptyAndRemove($picturesToRemove);
 

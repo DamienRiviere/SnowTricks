@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Trick;
+namespace App\Domain\Trick\Picture;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;

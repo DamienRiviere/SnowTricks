@@ -38,16 +38,16 @@ final class UpdateTrick
     /**
      * Add newItems to array editItems
      * @param array $newItems
-     * @param array $editItems
+     * @param array $updateItems
      * @return array
      */
-    public static function addNewItemToEditItems(array $newItems, array $editItems): array
+    public static function addNewItemToUpdateItems(array $newItems, array $updateItems): array
     {
         foreach ($newItems as $newItem) {
-            $editItems[] = $newItem;
+            $updateItems[] = $newItem;
         }
 
-        return $editItems;
+        return $updateItems;
     }
 
     public static function getItemsById($items)
@@ -70,5 +70,24 @@ final class UpdateTrick
         }
 
         return $itemsArr;
+    }
+
+    /**
+     * Search an item in array by his id
+     * @param int|null $id
+     * @param array $items
+     * @return array
+     */
+    public static function searchById(?int $id, array $items)
+    {
+        $newItems = [];
+
+        foreach ($items as $key => $value) {
+            if ($value->getId() === $id) {
+                $newItems[] = $items[$key];
+            }
+        }
+
+        return $newItems;
     }
 }

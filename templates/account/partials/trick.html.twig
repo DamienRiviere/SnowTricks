@@ -9,7 +9,7 @@
     <div class="card-body">
         <ul class="list-group list-group-flush">
             {% if user.tricks |length == 0 %}
-                <p class="mb-0 text-center">Vous n'avez jusqu'à présent créé aucun trick, rendez sur cette <a href="{{ path('trick_new') }}">page</a> pour créer votre premier trick !</p>
+                <p class="mb-0 text-center">Vous n'avez jusqu'à présent créé aucun trick, rendez-vous sur cette <a href="{{ path('trick_new') }}">page</a> pour créer votre premier trick !</p>
             {% else %}
                 {% for trick in user.tricks %}
                     <li class="list-group-item">
