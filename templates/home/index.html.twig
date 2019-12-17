@@ -21,7 +21,6 @@
                                 <h5 class="card-title mb-0">
                                     <a href="/trick/{{ trick.slug }}" class="text-decoration-none">
                                         <i class="fas fa-snowboarding mr-1 text-danger"></i>
-                                        <span class="text-dark">|</span>
                                         {{ trick.name }}
                                     </a>
                                     {% if is_granted('ROLE_USER') %}
@@ -43,11 +42,11 @@
                                 <img src="{{ asset('uploads/trick/') }}{{ picture.picture }}" class="card-img-top" alt="{{ picture.title }}">
                             {% endfor %}
 
-                            <div class="card-footer">
-                                <p class="small mb-0 text-muted">
+                            <div class="card-footer pr-3 pl-3">
+                                <p class="mb-0 text-muted">
                                     {% set user = trick.user %}
                                     <img src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}" class="avatar-mini mr-1">
-                                    Par <a href="{{ path('profile_index', {'slug': user.slug}) }}" class="text-danger">{{ user.name }}</a> le {{ trick.createdAt | date('d/m/y') }}
+                                    Par <a href="{{ path('profile_index', {'slug': user.slug}) }}" class="text-danger">{{ user.name }}</a>
                                 </p>
                             </div>
                         </div>

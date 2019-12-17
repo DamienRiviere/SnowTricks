@@ -57,10 +57,18 @@
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <i class="fas fa-snowboarding text-danger mr-1"></i>
-                        <a href="">Mon premier trick</a>
-                    </li>
+                    {% if likes != null %}
+                        {% for like in likes %}
+                            {% set trick = like.trick %}
+                            <li class="list-group-item">
+                                <i class="fas fa-snowboarding text-danger mr-1"></i>
+                                {{ trick.style.name }} |
+                                <a href="{{ path('trick_show', {'slug': trick.slug}) }}">{{ trick.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <p class="mb-0 text-center">Cette utilisateur n'a aimé aucun trick !</p>
+                    {% endif %}
                 </ul>
             </div>
         </div>

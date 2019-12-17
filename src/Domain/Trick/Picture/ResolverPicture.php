@@ -60,6 +60,7 @@ final class ResolverPicture
         $pictures = UpdateTrick::getItems($trick->getPictures());
         $picturesDto = $dto->getPictures();
         $newPictures = $this->createOnUpdate($picturesDto, $trick);
+        $this->deleteOnUpdate($picturesDto, $pictures);
 
         foreach ($pictures as $picture) {
             foreach ($picturesDto as $pictureDto) {
@@ -92,6 +93,27 @@ final class ResolverPicture
         return $this->create($picturesDto, $trick);
     }
 
+    /**
+     * Delete picture file if she is updated
+     * @param array $picturesDto
+     * @param array $pictures
+     */
+    public function deleteOnUpdate(array $picturesDto, array $pictures)
+    {
+        foreach ($picturesDto as $pictureDto) {
+            foreach ($pictures as $picture) {
+                if ($pictureDto->getPicture() != null && $pictureDto->getId() === $picture->getId()) {
+                    unlink("uploads/trick/" . $picture->getPicture());
+                }
+            }
+        }
+    }
+
+    /**
+     * Delete files if they are deleted from trick
+     * @param $path
+     * @param $pictures
+     */
     public function deleteFiles($path, $pictures)
     {
         foreach ($pictures as $picture) {

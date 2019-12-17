@@ -65,11 +65,16 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
      */
     private $comments;
+/**
+     * @ORM\OneToMany(targetEntity="App\Entity\TrickLike", mappedBy="user", orphanRemoval=true)
+     */
+    private $trickLikes;
 
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->trickLikes = new ArrayCollection();
     }
 
     /**
@@ -251,6 +256,37 @@ class User implements UserInterface
 // set the owning side to null (unless already changed)
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrickLike[]
+     */
+    public function getTrickLikes(): Collection
+    {
+        return $this->trickLikes;
+    }
+
+    public function addTrickLike(TrickLike $trickLike): self
+    {
+        if (!$this->trickLikes->contains($trickLike)) {
+            $this->trickLikes[] = $trickLike;
+            $trickLike->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrickLike(TrickLike $trickLike): self
+    {
+        if ($this->trickLikes->contains($trickLike)) {
+            $this->trickLikes->removeElement($trickLike);
+// set the owning side to null (unless already changed)
+            if ($trickLike->getUser() === $this) {
+                $trickLike->setUser(null);
             }
         }
 
