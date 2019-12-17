@@ -7,7 +7,9 @@ use App\Domain\Trick\Helpers\UpdateTrick;
 use App\Domain\Trick\Picture\ResolverPicture;
 use App\Domain\Trick\Video\ResolverVideo;
 use App\Entity\Trick;
+use App\Entity\TrickLike;
 use App\Repository\PictureRepository;
+use App\Repository\TrickLikeRepository;
 use App\Repository\TrickRepository;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,6 +48,9 @@ final class ResolverTrick
     /** @var ResolverVideo */
     protected $resolverVideo;
 
+    /** @var TrickLikeRepository */
+    protected $likeRepo;
+
     /**
      * ResolverTrick constructor.
      * @param FormFactoryInterface $formFactory
@@ -57,6 +62,7 @@ final class ResolverTrick
      * @param Security $security
      * @param ResolverPicture $resolverPicture
      * @param ResolverVideo $resolverVideo
+     * @param TrickLikeRepository $likeRepo
      */
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -67,7 +73,8 @@ final class ResolverTrick
         ResolverHelper $helper,
         Security $security,
         ResolverPicture $resolverPicture,
-        ResolverVideo $resolverVideo
+        ResolverVideo $resolverVideo,
+        TrickLikeRepository $likeRepo
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
@@ -78,6 +85,7 @@ final class ResolverTrick
         $this->security = $security;
         $this->resolverPicture = $resolverPicture;
         $this->resolverVideo = $resolverVideo;
+        $this->likeRepo = $likeRepo;
     }
 
     /**
@@ -104,7 +112,7 @@ final class ResolverTrick
      */
     public function save(TrickDTO $dto)
     {
-        $trick = Trick::create($dto, $this->security);
+        $trick = $this->createTrick($dto, $this->security);
         $pictures = $this->resolverPicture->create($dto->getPictures(), $trick);
         $videos = $this->resolverVideo->create($dto->getVideos(), $trick);
 
@@ -125,7 +133,7 @@ final class ResolverTrick
      */
     public function update(TrickDTO $dto, Trick $trick)
     {
-        $trick = Trick::create($dto, $this->security, $trick);
+        $trick = $this->updateTrick($dto, $trick);
         $updatePictures = $this->resolverPicture->update($dto, $trick);
 
         // Contains pictures to remove from database
@@ -145,5 +153,70 @@ final class ResolverTrick
         $this->em->flush();
 
         return $trick;
+    }
+
+    /**
+     * Create a new trick
+     * @param TrickDTO $dto
+     * @param Security $security
+     * @return Trick
+     */
+    public function createTrick(TrickDTO $dto, Security $security): Trick
+    {
+        $trick = new Trick();
+        $trick
+            ->setName($dto->getName())
+            ->setDescription($dto->getDescription())
+            ->setStyle($dto->getStyle())
+            ->setUser($security->getUser());
+
+        return $trick;
+    }
+
+    /**
+     * Update a trick
+     * @param TrickDTO $dto
+     * @param Trick $trick
+     * @return Trick
+     */
+    public function updateTrick(TrickDTO $dto, Trick $trick)
+    {
+        $trick
+            ->setDescription($dto->getDescription())
+            ->setStyle($dto->getStyle());
+
+        return $trick;
+    }
+
+    /**
+     * Like a trick
+     * @param Trick $trick
+     */
+    public function like(Trick $trick)
+    {
+        $like = new TrickLike();
+        $like
+            ->setTrick($trick)
+            ->setUser($this->security->getUser());
+
+        $this->em->persist($like);
+        $this->em->flush();
+    }
+
+    /**
+     * Unlike a trick
+     * @param Trick $trick
+     */
+    public function unlike(Trick $trick)
+    {
+        $like = $this->likeRepo->findOneBy(
+            [
+                'user'  =>  $this->security->getUser()->getId(),
+                'trick' =>  $trick->getId()
+            ]
+        );
+
+        $this->em->remove($like);
+        $this->em->flush();
     }
 }

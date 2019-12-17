@@ -7,9 +7,26 @@
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12 text-center">
-                    <h1 class="font-weight-bold text-white text-shadow">
+                    <h1 class="font-weight-bold text-shadow">
                         <span class="text-primary">{{ trick.name }}</span>
                     </h1>
+                    {% if app.user and app.user != trick.user %}
+                        {% if like != null %}
+                            <h5>
+                                <a href="" id="unlikeButton" data-id="{{ trick.id }}" data-slug="{{ trick.slug }}" class="text-decoration-none font-weight-bold text-danger">
+                                    J'aime
+                                    <i class="fas fa-thumbs-up" id="iconLike"></i>
+                                </a>
+                            </h5>
+                        {% else %}
+                            <h5>
+                                <a href="" id="likeButton" data-id="{{ trick.id }}" data-slug="{{ trick.slug }}" class="text-decoration-none font-weight-bold text-danger">
+                                    J'aime
+                                    <i class="far fa-thumbs-up" id="iconLike"></i>
+                                </a>
+                            </h5>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -19,7 +36,9 @@
 
     <div class="jumbotron">
         <div class="container">
-            <h2 class="display-4 text-primary">{{ trick.name }}</h2>
+            <h2 class="display-4 text-primary">
+                {{ trick.name }}
+            </h2>
             <p class="lead">{{ trick.description }}</p>
             <hr>
             <p class="mb-0">
@@ -67,6 +86,7 @@
 {% block javascripts %}
     <script src="{{ asset('js/comment_ajax.js') }}"></script>
     <script src="{{ asset('js/carousel.js') }}"></script>
+    <script src="{{ asset('js/trickLike.js') }}"></script>
 {% endblock %}
 
 

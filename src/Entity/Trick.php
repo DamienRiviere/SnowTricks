@@ -73,26 +73,9 @@ class Trick
     private $comments;
 
     /**
-     * Create a new trick from the dto
-     * @param TrickDTO $dto
-     * @param $security
-     * @param Trick|null $trick
-     * @return Trick
+     * @ORM\OneToMany(targetEntity="App\Entity\TrickLike", mappedBy="trick", orphanRemoval=true)
      */
-    public static function create(TrickDTO $dto, $security, Trick $trick = null): Trick
-    {
-        if ($dto->getId() === null) {
-            $trick = new self();
-        }
-
-        $trick
-            ->setName($dto->getName())
-            ->setDescription($dto->getDescription())
-            ->setStyle($dto->getStyle())
-            ->setUser($security->getUser());
-
-        return $trick;
-    }
+    private $trickLikes;
 
     /**
      * Initialize slug when the trick is created
@@ -125,6 +108,7 @@ class Trick
         $this->pictures = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->trickLikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -303,6 +287,37 @@ class Trick
             // set the owning side to null (unless already changed)
             if ($comment->getTrick() === $this) {
                 $comment->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrickLike[]
+     */
+    public function getTrickLikes(): Collection
+    {
+        return $this->trickLikes;
+    }
+
+    public function addTrickLike(TrickLike $trickLike): self
+    {
+        if (!$this->trickLikes->contains($trickLike)) {
+            $this->trickLikes[] = $trickLike;
+            $trickLike->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrickLike(TrickLike $trickLike): self
+    {
+        if ($this->trickLikes->contains($trickLike)) {
+            $this->trickLikes->removeElement($trickLike);
+            // set the owning side to null (unless already changed)
+            if ($trickLike->getTrick() === $this) {
+                $trickLike->setTrick(null);
             }
         }
 

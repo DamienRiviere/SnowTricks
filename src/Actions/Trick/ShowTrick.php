@@ -4,11 +4,13 @@ namespace App\Actions\Trick;
 
 use App\Domain\Comment\Resolver;
 use App\Entity\Trick;
+use App\Repository\TrickLikeRepository;
 use App\Responders\ViewResponder;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class ShowTrick
@@ -24,10 +26,22 @@ final class ShowTrick
     /** @var FormFactoryInterface */
     protected $formFactory;
 
-    public function __construct(FormFactoryInterface $formFactory, Resolver $resolver)
-    {
+    /** @var TrickLikeRepository */
+    protected $likeRepo;
+
+    /** @var Security */
+    protected $security;
+
+    public function __construct(
+        FormFactoryInterface $formFactory,
+        Resolver $resolver,
+        TrickLikeRepository $likeRepo,
+        Security $security
+    ) {
         $this->formFactory = $formFactory;
         $this->resolver = $resolver;
+        $this->likeRepo = $likeRepo;
+        $this->security = $security;
     }
 
     /**
@@ -48,7 +62,11 @@ final class ShowTrick
             'trick/show.html.twig',
             [
                 'trick' => $trick,
-                'form' => $form->createView()
+                'form'  => $form->createView(),
+                'like'  =>  $this->likeRepo->findOneBy([
+                    'user'  =>  $this->security->getUser()->getId(),
+                    'trick' =>  $trick->getId()
+                ])
             ]
         );
     }
