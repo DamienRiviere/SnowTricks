@@ -12,7 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Actions\Trick
  *
  * @Route("/trick/{id}/like", name="trick_like")
- * @Security("is_granted('ROLE_USER') and user != trick.getUser()")
+ * @Security("is_granted('ROLE_USER') and user != trick.getUser()",
+ *     message="Vous ne pouvez pas aimer un trick si vous en êtes le créateur !"
+ * )
  */
 final class LikeTrick
 {

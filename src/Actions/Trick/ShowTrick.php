@@ -58,15 +58,21 @@ final class ShowTrick
             $this->resolver->save($form->getData(), $trick);
         }
 
+        $like = null;
+
+        if ($this->security->getUser()) {
+            $like = $this->likeRepo->findOneBy([
+                'user'  =>  $this->security->getUser()->getId(),
+                'trick' =>  $trick->getId()
+            ]);
+        }
+
         return $responder(
             'trick/show.html.twig',
             [
                 'trick' => $trick,
                 'form'  => $form->createView(),
-                'like'  =>  $this->likeRepo->findOneBy([
-                    'user'  =>  $this->security->getUser()->getId(),
-                    'trick' =>  $trick->getId()
-                ])
+                'like'  => $like
             ]
         );
     }
