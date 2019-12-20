@@ -1,6 +1,6 @@
 $("#add-picture").click(function () {
     // Index of future fields that will be created
-    const index = +$("#widget-counter").val();
+    let index = $("#trick_pictures div.form-group").length;
 
     // Retrieving the prototype of the entries
     const template = $("#trick_pictures").data("prototype").replace(/__name__/g, index);
@@ -8,7 +8,7 @@ $("#add-picture").click(function () {
     // Inject the template into the div
     $("#trick_pictures").append(template);
 
-    $("#widget-counter").val(index + 1);
+    $("#widget-counter").val(parseInt(index) + 1);
 
     // Manages the delete button
     handleDeleteButtons();
@@ -33,7 +33,7 @@ function handleDeleteButtons()
 
 function updateCounter()
 {
-    const count = +$("#trick_pictures div.form-group").length;
+    let count = $("#trick_pictures div.form-group").length;
 
     $("#widget-counter").val(count);
 }

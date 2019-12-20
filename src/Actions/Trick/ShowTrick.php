@@ -2,7 +2,7 @@
 
 namespace App\Actions\Trick;
 
-use App\Domain\Comment\Resolver;
+use App\Domain\Comment\ResolverComment;
 use App\Entity\Trick;
 use App\Repository\TrickLikeRepository;
 use App\Responders\ViewResponder;
@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Security;
  */
 final class ShowTrick
 {
-    /** @var Resolver */
+    /** @var ResolverComment */
     protected $resolver;
 
     /** @var FormFactoryInterface */
@@ -34,7 +34,7 @@ final class ShowTrick
 
     public function __construct(
         FormFactoryInterface $formFactory,
-        Resolver $resolver,
+        ResolverComment $resolver,
         TrickLikeRepository $likeRepo,
         Security $security
     ) {

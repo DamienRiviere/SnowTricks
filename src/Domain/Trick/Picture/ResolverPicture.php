@@ -8,7 +8,7 @@ use App\Domain\Trick\TrickDTO;
 use App\Entity\Picture;
 use App\Entity\Trick;
 
-final class ResolverPicture
+class ResolverPicture
 {
 
     protected $uploadDirTrick;
@@ -48,7 +48,7 @@ final class ResolverPicture
     }
 
     /**
-     * Update pictures and add new pictures
+     * Update pictures trick
      * @param TrickDTO $dto
      * @param Trick $trick
      * @return array
@@ -59,8 +59,8 @@ final class ResolverPicture
 
         $pictures = UpdateTrick::getItems($trick->getPictures());
         $picturesDto = $dto->getPictures();
-        $newPictures = $this->createOnUpdate($picturesDto, $trick);
-        $this->deleteOnUpdate($picturesDto, $pictures);
+        $newPictures = $this->createPictureOnUpdate($picturesDto, $trick);
+        $this->deletePictureOnUpdate($picturesDto, $pictures);
 
         foreach ($pictures as $picture) {
             foreach ($picturesDto as $pictureDto) {
@@ -72,6 +72,8 @@ final class ResolverPicture
                         ->setPicture($newFilename);
 
                     $updatePictures[] = $picture;
+                } elseif ($pictureDto->getPicture() === null && $picture->getId() === $pictureDto->getId()) {
+                    $picture->setTitle($pictureDto->getTitle());
                 }
             }
         }
@@ -87,18 +89,18 @@ final class ResolverPicture
      * @param Trick $trick
      * @return array
      */
-    public function createOnUpdate(array $pictures, Trick $trick)
+    public function createPictureOnUpdate(array $pictures, Trick $trick)
     {
         $picturesDto = UpdateTrick::searchById(null, $pictures);
         return $this->create($picturesDto, $trick);
     }
 
     /**
-     * Delete picture file if she is updated
+     * Delete old picture file if she is updated
      * @param array $picturesDto
      * @param array $pictures
      */
-    public function deleteOnUpdate(array $picturesDto, array $pictures)
+    public function deletePictureOnUpdate(array $picturesDto, array $pictures)
     {
         foreach ($picturesDto as $pictureDto) {
             foreach ($pictures as $picture) {

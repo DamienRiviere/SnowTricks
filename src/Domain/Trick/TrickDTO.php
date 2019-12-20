@@ -116,7 +116,7 @@ final class TrickDTO
             $pictureDto
                 ->setId($picture->getId())
                 ->setTitle($picture->getTitle())
-                ->setPicture($picture->getPicture());
+                ->setName($picture->getPicture());
 
             $pictures[] = $pictureDto;
         }

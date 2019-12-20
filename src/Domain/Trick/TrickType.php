@@ -2,6 +2,7 @@
 
 namespace App\Domain\Trick;
 
+use App\Domain\Form\EventListener\SetDisabledNameFieldListener;
 use App\Domain\Trick\Picture\PictureType;
 use App\Domain\Trick\Video\VideoType;
 use App\Entity\Style;
@@ -11,8 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,11 +20,11 @@ final class TrickType extends AbstractType
 {
 
     /** @var RequestStack */
-    protected $requestStack;
+    protected $request;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $request)
     {
-        $this->requestStack = $requestStack;
+        $this->request = $request;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -39,12 +38,6 @@ final class TrickType extends AbstractType
                     'attr' => [
                         'placeholder' => 'Nom du trick'
                     ]
-                ]
-            )
-            ->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                [
-                    $this,  'onPreSetData'
                 ]
             )
             ->add(
@@ -87,29 +80,8 @@ final class TrickType extends AbstractType
                     'label' => false
                 ]
             )
+            ->addEventSubscriber(new SetDisabledNameFieldListener($this->request))
         ;
-    }
-
-    public function onPreSetData(FormEvent $event)
-    {
-        $form = $event->getForm();
-        $route = $this->requestStack->getCurrentRequest()->attributes->get("_route");
-
-        if ($route === "trick_edit") {
-            $form
-                ->add(
-                    'name',
-                    TextType::class,
-                    [
-                        'label' => 'Nom',
-                        'disabled' => 'true',
-                        'attr' => [
-                            'placeholder' => 'Nom du trick'
-                        ]
-                    ]
-                )
-            ;
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

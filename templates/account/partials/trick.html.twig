@@ -19,7 +19,7 @@
                             {{ trick.name }}
                         </a>
                         <div class="float-right">
-                            <a href="{{ path('trick_edit', {'slug': trick.slug}) }}" title="Modifier le trick" class="text-decoration-none mr-2">
+                            <a href="{{ path('trick_update', {'slug': trick.slug}) }}" title="Modifier le trick" class="text-decoration-none mr-2">
                                 <i class="fas fa-edit text-primary"></i>
                             </a>
                             <a href="" class="text-decoration-none deleteTrick mr-2" title="Supprimer le trick" data-toggle="modal" data-target="#deleteTrickModal" data-id="{{ trick.id }}">

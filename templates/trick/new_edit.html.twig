@@ -5,7 +5,7 @@
 {% block title %}
     {% if route == 'trick_new' %}
         Créer un nouveau trick
-    {% elseif route == 'trick_edit' %}
+    {% elseif route == 'trick_update' %}
         Modification de {{ trick.name }}
     {% endif %}
 {% endblock %}
@@ -17,7 +17,7 @@
         <h2 class="text-primary">
             {% if route == 'trick_new' %}
                 Créer un nouveau trick
-            {% elseif route == 'trick_edit' %}
+            {% elseif route == 'trick_update' %}
                 Modification de {{ trick.name }}
             {% endif %}
         </h2>

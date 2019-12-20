@@ -4,7 +4,7 @@ namespace App\Domain\Helpers;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-final class ResolverHelper
+class ResolverHelper
 {
 
     /** @var EntityManagerInterface */

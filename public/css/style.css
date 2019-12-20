@@ -167,3 +167,13 @@ body {
     max-height: 35px;
 }
 /** END PROFIL */
+
+/** FORM UPDATE */
+.img-update {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    width: 335px;
+    height: 200px;
+}
+/** END FORM UPDATE */

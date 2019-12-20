@@ -8,7 +8,7 @@ final class UpdateTrick
 {
 
     /**
-     * Get all items to remove from the Video or Picture entity when the form is edited
+     * Get all items to remove from the Video or Picture entity when the form is updated
      * @param array $dto
      * @param PersistentCollection $trick
      * @return array
