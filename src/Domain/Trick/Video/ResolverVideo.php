@@ -7,7 +7,7 @@ use App\Domain\Trick\TrickDTO;
 use App\Entity\Trick;
 use App\Entity\Video;
 
-final class ResolverVideo
+class ResolverVideo
 {
 
     /**

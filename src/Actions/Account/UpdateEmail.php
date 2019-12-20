@@ -3,6 +3,7 @@
 namespace App\Actions\Account;
 
 use App\Domain\Account\Email\ResolverEmail;
+use App\Repository\TrickLikeRepository;
 use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -26,10 +27,14 @@ final class UpdateEmail
     /** @var Security */
     protected $security;
 
-    public function __construct(ResolverEmail $resolver, Security $security)
+    /** @var TrickLikeRepository */
+    protected $likeRepo;
+
+    public function __construct(ResolverEmail $resolver, Security $security, TrickLikeRepository $likeRepo)
     {
         $this->resolver = $resolver;
         $this->security = $security;
+        $this->likeRepo = $likeRepo;
     }
 
     public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
@@ -50,7 +55,10 @@ final class UpdateEmail
         return $responder(
             'account/edit_email.html.twig',
             [
-                'form'  =>  $form->createView()
+                'form'  =>  $form->createView(),
+                'likes' =>  $this->likeRepo->findBy(
+                    ['user' =>  $this->security->getUser()->getId()]
+                )
             ]
         );
     }

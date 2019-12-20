@@ -19,25 +19,79 @@
 {% endblock %}
 
 {% block _trick_pictures_entry_widget %}
-    <div class="form-group" id="block_{{ id }}">
-        <div class="row">
-            <div class="col-10">
-                <div class="row">
-                    <div class="col">
-                        {{ form_widget(form.title) }}
-                        {{ form_errors(form.title) }}
+    {% set route =  app.request.get('_route') %}
+
+    {% if route == "trick_update" %}
+        {% set name = form.name.vars.value %}
+        {% set title = form.title.vars.value %}
+
+        <div class="form-group" id="block_{{ id }}">
+            <div class="row">
+                <div class="col-4">
+                    {% if name != null %}
+                        <figure>
+                            <img src="{{ asset('uploads/trick/') }}{{ name }}" alt="{{ title }}" title="{{ title }}" class="img-update">
+                            <figcaption class="text-center text-primary font-weight-bold">{{ title }}</figcaption>
+                        </figure>
+                    {% else %}
+                        <figure>
+                            <img src="{{ asset('img/image-not-found.jpg') }}" alt="Pas d'image" class="img-update">
+                            <figcaption class="text-center text-primary font-weight-bold">Pas d'image</figcaption>
+                        </figure>
+                    {% endif %}
+                </div>
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-10">
+                            {{ form_widget(form.title) }}
+                            {{ form_errors(form.title) }}
+                            {{ form_help(form.title) }}
+                        </div>
+                        <div class="col-2">
+                            <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+                        </div>
                     </div>
-                    <div class="col">
-                        {{ form_widget(form.picture) }}
-                        {{ form_errors(form.picture) }}
+                    <div class="row">
+                        <div class="col-10 mt-3">
+                            {{ form_widget(form.name) }}
+                            {{ form_errors(form.name) }}
+                            {{ form_help(form.name) }}
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col-10 mt-3">
+                            {{ form_widget(form.picture) }}
+                            {{ form_errors(form.picture) }}
+                            {{ form_help(form.picture) }}
+                        </div>
+                    </div>
+                    <hr>
                 </div>
             </div>
-            <div class="col-2">
-                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+        </div>
+    {% else %}
+        <div class="form-group" id="block_{{ id }}">
+            <div class="row">
+                <div class="col-10">
+                    <div class="row">
+                        <div class="col">
+                            {{ form_widget(form.title) }}
+                            {{ form_errors(form.title) }}
+                            {{ form_help(form.title) }}
+                        </div>
+                        <div class="col">
+                            {{ form_widget(form.picture) }}
+                            {{ form_errors(form.picture) }}
+                            {{ form_help(form.picture) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
 {# END FORM PICTURE #}
 
@@ -62,20 +116,62 @@
 {% endblock %}
 
 {% block _trick_videos_entry_widget %}
-    <div class="form-group" id="block_{{ id }}">
-        <div class="row">
-            <div class="col-10">
-                <div class="row">
-                    <div class="col">
-                        {{ form_widget(form.link) }}
-                        {{ form_errors(form.link) }}
+    {% set route =  app.request.get('_route') %}
+
+    {% if route == "trick_update" %}
+        {% set link = form.link.vars.value %}
+
+        <div class="form-group" id="block_{{ id }}">
+            <div class="row">
+                <div class="col-4">
+                    {% if link != null %}
+                        <iframe
+                                width="335"
+                                height="200"
+                                src="{{ link }}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                        >
+                        </iframe>
+                    {% else %}
+                        <figure>
+                            <img src="{{ asset('img/video-not-found.png') }}" alt="Pas de vidéo" class="img-update">
+                            <figcaption class="text-center text-primary font-weight-bold">Pas de vidéo</figcaption>
+                        </figure>
+                    {% endif %}
+                </div>
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="col">
+                                {{ form_widget(form.link) }}
+                                {{ form_errors(form.link) }}
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-2">
-                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+        </div>
+    {% else %}
+        <div class="form-group" id="block_{{ id }}">
+            <div class="row">
+                <div class="col-10">
+                    <div class="row">
+                        <div class="col">
+                            {{ form_widget(form.link) }}
+                            {{ form_errors(form.link) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
 {# END FORM VIDEO #}

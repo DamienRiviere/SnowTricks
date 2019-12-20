@@ -2,14 +2,24 @@
 
 namespace App\Domain\Trick\Picture;
 
+use App\Domain\Form\EventListener\AddNameFieldListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class PictureType extends AbstractType
 {
+
+    /** @var RequestStack */
+    protected $request;
+
+    public function __construct(RequestStack $request)
+    {
+        $this->request = $request;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,8 +29,9 @@ final class PictureType extends AbstractType
                 TextType::class,
                 [
                     'label' => false,
+                    'help'  => 'Titre de l\'image',
                     'attr' => [
-                        'placeholder' => 'Titre de l\'image'
+                        'placeholder' => 'Écrivez le titre de votre image ...'
                     ]
                 ]
             )
@@ -30,12 +41,13 @@ final class PictureType extends AbstractType
                 [
                     'label' => false,
                     'required' => false,
-                    'data_class' => null,
+                    'help' => 'Image du trick',
                     'attr' => [
-                        'placeholder' => 'Image à upload'
+                        'placeholder' => 'Choississez une image à mettre en ligne ...'
                     ]
                 ]
             )
+            ->addEventSubscriber(new AddNameFieldListener($this->request))
         ;
     }
 

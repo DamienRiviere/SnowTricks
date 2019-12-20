@@ -40,18 +40,6 @@ class Comment
      */
     private $user;
 
-    public static function create(CommentDTO $dto, Trick $trick, Security $security)
-    {
-        $comment = new self();
-        $comment
-            ->setContent($dto->getContent())
-            ->setTrick($trick)
-            ->setUser($security->getUser())
-            ->setCreatedAt(new \DateTime());
-
-        return $comment;
-    }
-
     public function getId(): ?int
     {
         return $this->id;

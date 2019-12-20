@@ -13,7 +13,6 @@ final class PictureDTO
     protected $id;
 
     /**
-     * @var string|null
      * @Assert\NotBlank(
      *     message = "Le titre de l'image ne doit pas être vide"
      * )
@@ -28,6 +27,11 @@ final class PictureDTO
      * )
      */
     protected $picture;
+
+    /**
+     * @var string|null
+     */
+    protected $name;
 
     /**
      * @return mixed
@@ -49,7 +53,7 @@ final class PictureDTO
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -66,5 +70,15 @@ final class PictureDTO
         $this->picture = $picture;
 
         return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name): void
+    {
+        $this->name = $name;
     }
 }

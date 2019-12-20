@@ -3,6 +3,7 @@
 namespace App\Actions\Account;
 
 use App\Domain\Account\Password\ResolverPassword;
+use App\Repository\TrickLikeRepository;
 use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -25,10 +26,14 @@ final class UpdatePassword
     /** @var Security */
     protected $security;
 
-    public function __construct(ResolverPassword $resolver, Security $security)
+    /** @var TrickLikeRepository */
+    protected $likeRepo;
+
+    public function __construct(ResolverPassword $resolver, Security $security, TrickLikeRepository $likeRepo)
     {
         $this->resolver = $resolver;
         $this->security = $security;
+        $this->likeRepo = $likeRepo;
     }
 
     public function __invoke(ViewResponder $responder, Request $request, RedirectResponder $redirectResponder)
@@ -48,7 +53,10 @@ final class UpdatePassword
         return $responder(
             'account/edit_password.html.twig',
             [
-                'form'  => $form->createView()
+                'form'  => $form->createView(),
+                'likes' =>  $this->likeRepo->findBy(
+                    ['user' =>  $this->security->getUser()->getId()]
+                )
             ]
         );
     }

@@ -3,6 +3,7 @@
 namespace App\Actions\Account;
 
 use App\Domain\Account\Picture\ResolverPicture;
+use App\Repository\TrickLikeRepository;
 use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -26,10 +27,14 @@ final class UpdatePicture
     /** @var Security */
     protected $security;
 
-    public function __construct(ResolverPicture $resolver, Security $security)
+    /** @var TrickLikeRepository */
+    protected $likeRepo;
+
+    public function __construct(ResolverPicture $resolver, Security $security, TrickLikeRepository $likeRepo)
     {
         $this->resolver = $resolver;
         $this->security = $security;
+        $this->likeRepo = $likeRepo;
     }
 
     public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
@@ -50,7 +55,10 @@ final class UpdatePicture
         return $responder(
             'account/edit_picture.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'likes' =>  $this->likeRepo->findBy(
+                    ['user' =>  $this->security->getUser()->getId()]
+                )
             ]
         );
     }

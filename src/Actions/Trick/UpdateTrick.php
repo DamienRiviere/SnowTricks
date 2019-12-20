@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class UpdateTrick
  * @package App\Actions\Trick
  *
- * @Route("/trick/edit/{slug}", name="trick_edit")
+ * @Route("/trick/edit/{slug}", name="trick_update")
  * @IsGranted("ROLE_USER")
  */
 final class UpdateTrick

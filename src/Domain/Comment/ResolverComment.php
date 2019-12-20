@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
-final class Resolver
+final class ResolverComment
 {
 
     /** @var FormFactoryInterface */
@@ -37,9 +37,21 @@ final class Resolver
 
     public function save(CommentDTO $dto, Trick $trick)
     {
-        $comment = Comment::create($dto, $trick, $this->security);
+        $comment = $this->create($dto, $trick, $this->security);
 
         $this->em->persist($comment);
         $this->em->flush();
+    }
+
+    public function create(CommentDTO $dto, Trick $trick, Security $security)
+    {
+        $comment = new Comment();
+        $comment
+            ->setContent($dto->getContent())
+            ->setTrick($trick)
+            ->setUser($security->getUser())
+            ->setCreatedAt(new \DateTime());
+
+        return $comment;
     }
 }

@@ -25,7 +25,7 @@
                                     </a>
                                     {% if is_granted('ROLE_USER') %}
                                         <div class="float-right">
-                                            <a href="{{ path('trick_edit', {slug: trick.slug}) }}" title="Modifier le trick" class="text-decoration-none">
+                                            <a href="{{ path('trick_update', {slug: trick.slug}) }}" title="Modifier le trick" class="text-decoration-none">
                                                 <i class="fas fa-edit text-primary"></i>
                                             </a>
                                             {% if app.user == trick.user %}
