@@ -6,21 +6,23 @@
 
     {% include 'partials/header.html.twig' %}
 
-    <div class="container-fluid bg-light py-5 text-center">
+    <div id="trick-section"  class="container-fluid bg-light py-5 text-center">
         <h2 class="text-primary">Tous les tricks</h2>
         <p class="font-weight-bold mb-0">L'annuaire de toutes les figures entré par les utilisateurs</p>
     </div>
 
-    <div class="container-fluid bg-tricks">
+    <div class="container-fluid">
         <div class="container">
             <div class="row">
                 {% for trick in tricks %}
-                    <div class="col-4 py-4">
-                        <div class="card shadow" style="width: 18rem;">
+                    <div class="col-lg-4 col-md-6 col-sm-12 py-4">
+                        <div class="card shadow">
                             <div class="card-header">
                                 <h5 class="card-title mb-0">
                                     <a href="/trick/{{ trick.slug }}" class="text-decoration-none">
-                                        <i class="fas fa-snowboarding mr-1 text-danger"></i>
+                                        <span class="responsive-logo-trick">
+                                            <i class="fas fa-snowboarding mr-1 text-danger"></i>
+                                        </span>
                                         {{ trick.name }}
                                     </a>
                                     {% if is_granted('ROLE_USER') %}
@@ -61,32 +63,15 @@
                 <i class="fas fa-spinner mr-1"></i>
                 Afficher plus
             </a>
+
         </div>
+        <a href="#trick-section"><i class="fas fa-arrow-circle-up float-right arrow-up text-dark"></i></a>
     </div>
 
-    <!-- Modal Delete Trick -->
-    <div class="modal fade" id="deleteTrickModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Supprimer le trick</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Êtes-vous sur de vouloir supprimer le trick ?
-                </div>
-                <div class="modal-footer text-white">
-                    <a href="#" class="btn btn-danger modal-delete-trick text-white" data-id="">Oui</a>
-                    <a class="btn btn-secondary" data-dismiss="modal">Annuler</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'partials/modal_delete.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('js/scroll.js') }}"></script>
     <script src="{{ asset('js/modal_delete.js') }}"></script>
 {% endblock %}

@@ -1,12 +1,12 @@
 {# FORM PICTURE #}
 {% block _trick_pictures_widget %}
-    <p>Ici, vous pouvez ajouter les images du trick !</p>
+    <p class="responsive-center">Ici, vous pouvez ajouter les images du trick !</p>
 
     {{ form_widget(form) }}
 
     <input type="hidden" id="widget-counter" value="0">
 
-    <div class="form-group mb-0">
+    <div class="form-group mb-0 responsive-center">
         <button type="button" id="add-picture" class="btn btn-primary">
             <i class="fas fa-plus mr-1"></i>
             Ajouter une image
@@ -27,20 +27,20 @@
 
         <div class="form-group" id="block_{{ id }}">
             <div class="row">
-                <div class="col-4">
+                <div class="col-lg-4 col-md-12 col-sm-12">
                     {% if name != null %}
-                        <figure>
-                            <img src="{{ asset('uploads/trick/') }}{{ name }}" alt="{{ title }}" title="{{ title }}" class="img-update">
+                        <figure class="text-center">
+                            <img src="{{ asset('uploads/trick/') }}{{ name }}" alt="{{ title }}" title="{{ title }}" class="img-update img-fluid">
                             <figcaption class="text-center text-primary font-weight-bold">{{ title }}</figcaption>
                         </figure>
                     {% else %}
-                        <figure>
-                            <img src="{{ asset('img/image-not-found.jpg') }}" alt="Pas d'image" class="img-update">
+                        <figure class="text-center">
+                            <img src="{{ asset('img/image-not-found.jpg') }}" alt="Pas d'image" class="img-update img-fluid">
                             <figcaption class="text-center text-primary font-weight-bold">Pas d'image</figcaption>
                         </figure>
                     {% endif %}
                 </div>
-                <div class="col-8">
+                <div class="col-lg-8 col-md-12 col-sm-12">
                     <div class="row">
                         <div class="col-10">
                             {{ form_widget(form.title) }}
@@ -74,12 +74,12 @@
             <div class="row">
                 <div class="col-10">
                     <div class="row">
-                        <div class="col">
+                        <div class="col-lg-6">
                             {{ form_widget(form.title) }}
                             {{ form_errors(form.title) }}
                             {{ form_help(form.title) }}
                         </div>
-                        <div class="col">
+                        <div class="col-lg-6">
                             {{ form_widget(form.picture) }}
                             {{ form_errors(form.picture) }}
                             {{ form_help(form.picture) }}
@@ -97,13 +97,13 @@
 
 {# FORM VIDEO #}
 {% block _trick_videos_widget %}
-    <p>Ici, vous pouvez ajouter les vidéos du trick !</p>
+    <p class="responsive-center">Ici, vous pouvez ajouter les vidéos du trick !</p>
 
     {{ form_widget(form) }}
 
     <input type="hidden" id="widget-counter" value="0">
 
-    <div class="form-group mb-0">
+    <div class="form-group mb-0 responsive-center">
         <button type="button" id="add-video" class="btn btn-primary">
             <i class="fas fa-plus mr-1"></i>
             Ajouter une vidéo
@@ -123,7 +123,7 @@
 
         <div class="form-group" id="block_{{ id }}">
             <div class="row">
-                <div class="col-4">
+                <div class="col-lg-4 col-md-12 col-sm-12 text-center">
                     {% if link != null %}
                         <iframe
                                 width="335"
@@ -132,22 +132,21 @@
                                 frameborder="0"
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen
+                                class="img-fluid mb-3"
                         >
                         </iframe>
                     {% else %}
                         <figure>
-                            <img src="{{ asset('img/video-not-found.png') }}" alt="Pas de vidéo" class="img-update">
+                            <img src="{{ asset('img/video-not-found.png') }}" alt="Pas de vidéo" class="img-update img-fluid">
                             <figcaption class="text-center text-primary font-weight-bold">Pas de vidéo</figcaption>
                         </figure>
                     {% endif %}
                 </div>
-                <div class="col-8">
+                <div class="col-lg-8 col-md-12 col-sm-12">
                     <div class="row">
                         <div class="col-10">
-                            <div class="col">
-                                {{ form_widget(form.link) }}
-                                {{ form_errors(form.link) }}
-                            </div>
+                            {{ form_widget(form.link) }}
+                            {{ form_errors(form.link) }}
                         </div>
                         <div class="col-2">
                             <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
@@ -155,6 +154,7 @@
                     </div>
                 </div>
             </div>
+            <hr>
         </div>
     {% else %}
         <div class="form-group" id="block_{{ id }}">

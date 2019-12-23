@@ -33,9 +33,6 @@ final class PictureDTO
      */
     protected $name;
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;

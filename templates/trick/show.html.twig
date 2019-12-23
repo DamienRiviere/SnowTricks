@@ -3,7 +3,7 @@
 {% block title %}{{ trick.name }}{% endblock %}
 
 {% block body %}
-    <header class="headtricks">
+    <header id="headtricks" class="headtricks">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12 text-center">
@@ -27,25 +27,42 @@
                             </h5>
                         {% endif %}
                     {% endif %}
+                    {% if app.user %}
+                        <a href="{{ path('trick_update', {'slug': trick.slug}) }}" class="text-decoration-none">
+                            <i class="fas fa-edit text-primary button-trick"></i>
+                        </a>
+                    {% endif %}
+                    {% if app.user and app.user == trick.user %}
+                        <a href="#" class="deleteTrick" title="Supprimer le trick" data-toggle="modal" data-target="#deleteTrickModal" data-id="{{ trick.id }}">
+                            <i class="fas fa-trash-alt text-danger button-trick"></i>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
+
     </header>
 
-    {% include 'trick/partials/carousel.html.twig' %}
+    {% include 'trick/partials/slider.html.twig' %}
 
     <div class="jumbotron">
         <div class="container">
-            <h2 class="display-4 text-primary">
+            <h2 class="text-primary font-weight-bold">
                 {{ trick.name }}
             </h2>
-            <p class="lead">{{ trick.description }}</p>
+            <p>{{ trick.description }}</p>
             <hr>
             <p class="mb-0">
                 {% set user = trick.user %}
                 <img src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}" class="avatar-mini mr-1">
-                Par <a href="{{ path('profile_index', {'slug' : user.slug}) }}" class="text-danger">{{ user.name }}</a> le {{ trick.createdAt | date('d/m/y') }}
-                <span class="badge badge-primary float-right">{{ trick.style.name }}</span>
+                <span class="responsive-par">
+                   Par
+                </span>
+                <a href="{{ path('profile_index', {'slug' : user.slug}) }}" class="text-danger">{{ user.name }}</a>
+                <span class="responsive-date-trick">
+                    le {{ trick.createdAt | date('d/m/y') }}
+                </span>
+                <span class="badge badge-primary float-right mt-1">{{ trick.style.name }}</span>
             </p>
         </div>
     </div>
@@ -66,7 +83,9 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body py-3">
                         <div class="media">
-                            <img class="d-flex mr-3 rounded-circle avatar-medium" src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}">
+                            <span class="responsive-img-user">
+                               <img class="d-flex mr-3 rounded-circle avatar-medium" src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}">
+                            </span>
                             <div class="media-body">
                                 <h5 class="mt-0">
                                     <span class="text-danger">{{ user.name }}</span>
@@ -81,12 +100,14 @@
         {% endif %}
     </div>
 
+    {% include 'partials/modal_delete.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('js/head_trick.js') }}"></script>
     <script src="{{ asset('js/comment_ajax.js') }}"></script>
-    <script src="{{ asset('js/carousel.js') }}"></script>
-    <script src="{{ asset('js/trickLike.js') }}"></script>
+    <script src="{{ asset('js/trick_like.js') }}"></script>
+    <script src="{{ asset('js/modal_delete.js') }}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <script src="{{ asset('js/slider.js') }}"></script>
 {% endblock %}
-
-
