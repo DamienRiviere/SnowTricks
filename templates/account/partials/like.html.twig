@@ -13,14 +13,16 @@
                     {% set trick = like.trick %}
                     <li class="list-group-item">
                         <i class="fas fa-snowboarding text-danger mr-1"></i>
-                        {{ trick.style.name }} |
+                        <span class="responsive-style">
+                            {{ trick.style.name }}
+                        </span>
                         <a href="{{ path('trick_show', {'slug': trick.slug}) }}">{{ trick.name }}</a>
                         <div class="float-right">
                             <a href="{{ path('trick_update', {'slug': trick.slug}) }}" title="Modifier le trick" class="text-decoration-none mr-2">
                                 <i class="fas fa-edit text-primary"></i>
                             </a>
                             <a href="" id="unlikeButton" data-id="{{ trick.id }}" class="text-danger">
-                                Supprimer de la liste
+                                <i class="fas fa-trash-alt text-danger"></i>
                             </a>
                         </div>
                     </li>
@@ -33,5 +35,5 @@
 </div>
 
 {% block javascripts %}
-    <script src="{{ asset('js/accountDeleteTrickLike.js') }}"></script>
+    <script src="{{ asset('js/account_delete_trick_like.js') }}"></script>
 {% endblock %}

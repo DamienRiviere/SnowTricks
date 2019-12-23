@@ -1,0 +1,14 @@
+<section class="slider" id="slider">
+    {% for picture in trick.pictures %}
+        <img src="{{ asset('uploads/trick/') }}{{ picture.picture }}" alt="{{ picture.title }}" title="{{ picture.title }}">
+    {% endfor %}
+    {% for video in trick.videos %}
+        <iframe
+            width="560"
+            height="208"
+            src="{{ video.link }}"
+            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    {% endfor %}
+</section>

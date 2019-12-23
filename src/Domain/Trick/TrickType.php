@@ -55,8 +55,9 @@ final class TrickType extends AbstractType
                 EntityType::class,
                 [
                     'class' =>  Style::class,
-                    'choice_label' => 'name',
-                    'expanded' => true,
+                    'choice_label' => function (Style $style) {
+                        return $style->getName();
+                    },
                     'label' => 'Style de trick'
                 ]
             )

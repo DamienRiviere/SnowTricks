@@ -31,7 +31,7 @@ final class PictureType extends AbstractType
                     'label' => false,
                     'help'  => 'Titre de l\'image',
                     'attr' => [
-                        'placeholder' => 'Écrivez le titre de votre image ...'
+                        'placeholder' => 'Titre de votre image ...'
                     ]
                 ]
             )
@@ -43,7 +43,7 @@ final class PictureType extends AbstractType
                     'required' => false,
                     'help' => 'Image du trick',
                     'attr' => [
-                        'placeholder' => 'Choississez une image à mettre en ligne ...'
+                        'placeholder' => 'Image à mettre en ligne ...'
                     ]
                 ]
             )

@@ -3,6 +3,10 @@ body {
     font-family: 'Ubuntu', sans-serif !important;
 }
 
+.navbar-sm {
+    display: none;
+}
+
 /* Logo Navbar */
 .logo {
     height: 30px;
@@ -30,8 +34,26 @@ body {
     background-repeat: no-repeat;
 }
 
+.arrow-down {
+    position: relative;
+    right: 15px;
+    bottom: 120px;
+    font-size: 3em;
+}
+
+.arrow-up {
+    position: relative;
+    left: 0px;
+    bottom: 80px;
+    font-size: 3em;
+}
+
 .section-title {
     margin-top: 55px;
+}
+
+.section-title-responsive {
+    margin-top: 0px;
 }
 
 /* Header trick */
@@ -45,98 +67,65 @@ body {
     background-repeat: no-repeat;
 }
 
+.headtricks-responsive {
+    margin-top: 0px;
+    height: 50vh;
+    min-height: 500px;
+    background-image: url('../img/minimalist-blue-mountains.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.button-trick {
+    font-size: 1.4em;
+}
+
 .bg-footer {
     background: rgba(0,0,0,0.8);
 }
 
-/* CAROUSEL */
-.carousel-item {
-    margin-right: auto !important;
+/* SLIDER */
+.slider {
+    margin: auto;
+    padding: 20px;
+    width: 90%;
 }
 
-.img-carousel {
-    height: 280px !important;
+.slick-slide {
+    margin: 0px 20px;
+    width: 350px;
 }
 
-@media (min-width: 768px) {
-
-    /* show 3 items */
-    .carousel-inner .active,
-    .carousel-inner .active + .carousel-item,
-    .carousel-inner .active + .carousel-item + .carousel-item,
-    .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item  {
-        display: block;
-    }
-
-    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
-    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
-        transition: none;
-    }
-
-    .carousel-inner .carousel-item-next,
-    .carousel-inner .carousel-item-prev {
-        position: relative;
-        transform: translate3d(0, 0, 0);
-    }
-
-    .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-        position: absolute;
-        top: 0;
-        right: -25%;
-        z-index: -1;
-        display: block;
-        visibility: visible;
-    }
-
-    /* left or forward direction */
-    .active.carousel-item-left + .carousel-item-next.carousel-item-left,
-    .carousel-item-next.carousel-item-left + .carousel-item,
-    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
-    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
-    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-        position: relative;
-        transform: translate3d(-100%, 0, 0);
-        visibility: visible;
-    }
-
-    /* farthest right hidden item must be abso position for animations */
-    .carousel-inner .carousel-item-prev.carousel-item-right {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        display: block;
-        visibility: visible;
-    }
-
-    /* right or prev direction */
-    .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
-    .carousel-item-prev.carousel-item-right + .carousel-item,
-    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
-    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
-    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-        position: relative;
-        transform: translate3d(100%, 0, 0);
-        visibility: visible;
-        display: block;
-        visibility: visible;
-    }
-
+.slick-slide img {
+    width: 100%;
 }
 
-/* Bootstrap Lightbox using Modal */
+.slick-slide {
+    transition: all ease-in-out .3s;
+    opacity: .2;
+}
 
-#profile-grid { overflow: auto; white-space: normal; }
-#profile-grid .profile { padding-bottom: 40px; }
-#profile-grid .panel { padding: 0 }
-#profile-grid .panel-body { padding: 15px }
-#profile-grid .profile-name { font-weight: bold; }
-#profile-grid .thumbnail {margin-bottom:6px;}
-#profile-grid .panel-thumbnail { overflow: hidden; }
-#profile-grid .img-rounded { border-radius: 4px 4px 0 0;}
-/* END CAROUSEL */
+.slick-active {
+    opacity: .5;
+}
+
+.slick-current {
+    opacity: 1;
+}
+
+.slick-prev:before, .slick-next:before {
+    color:gray !important;
+}
+
+.slick-prev {
+    margin-left: 15px;
+}
+
+.slick-next {
+    margin-right: 15px;
+}
+/* END SLIDER */
 
 /** PROFIL  */
 .avatar {
@@ -177,3 +166,94 @@ body {
     height: 200px;
 }
 /** END FORM UPDATE */
+
+/** RESPONSIVE */
+@media screen and (max-width: 992px) {
+    .responsive-details-profile {
+        text-align: center;
+    }
+
+    .responsive-btn-profile {
+        text-align: center;
+    }
+
+    .responsive-center {
+        text-align: center;
+    }
+
+    .responsive-video-form {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .responsive-btn-profile {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-mt {
+        margin-top: 8px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .navbar-medium {
+        display: none;
+    }
+
+    .navbar-sm {
+        display: flex;
+        justify-content: center;
+    }
+
+    .title-nav {
+        display: none !important;
+    }
+
+    .fa-bars {
+        font-size: 1.5em;
+    }
+
+    .nav-btn-style {
+        font-size: 1.5em;
+    }
+
+    .btn-display {
+        display: block;
+    }
+
+    .responsive-style {
+        display: none;
+    }
+
+    .responsive-logo-trick {
+        display: none;
+    }
+
+    .responsive-par {
+        display: none;
+    }
+
+    .responsive-date-trick {
+        display: none;
+    }
+
+    .responsive-comment-body {
+        padding: 1rem !important;
+    }
+
+    .responsive-container-padding {
+        padding: 0rem !important;
+    }
+
+    footer {
+        visibility: hidden;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .responsive-img-user {
+        display: none;
+    }
+}

@@ -3,20 +3,22 @@
         <img src="{{ asset('uploads/profile/') }}{{ user.picture }}" class="avatar-profil mb-3" alt="Avatar de {{ user.username }}">
     </div>
     <div class="col-lg-9">
-        <h2 class="mb-0 pl-1 text-danger">{{ user.username }}</h2>
-        <p class="mb-0 pl-1 text-primary">{{ user.email }}</p>
-        <p class="text-muted pl-1 profil-center">Inscrit depuis le {{ user.createdAt | date('d/m/Y') }}</p>
+        <div class="responsive-center">
+            <h2 class="mb-0 pl-1 text-danger">{{ user.username }}</h2>
+            <p class="mb-0 pl-1 text-primary">{{ user.email }}</p>
+            <p class="text-muted pl-1 profil-center">Inscrit depuis le {{ user.createdAt | date('d/m/Y') }}</p>
+        </div>
         {% if user is same as(app.user) %}
-            <div class="mt-3">
-                <a href="{{ path('account_email') }}" class="btn btn-primary">
+            <div class="mt-3 responsive-btn-profile">
+                <a href="{{ path('account_email') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-envelope text-white mr-1"></i>
                     Modifier mon email
                 </a>
-                <a href="{{ path('account_password') }}" class="btn btn-primary">
+                <a href="{{ path('account_password') }}" class="btn btn-primary btn-sm btn-mt">
                     <i class="fas fa-lock text-white mr-1"></i>
                     Modifier mon mot de passe
                 </a>
-                <a href="{{ path('account_picture') }}" class="btn btn-primary">
+                <a href="{{ path('account_picture') }}" class="btn btn-primary btn-sm btn-mt">
                     <i class="far fa-image text-white mr-1"></i>
                     Modifier mon image
                 </a>
