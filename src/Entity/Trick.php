@@ -14,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Trick
 {
+
+    public const LIMIT_PER_PAGE = 9;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

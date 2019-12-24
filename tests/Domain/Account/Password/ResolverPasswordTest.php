@@ -26,6 +26,7 @@ class ResolverPasswordTest extends TestCase
         $mockEm = $this->createMock(EntityManagerInterface::class);
         $mockFlash = $this->createMock(FlashBagInterface::class);
         $this->mockEncoder = $this->createMock(UserPasswordEncoderInterface::class);
+        $this->mockEncoder->method("encodePassword")->willReturn("toto");
 
         $this->resolver = new ResolverPassword(
             $mockFormFactory,
@@ -45,7 +46,7 @@ class ResolverPasswordTest extends TestCase
             ->setName("Damien")
             ->setEmail("test@hotmail.com")
             ->setPicture("photo.jpg")
-            ->setPassword("toto");
+            ->setPassword("tata");
 
         $user = $this->resolver->updatePassword($passwordDto, $newUser);
 

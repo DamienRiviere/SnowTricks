@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8f20659d99543fc6857969d9b1fbcbf",
+    "content-hash": "8aadc179d524dcfff951c1ab9293ae88",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3392,7 +3392,7 @@
         },
         {
             "name": "symfony/inflector",
-            "version": "v4.3.8",
+            "version": "v4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/inflector.git",
@@ -4136,16 +4136,16 @@
         },
         {
             "name": "symfony/property-access",
-            "version": "v4.3.8",
+            "version": "v4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/property-access.git",
-                "reference": "bb0c302375ffeef60c31e72a4539611b7f787565"
+                "reference": "2abd699fca214838afdd151fd2a2f8a8b07a738a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/property-access/zipball/bb0c302375ffeef60c31e72a4539611b7f787565",
-                "reference": "bb0c302375ffeef60c31e72a4539611b7f787565",
+                "url": "https://api.github.com/repos/symfony/property-access/zipball/2abd699fca214838afdd151fd2a2f8a8b07a738a",
+                "reference": "2abd699fca214838afdd151fd2a2f8a8b07a738a",
                 "shasum": ""
             },
             "require": {
@@ -4199,7 +4199,7 @@
                 "property path",
                 "reflection"
             ],
-            "time": "2019-08-26T08:26:39+00:00"
+            "time": "2019-12-01T10:50:31+00:00"
         },
         {
             "name": "symfony/property-info",
@@ -4689,16 +4689,16 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v4.3.8",
+            "version": "v4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "18f30003dbe7178dcc1f75901ecb9f4937d146f5"
+                "reference": "12ce178feef47bed8316cc48e68892f9a34c0794"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/18f30003dbe7178dcc1f75901ecb9f4937d146f5",
-                "reference": "18f30003dbe7178dcc1f75901ecb9f4937d146f5",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/12ce178feef47bed8316cc48e68892f9a34c0794",
+                "reference": "12ce178feef47bed8316cc48e68892f9a34c0794",
                 "shasum": ""
             },
             "require": {
@@ -4765,7 +4765,7 @@
             ],
             "description": "Symfony Serializer Component",
             "homepage": "https://symfony.com",
-            "time": "2019-11-13T07:29:07+00:00"
+            "time": "2019-11-28T11:29:50+00:00"
         },
         {
             "name": "symfony/serializer-pack",

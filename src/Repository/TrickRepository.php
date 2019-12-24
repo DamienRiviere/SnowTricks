@@ -18,4 +18,16 @@ class TrickRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Trick::class);
     }
+
+    public function loadTricks(int $offset, int $limit)
+    {
+        $qb = $this->createQueryBuilder('t')
+                   ->orderBy('t.createdAt', 'DESC')
+                   ->getQuery();
+
+        $qb->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $qb->getResult();
+    }
 }
