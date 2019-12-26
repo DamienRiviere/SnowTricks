@@ -1,3 +1,9 @@
+<div class="d-flex justify-content-center mt-2 mb-2">
+    <button id="display-media" class="btn btn-primary btn-display">
+        Voir les médias
+    </button>
+</div>
+
 <section class="slider" id="slider">
     {% for picture in trick.pictures %}
         <img src="{{ asset('uploads/trick/') }}{{ picture.picture }}" alt="{{ picture.title }}" title="{{ picture.title }}">

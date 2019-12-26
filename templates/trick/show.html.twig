@@ -78,32 +78,45 @@
                 Il n'y a encore aucun commentaire sur ce trick !
             </div>
         {% else %}
-            {% for comment in trick.getComments() %}
-                {% set user = comment.user %}
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body py-3">
-                        <div class="media">
+            <div id="comment-container">
+                {% for comment in comments %}
+                    {% set user = comment.user %}
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body py-3">
+                            <div class="media">
                             <span class="responsive-img-user">
                                <img class="d-flex mr-3 rounded-circle avatar-medium" src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}">
                             </span>
-                            <div class="media-body">
-                                <h5 class="mt-0">
-                                    <span class="text-danger">{{ user.name }}</span>
-                                    <span class="small text-muted">le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i') }}</span>
-                                </h5>
-                                {{ comment.content }}
+                                <div class="media-body">
+                                    <h5 class="mt-0">
+                                        <a href="{{ path('profile_index', {'slug': user.slug}) }}" class="text-danger">{{ user.name }}</a>
+                                        <span class="small text-muted">le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i') }}</span>
+                                    </h5>
+                                    {{ comment.content }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+            {% if comments | length == 10 %}
+            <div class="d-flex justify-content-center py-4">
+                <button id="load-more" data-next-page="{{ nextPage }}" class="btn btn-primary" data-trick-slug="{{ trick.slug }}">
+                    <i class="fas fa-spinner mr-1"></i>
+                    Afficher plus
+                </button>
+            </div>
+            {% endif %}
         {% endif %}
     </div>
+
+
 
     {% include 'partials/modal_delete.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('js/load_more_comment.js') }}"></script>
     <script src="{{ asset('js/head_trick.js') }}"></script>
     <script src="{{ asset('js/comment_ajax.js') }}"></script>
     <script src="{{ asset('js/trick_like.js') }}"></script>

@@ -3,7 +3,9 @@
 namespace App\Actions\Trick;
 
 use App\Domain\Comment\ResolverComment;
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Repository\CommentRepository;
 use App\Repository\TrickLikeRepository;
 use App\Responders\ViewResponder;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -32,16 +34,21 @@ final class ShowTrick
     /** @var Security */
     protected $security;
 
+    /** @var CommentRepository */
+    protected $commentRepo;
+
     public function __construct(
         FormFactoryInterface $formFactory,
         ResolverComment $resolver,
         TrickLikeRepository $likeRepo,
-        Security $security
+        Security $security,
+        CommentRepository $commentRepo
     ) {
         $this->formFactory = $formFactory;
         $this->resolver = $resolver;
         $this->likeRepo = $likeRepo;
         $this->security = $security;
+        $this->commentRepo = $commentRepo;
     }
 
     /**
@@ -54,10 +61,6 @@ final class ShowTrick
     {
         $form = $this->resolver->getFormType($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->resolver->save($form->getData(), $trick);
-        }
-
         $like = null;
 
         if ($this->security->getUser()) {
@@ -67,12 +70,16 @@ final class ShowTrick
             ]);
         }
 
+        $comments = $this->commentRepo->loadComments(0, Comment::LIMIT_PER_PAGE, $trick);
+
         return $responder(
             'trick/show.html.twig',
             [
                 'trick' => $trick,
                 'form'  => $form->createView(),
-                'like'  => $like
+                'like'  => $like,
+                'comments' => $comments,
+                'nextPage' => 2
             ]
         );
     }

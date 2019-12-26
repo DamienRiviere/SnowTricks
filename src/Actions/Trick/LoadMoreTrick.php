@@ -2,7 +2,7 @@
 
 namespace App\Actions\Trick;
 
-use App\Domain\Services\Pagination;
+use App\Domain\Services\PaginationTrick;
 use App\Entity\Trick;
 use App\Repository\TrickRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,10 +25,10 @@ final class LoadMoreTrick
     /** @var Environment */
     protected $templating;
 
-    /** @var Pagination */
+    /** @var PaginationTrick */
     protected $pagination;
 
-    public function __construct(TrickRepository $trickRepo, Environment $templating, Pagination $pagination)
+    public function __construct(TrickRepository $trickRepo, Environment $templating, PaginationTrick $pagination)
     {
         $this->trickRepo = $trickRepo;
         $this->templating = $templating;
@@ -43,7 +43,12 @@ final class LoadMoreTrick
         return new Response(
             json_encode(
                 [
-                    'html' => $this->templating->render('partials/_load_more.html.twig', ['tricks' => $tricks]),
+                    'html' => $this->templating->render(
+                        'partials/_load_more_tricks.html.twig',
+                        [
+                            'tricks' => $tricks
+                        ]
+                    ),
                     'pages' => $this->pagination->getPages()
                 ]
             ),

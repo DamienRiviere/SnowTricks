@@ -5,7 +5,7 @@ namespace App\Domain\Services;
 use App\Entity\Trick;
 use App\Repository\TrickRepository;
 
-final class Pagination
+final class PaginationTrick
 {
 
     /** @var TrickRepository */

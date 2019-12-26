@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\Security;
  */
 class Comment
 {
+
+    public const LIMIT_PER_PAGE = 10;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
