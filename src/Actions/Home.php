@@ -2,9 +2,11 @@
 
 namespace App\Actions;
 
+use App\Entity\Trick;
 use App\Repository\TrickLikeRepository;
 use App\Repository\TrickRepository;
 use App\Responders\ViewResponder;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
@@ -13,7 +15,7 @@ use Symfony\Component\Security\Core\Security;
  * Class Home
  * @package App\Actions
  *
- * @Route("/", name="home")
+ * @Route("/", name="home", methods={"GET", "POST"})
  */
 final class Home
 {
@@ -21,32 +23,26 @@ final class Home
     /** @var TrickRepository */
     protected $trickRepo;
 
-    /** @var TrickLikeRepository */
-    protected $likeRepo;
-
     /** @var Security */
     protected $security;
 
-    public function __construct(TrickRepository $trickRepo, TrickLikeRepository $likeRepo, Security $security)
+    public function __construct(TrickRepository $trickRepo)
     {
         $this->trickRepo = $trickRepo;
-        $this->likeRepo = $likeRepo;
-        $this->security = $security;
     }
 
     /**
      * @param ViewResponder $responder
+     * @param Request $request
      * @return Response
      */
-    public function __invoke(ViewResponder $responder)
+    public function __invoke(ViewResponder $responder, Request $request)
     {
-
-
         return $responder(
             'home/index.html.twig',
             [
-                'tricks'    => $this->trickRepo->findBy([], ['createdAt' => 'DESC']),
-                'likes'      => $this->likeRepo->findAll()
+                'tricks'    => $this->trickRepo->loadTricks(0, Trick::LIMIT_PER_PAGE),
+                'nextPage'  => 2
             ]
         );
     }

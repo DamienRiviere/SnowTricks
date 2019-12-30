@@ -1,0 +1,17 @@
+{% set user = comment.user %}
+<div class="card mb-4 shadow-sm">
+    <div class="card-body py-3">
+        <div class="media">
+            <span class="responsive-img-user">
+                <img class="d-flex mr-3 rounded-circle avatar-medium" src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}">
+            </span>
+            <div class="media-body">
+                <h5 class="mt-0">
+                    <span class="text-danger">{{ user.name }}</span>
+                    <span class="small text-muted">le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i') }}</span>
+                </h5>
+                {{ comment.content }}
+            </div>
+        </div>
+    </div>
+</div>

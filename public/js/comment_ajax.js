@@ -1,15 +1,15 @@
 document.querySelector("button[type='submit']").addEventListener("click", (e) => {
     e.preventDefault();
 
-    const url = window.location.pathname;
+    const container = $("#comment-container");
+    let slug = $("#allComments").data("trick-slug");
 
     $.ajax({
-        url: url,
+        url: "/trick/" + slug + "/new-comment",
         type: 'POST',
         data: $('form').serialize(),
-        dataType: "html",
-        success: function (data) {
-            $("body").html(data);
+        success: function (response) {
+            container.prepend(response.html);
         }
     });
 });

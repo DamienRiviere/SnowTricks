@@ -1,0 +1,40 @@
+{% for trick in tricks %}
+    <div class="col-lg-4 col-md-6 col-sm-12 py-4">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <a href="/trick/{{ trick.slug }}" class="text-decoration-none">
+                                        <span class="responsive-logo-trick">
+                                            <i class="fas fa-snowboarding mr-1 text-danger"></i>
+                                        </span>
+                        {{ trick.name }}
+                    </a>
+                    {% if is_granted('ROLE_USER') %}
+                        <div class="float-right">
+                            <a href="{{ path('trick_update', {slug: trick.slug}) }}" title="Modifier le trick" class="text-decoration-none">
+                                <i class="fas fa-edit text-primary"></i>
+                            </a>
+                            {% if app.user == trick.user %}
+                                <a href="#" class="text-decoration-none deleteTrick" title="Supprimer le trick" data-toggle="modal" data-target="#deleteTrickModal" data-id="{{ trick.id }}">
+                                    <i class="fas fa-trash-alt text-danger"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </h5>
+            </div>
+
+            {% for picture in trick.pictures | slice(0, 1) %}
+                <img src="{{ asset('uploads/trick/') }}{{ picture.picture }}" class="card-img-top" alt="{{ picture.title }}">
+            {% endfor %}
+
+            <div class="card-footer pr-3 pl-3">
+                <p class="mb-0 text-muted">
+                    {% set user = trick.user %}
+                    <img src="{{ asset('uploads/profile/') }}{{ user.picture }}" alt="Avatar de {{ user.name }}" class="avatar-mini mr-1">
+                    Par <a href="{{ path('profile_index', {'slug': user.slug}) }}" class="text-danger">{{ user.name }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endfor %}

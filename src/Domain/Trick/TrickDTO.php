@@ -62,6 +62,10 @@ final class TrickDTO
      * @Assert\NotBlank(
      *     message="Le trick doit contenir au moins une image !"
      * )
+     * @Assert\Count(
+     *     min="2",
+     *     minMessage="Vous devez entrer au minimums 2 images !"
+     * )
      */
     protected $pictures;
 
@@ -69,6 +73,10 @@ final class TrickDTO
      * @Assert\Valid()
      * @Assert\NotBlank(
      *     message="Le trick doit contenir au moins une vidéo !"
+     * )
+     * @Assert\Count(
+     *     min="2",
+     *     minMessage="Vous devez entrer au minimums 2 vidéos !"
      * )
      */
     protected $videos;

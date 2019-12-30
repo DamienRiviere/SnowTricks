@@ -41,6 +41,8 @@ final class ResolverComment
 
         $this->em->persist($comment);
         $this->em->flush();
+
+        return $comment;
     }
 
     public function create(CommentDTO $dto, Trick $trick, Security $security)

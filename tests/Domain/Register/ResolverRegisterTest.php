@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Domain\Account\Password;
+namespace App\Tests\Domain\Register;
 
-use App\Domain\Account\Password\PasswordDTO;
-use App\Domain\Account\Password\ResolverPassword;
+use App\Domain\Register\RegisterDTO;
+use App\Domain\Register\ResolverRegister;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
@@ -11,10 +11,10 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ResolverPasswordTest extends TestCase
+class ResolverRegisterTest extends TestCase
 {
 
-    /** @var ResolverPassword */
+    /** @var ResolverRegister */
     protected $resolver;
 
     /** @var UserPasswordEncoderInterface */
@@ -24,34 +24,26 @@ class ResolverPasswordTest extends TestCase
     {
         $mockFormFactory = $this->createMock(FormFactoryInterface::class);
         $mockEm = $this->createMock(EntityManagerInterface::class);
-        $mockFlash = $this->createMock(FlashBagInterface::class);
         $this->mockEncoder = $this->createMock(UserPasswordEncoderInterface::class);
         $this->mockEncoder->method("encodePassword")->willReturn("toto");
-
-        $this->resolver = new ResolverPassword(
+        $mockFlash = $this->createMock(FlashBagInterface::class);
+        $this->resolver = new ResolverRegister(
             $mockFormFactory,
-            $this->mockEncoder,
             $mockEm,
+            $this->mockEncoder,
             $mockFlash
         );
     }
 
-    public function testUpdatePassword()
+    public function testCreate()
     {
-        $passwordDto = new PasswordDTO();
-        $passwordDto->setPassword("monmotdepasse");
+        $registerDto = new RegisterDTO();
+        $registerDto->setName("Damien");
+        $registerDto->setEmail("damien@gmail.fr");
+        $registerDto->setPassword("test");
 
-        $newUser = new User();
-        $newUser
-            ->setName("Damien")
-            ->setEmail("test@hotmail.com")
-            ->setPicture("photo.jpg")
-            ->setPassword("tata");
+        $user = $this->resolver->create($registerDto);
 
-        $user = $this->resolver->updatePassword($passwordDto, $newUser);
-
-        $this->assertIsString($user->getPassword());
-        $this->assertNotNull($user->getPassword());
         $this->assertInstanceOf(User::class, $user);
     }
 }
