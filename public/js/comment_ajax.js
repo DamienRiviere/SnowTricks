@@ -2,8 +2,7 @@ document.querySelector("button[type='submit']").addEventListener("click", (e) =>
     e.preventDefault();
 
     const container = $("#comment-container");
-    const btnNewComment = document.getElementById("btnNewComment");
-    let slug = $(btnNewComment).data("trick-slug");
+    let slug = $("#allComments").data("trick-slug");
 
     $.ajax({
         url: "/trick/" + slug + "/new-comment",

@@ -2,7 +2,7 @@
 
 namespace App\Actions;
 
-use App\Domain\Register\Resolver;
+use App\Domain\Register\ResolverRegister;
 use App\Responders\RedirectResponder;
 use App\Responders\ViewResponder;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,10 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 final class Register
 {
 
-    /** @var Resolver  */
+    /** @var ResolverRegister  */
     protected $resolver;
 
-    public function __construct(Resolver $resolver)
+    public function __construct(ResolverRegister $resolver)
     {
         $this->resolver = $resolver;
     }

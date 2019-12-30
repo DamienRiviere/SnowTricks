@@ -4,7 +4,7 @@ namespace App\Domain\Services;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-final class FileUploader
+class FileUploader
 {
 
     protected $targetDirectory;
