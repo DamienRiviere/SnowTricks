@@ -25,7 +25,6 @@
 /.phpcs-cache
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
-/public/uploads/
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
