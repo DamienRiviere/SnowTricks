@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Security;
 
 final class ResolverTrick
@@ -51,6 +52,9 @@ final class ResolverTrick
     /** @var TrickLikeRepository */
     protected $likeRepo;
 
+    /** @var FlashBagInterface */
+    protected $flash;
+
     /**
      * ResolverTrick constructor.
      * @param FormFactoryInterface $formFactory
@@ -63,6 +67,7 @@ final class ResolverTrick
      * @param ResolverPicture $resolverPicture
      * @param ResolverVideo $resolverVideo
      * @param TrickLikeRepository $likeRepo
+     * @param FlashBagInterface $flash
      */
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -74,7 +79,8 @@ final class ResolverTrick
         Security $security,
         ResolverPicture $resolverPicture,
         ResolverVideo $resolverVideo,
-        TrickLikeRepository $likeRepo
+        TrickLikeRepository $likeRepo,
+        FlashBagInterface $flash
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
@@ -86,6 +92,7 @@ final class ResolverTrick
         $this->resolverPicture = $resolverPicture;
         $this->resolverVideo = $resolverVideo;
         $this->likeRepo = $likeRepo;
+        $this->flash = $flash;
     }
 
     /**
@@ -186,6 +193,21 @@ final class ResolverTrick
             ->setStyle($dto->getStyle());
 
         return $trick;
+    }
+
+    public function deleteTrick(Trick $trick)
+    {
+        $this->resolverPicture->deleteFiles("uploads/trick/", $trick->getPictures());
+        $this->em->remove($trick);
+        $this->em->flush();
+    }
+
+    public function getFlashMessageDelete()
+    {
+        return $this->flash->add(
+            "bg-danger",
+            "Le trick a bien été supprimer !"
+        );
     }
 
     /**

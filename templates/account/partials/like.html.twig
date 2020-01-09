@@ -13,7 +13,7 @@
                     {% set trick = like.trick %}
                     <li class="list-group-item">
                         <i class="fas fa-snowboarding text-danger mr-1"></i>
-                        <span class="responsive-style">
+                        <span class="responsive-style badge badge-primary">
                             {{ trick.style.name }}
                         </span>
                         <a href="{{ path('trick_show', {'slug': trick.slug}) }}">{{ trick.name }}</a>
@@ -35,5 +35,5 @@
 </div>
 
 {% block javascripts %}
-    <script src="{{ asset('js/account_delete_trick_like.js') }}"></script>
+    {{ encore_entry_script_tags('js/account_delete_trick_like') }}
 {% endblock %}

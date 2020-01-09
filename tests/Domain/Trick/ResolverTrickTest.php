@@ -17,6 +17,7 @@ use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Security;
 
 class ResolverTrickTest extends TestCase
@@ -34,6 +35,9 @@ class ResolverTrickTest extends TestCase
     /** @var TrickLikeRepository */
     protected $mockLikeRepo;
 
+    /** @var FlashBagInterface */
+    protected $mockFlash;
+
     protected function setUp(): void
     {
         $this->mockFormFactory = $this->createMock(FormFactoryInterface::class);
@@ -46,6 +50,7 @@ class ResolverTrickTest extends TestCase
         $mockResolverPicture = $this->createMock(ResolverPicture::class);
         $mockResolverVideo = $this->createMock(ResolverVideo::class);
         $this->mockLikeRepo = $this->createMock(TrickLikeRepository::class);
+        $this->mockFlash = $this->createMock(FlashBagInterface::class);
 
         $this->resolver = new ResolverTrick(
             $this->mockFormFactory,
@@ -57,7 +62,8 @@ class ResolverTrickTest extends TestCase
             $this->mockSecurity,
             $mockResolverPicture,
             $mockResolverVideo,
-            $this->mockLikeRepo
+            $this->mockLikeRepo,
+            $this->mockFlash
         );
     }
 

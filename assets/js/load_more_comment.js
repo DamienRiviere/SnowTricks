@@ -1,6 +1,6 @@
 $(document).ready(function () {
     const loadBtn = document.getElementById("load-more");
-    let slug = $("#allComments").data("trick-slug");
+    let slug = $(loadBtn).data("slug");
     let nextPage = $(loadBtn).data("next-page");
 
     if (loadBtn != null) {

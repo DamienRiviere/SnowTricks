@@ -46,7 +46,6 @@ class User implements UserInterface
      */
     private $picture;
 
-
     /**
      * @ORM\Column(type="array")
      */
@@ -69,6 +68,16 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\TrickLike", mappedBy="user", orphanRemoval=true)
      */
     private $trickLikes;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $recoveryToken;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $recoveryDate;
 
     public function __construct()
     {
@@ -289,6 +298,30 @@ class User implements UserInterface
                 $trickLike->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRecoveryToken(): ?string
+    {
+        return $this->recoveryToken;
+    }
+
+    public function setRecoveryToken(?string $recoveryToken): self
+    {
+        $this->recoveryToken = $recoveryToken;
+
+        return $this;
+    }
+
+    public function getRecoveryDate(): ?\DateTimeInterface
+    {
+        return $this->recoveryDate;
+    }
+
+    public function setRecoveryDate(?\DateTimeInterface $recoveryDate): self
+    {
+        $this->recoveryDate = $recoveryDate;
 
         return $this;
     }

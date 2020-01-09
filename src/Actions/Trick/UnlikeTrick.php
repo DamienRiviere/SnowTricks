@@ -20,15 +20,15 @@ final class UnlikeTrick
 {
 
     /** @var ResolverTrick */
-    protected $resolver;
+    protected $resolverTrick;
 
-    public function __construct(ResolverTrick $resolver)
+    public function __construct(ResolverTrick $resolverTrick)
     {
-        $this->resolver = $resolver;
+        $this->resolverTrick = $resolverTrick;
     }
 
     public function __invoke(Trick $trick)
     {
-        $this->resolver->unlike($trick);
+        $this->resolverTrick->unlike($trick);
     }
 }

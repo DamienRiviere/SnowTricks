@@ -17,7 +17,7 @@ body {
 }
 
 .bg-tricks {
-    background-image: url("../img/minimalist-mountains-black-and-white.jpg");
+    background-image: url("../images/minimalist-mountains-black-and-white.jpg");
 }
 
 .text-shadow {
@@ -28,7 +28,7 @@ body {
 .masthead {
     height: 100vh;
     min-height: 500px;
-    background-image: url('../img/snowboard_evening_snow_light_trick.jpg');
+    background-image: url('../images/snowboard_evening_snow_light_trick.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -61,7 +61,7 @@ body {
     margin-top: 55px;
     height: 50vh;
     min-height: 500px;
-    background-image: url('../img/minimalist-blue-mountains.jpg');
+    background-image: url('../images/minimalist-blue-mountains.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -71,7 +71,7 @@ body {
     margin-top: 0px;
     height: 50vh;
     min-height: 500px;
-    background-image: url('../img/minimalist-blue-mountains.jpg');
+    background-image: url('../images/minimalist-blue-mountains.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

@@ -22,7 +22,7 @@ final class UpdatePicture
 {
 
     /** @var ResolverPicture */
-    protected $resolver;
+    protected $resolverPicture;
 
     /** @var Security */
     protected $security;
@@ -30,22 +30,21 @@ final class UpdatePicture
     /** @var TrickLikeRepository */
     protected $likeRepo;
 
-    public function __construct(ResolverPicture $resolver, Security $security, TrickLikeRepository $likeRepo)
+    public function __construct(ResolverPicture $resolverPicture, Security $security, TrickLikeRepository $likeRepo)
     {
-        $this->resolver = $resolver;
+        $this->resolverPicture = $resolverPicture;
         $this->security = $security;
         $this->likeRepo = $likeRepo;
     }
 
     public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
     {
-        $form = $this->resolver->getFormType($request);
+        $form = $this->resolverPicture->getFormType($request);
         $user = $this->security->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->resolver->update($form->getData()->getPicture(), $user);
-
-            $this->resolver->getFlashMessage();
+            $this->resolverPicture->update($form->getData()->getPicture(), $user);
+            $this->resolverPicture->getFlashMessage();
 
             return $redirectResponder(
                 'account_index'
@@ -53,7 +52,7 @@ final class UpdatePicture
         }
 
         return $responder(
-            'account/edit_picture.html.twig',
+            'account/update_picture.html.twig',
             [
                 'form' => $form->createView(),
                 'likes' =>  $this->likeRepo->findBy(

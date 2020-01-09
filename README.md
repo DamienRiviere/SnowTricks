@@ -1,6 +1,54 @@
 # Développez de A à Z le site communautaire SnowTricks
 
-## Contexte
+## Installation du projet
+
+En fonction de votre système d'exploitation plusieurs serveurs peuvent être installés :
+    
+    - Windows : WAMP (http://www.wampserver.com/)
+    - MAC : MAMP (https://www.mamp.info/en/mamp/)
+    - Linux : LAMP (https://doc.ubuntu-fr.org/lamp)
+    - XAMP (https://www.apachefriends.org/fr/index.html)
+    
+## Clonage du projet
+
+Installation de GIT : 
+
+    - GIT (https://git-scm.com/downloads) 
+    
+Une fois GIT installé, il faudra vous placer dans le répertoire de votre choix puis exécuté la commande suivante :
+
+    - git clone https://github.com/DamienRiviere/SnowTricks.git
+    
+Le projet sera automatiquement copié dans le répertoire ciblé.
+
+## Configuration des variables d'environnement
+
+Configurez les variables d'environnement comme la connexion à la base de données dans le fichier env.local qui sera créé à la racine du projet en copiant le fichier .env. 
+Vous pourrez ensuite renseigner les identifiants de votre base de données en suivant le modèle ci-dessous.
+
+    - DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7
+    
+## Création de la base de données
+
+Créez la base de données de l'application en tapant la commande ci-dessous : 
+
+    - php bin/console doctrine:database:create
+    
+## Lancement du serveur
+
+Vous pouvez lancer le serveur via la commande suivante : 
+
+    - php bin/console server:run
+
+## Générer des fausses données 
+
+Vous pouvez générer des fausses données grâce la fixture présente dans le projet avec la commande suivante :
+
+    - php bin/console doctrine:fixtures:load
+    
+# Description du projet
+     
+## Contexte du projet
 
 Jimmy Sweat est un entrepreneur ambitieux passionné de snowboard. Son objectif est la création d'un site collaboratif pour faire connaitre ce sport auprès du grand public et aider à l'apprentissage des figures (tricks).
 

@@ -2,8 +2,7 @@
 
 namespace App\Actions\Trick;
 
-use App\Domain\Trick\Helpers\TrickFlashMessage;
-use App\Domain\Trick\Picture\ResolverPicture;
+use App\Domain\Trick\ResolverTrick;
 use App\Entity\Trick;
 use App\Responders\RedirectResponder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,26 +22,21 @@ final class DeleteTrick
     /** @var EntityManagerInterface */
     protected $em;
 
-    /** @var TrickFlashMessage */
-    protected $flash;
+    /** @var ResolverTrick */
+    protected $resolverTrick;
 
-    /** @var ResolverPicture */
-    protected $resolver;
-
-    public function __construct(EntityManagerInterface $em, TrickFlashMessage $flash, ResolverPicture $resolver)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        ResolverTrick $resolverTrick
+    ) {
         $this->em = $em;
-        $this->flash = $flash;
-        $this->resolver = $resolver;
+        $this->resolverTrick = $resolverTrick;
     }
 
     public function __invoke(Trick $trick, RedirectResponder $responder)
     {
-        $this->resolver->deleteFiles("uploads/trick/", $trick->getPictures());
-        $this->em->remove($trick);
-        $this->em->flush();
-
-        $this->flash->getFlashMessageDelete();
+        $this->resolverTrick->deleteTrick($trick);
+        $this->resolverTrick->getFlashMessageDelete();
 
         return $responder(
             "home"

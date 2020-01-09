@@ -7,16 +7,16 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Connexion</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+            {{ encore_entry_link_tags('css/app') }}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
             <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates&display=swap" rel="stylesheet">
         {% endblock %}
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <!-- Favicons -->
-        <link href="{{ asset('img/favicon/favicon-32x32.png') }}" type="img/png" rel="icon" />
-        <link rel="icon" type="img/png" href="{{ asset('img/favicon/favicon-32x32.png') }}" sizes="32x32">
-        <link rel="icon" type="img/png" href="{{ asset('img/favicon/favicon-16x16.png') }}" sizes="16x16">
+        <link href="{{ asset('build/images/favicon/favicon-32x32.png') }}" type="img/png" rel="icon" />
+        <link rel="icon" type="img/png" href="{{ asset('build/images/favicon/favicon-32x32.png') }}" sizes="32x32">
+        <link rel="icon" type="img/png" href="{{ asset('build/images/favicon/favicon-16x16.png') }}" sizes="16x16">
         <!-- Twitter Card data -->
         <meta name="twitter:card" content="summary"/>
         <meta name="twitter:title" content="SnowTricks"/>
@@ -63,8 +63,10 @@
                             </button>
 
                             <hr>
-
-                            <p class="mb-0 small">Vous n'êtes pas encore inscrit ?! <a href="{{ path('register_index') }}">Inscrivez-vous ici !</a></p>
+                            <div class="text-center">
+                                <p class="mb-0 small">Vous n'êtes pas encore inscrit ?! <a href="{{ path('register_index') }}">Inscrivez-vous ici !</a></p>
+                                <p class="mb-0 small"><a href="{{ path('password_forgot') }}">Mot de passe oublié ?</a></p>
+                            </div>
 
                             {{ form_end(form) }}
                         </div>

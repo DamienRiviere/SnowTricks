@@ -20,6 +20,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/modal_delete.js') }}"></script>
-    <script src="{{ asset('js/section_title.js') }}"></script>
+    {{ encore_entry_script_tags('js/modal_delete') }}
+    {{ encore_entry_script_tags('js/section_title') }}
 {% endblock %}
