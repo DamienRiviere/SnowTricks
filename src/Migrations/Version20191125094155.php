@@ -25,7 +25,7 @@ final class Version20191125094155 extends AbstractMigration
         $this->addSql('ALTER TABLE picture ADD trick_id INT NOT NULL');
         $this->addSql('ALTER TABLE picture ADD CONSTRAINT FK_16DB4F89B281BE2E FOREIGN KEY (trick_id) REFERENCES trick (id)');
         $this->addSql('CREATE INDEX IDX_16DB4F89B281BE2E ON picture (trick_id)');
-        $this->addSql('ALTER TABLE style ADD name VARCHAR(255) NOT NULL, ADD description LONGTEXT NOT NULL');
+        $this->addSql('ALTER TABLE style ADD description LONGTEXT NOT NULL');
         $this->addSql('ALTER TABLE trick ADD style_id INT NOT NULL');
         $this->addSql('ALTER TABLE trick ADD CONSTRAINT FK_D8F0A91EBACD6074 FOREIGN KEY (style_id) REFERENCES style (id)');
         $this->addSql('CREATE INDEX IDX_D8F0A91EBACD6074 ON trick (style_id)');
