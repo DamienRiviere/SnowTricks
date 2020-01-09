@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié{% endblock %}
+
+{% block body %}
+    <div id="section-title" class="container-fluid bg-light py-5 text-center section-title">
+        <h2 class="text-primary">
+            Mot de passe oublié
+        </h2>
+        <p class="font-weight-bold mb-0">Réinitialisation du mot de passe</p>
+    </div>
+
+    <div class="container py-5">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-lock text-primary mr-1"></i>
+                    Entrez votre adresse email
+                </h4>
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+
+                {{ form_row(form.email) }}
+
+                <button type="submit" class="btn btn-primary">Valider</button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+        {% include 'partials/alert.html.twig' %}
+    </div>
+{% endblock %}

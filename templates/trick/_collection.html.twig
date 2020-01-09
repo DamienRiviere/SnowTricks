@@ -30,12 +30,12 @@
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     {% if name != null %}
                         <figure class="text-center">
-                            <img src="{{ asset('uploads/trick/') }}{{ name }}" alt="{{ title }}" title="{{ title }}" class="img-update img-fluid">
+                            <img src="{{ asset('/uploads/trick/') }}{{ name }}" alt="{{ title }}" title="{{ title }}" class="img-update img-fluid">
                             <figcaption class="text-center text-primary font-weight-bold">{{ title }}</figcaption>
                         </figure>
                     {% else %}
                         <figure class="text-center">
-                            <img src="{{ asset('img/image-not-found.jpg') }}" alt="Pas d'image" class="img-update img-fluid">
+                            <img src="{{ asset('/build/images/image-not-found.jpg') }}" alt="Pas d'image" class="img-update img-fluid">
                             <figcaption class="text-center text-primary font-weight-bold">Pas d'image</figcaption>
                         </figure>
                     {% endif %}
@@ -137,7 +137,7 @@
                         </iframe>
                     {% else %}
                         <figure>
-                            <img src="{{ asset('img/video-not-found.png') }}" alt="Pas de vidéo" class="img-update img-fluid">
+                            <img src="{{ asset('/build/images/video-not-found.png') }}" alt="Pas de vidéo" class="img-update img-fluid">
                             <figcaption class="text-center text-primary font-weight-bold">Pas de vidéo</figcaption>
                         </figure>
                     {% endif %}

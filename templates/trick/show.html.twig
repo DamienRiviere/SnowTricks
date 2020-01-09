@@ -71,9 +71,14 @@
     <div class="container mb-4">
         {% include 'trick/partials/new_comment.html.twig' %}
 
-        <h3 class="mb-4" id="allComments" data-trick-slug="{{ trick.slug }}">Tous les commentaires</h3>
+        <h3 class="mb-4">Tous les commentaires</h3>
 
         <div id="comment-container">
+        {% if trick.getComments() | length == 0 %}
+            <div class="alert alert-danger py-4 my-4">
+                Il n'y a encore aucun commentaire sur ce trick !
+            </div>
+        {% else %}
             {% for comment in comments %}
                 {% set user = comment.user %}
                 <div class="card mb-4 shadow-sm">
@@ -84,7 +89,7 @@
                             </span>
                             <div class="media-body">
                                 <h5 class="mt-0">
-                                    <a href="{{ path('profile_index', {'slug': user.slug}) }}" class="text-danger">{{ user.name }}</a>
+                                    <span class="text-danger">{{ user.name }}</span>
                                     <span class="small text-muted">le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i') }}</span>
                                 </h5>
                                 {{ comment.content }}
@@ -93,10 +98,11 @@
                     </div>
                 </div>
             {% endfor %}
+        {% endif %}
         </div>
         {% if comments | length == 10 %}
             <div class="d-flex justify-content-center py-4">
-                <button id="load-more" data-next-page="{{ nextPage }}" class="btn btn-primary">
+                <button id="load-more" data-next-page="{{ nextPage }}" data-slug="{{ trick.slug }}" class="btn btn-primary">
                     <i class="fas fa-spinner mr-1"></i>
                     Afficher plus
                 </button>
@@ -108,11 +114,11 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/load_more_comment.js') }}"></script>
-    <script src="{{ asset('js/head_trick.js') }}"></script>
-    <script src="{{ asset('js/comment_ajax.js') }}"></script>
-    <script src="{{ asset('js/trick_like.js') }}"></script>
-    <script src="{{ asset('js/modal_delete.js') }}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-    <script src="{{ asset('js/slider.js') }}"></script>
+    {{ encore_entry_script_tags('js/slider') }}
+    {{ encore_entry_script_tags('js/load_more_comment') }}
+    {{ encore_entry_script_tags('js/head_trick') }}
+    {{ encore_entry_script_tags('js/comment_ajax') }}
+    {{ encore_entry_script_tags('js/trick_like') }}
+    {{ encore_entry_script_tags('js/modal_delete') }}
 {% endblock %}

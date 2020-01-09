@@ -13,6 +13,7 @@ use Twig\Environment;
 final class ViewResponder
 {
 
+    /** @var Environment  */
     protected $templating;
 
     /**

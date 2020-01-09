@@ -17,21 +17,20 @@ final class Register
 {
 
     /** @var ResolverRegister  */
-    protected $resolver;
+    protected $resolverRegister;
 
-    public function __construct(ResolverRegister $resolver)
+    public function __construct(ResolverRegister $resolverRegister)
     {
-        $this->resolver = $resolver;
+        $this->resolverRegister = $resolverRegister;
     }
 
     public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
     {
-        $form = $this->resolver->getFormType($request);
+        $form = $this->resolverRegister->getFormType($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->resolver->save($form->getData());
-            
-            $this->resolver->getFlashMessage();
+            $this->resolverRegister->save($form->getData());
+            $this->resolverRegister->getFlashMessage();
 
             return $redirectResponder(
                 'auth_login'

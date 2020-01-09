@@ -8,7 +8,6 @@ use App\Entity\Trick;
 use App\Repository\CommentRepository;
 use App\Repository\TrickLikeRepository;
 use App\Responders\ViewResponder;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,10 +22,7 @@ use Symfony\Component\Security\Core\Security;
 final class ShowTrick
 {
     /** @var ResolverComment */
-    protected $resolver;
-
-    /** @var FormFactoryInterface */
-    protected $formFactory;
+    protected $resolverComment;
 
     /** @var TrickLikeRepository */
     protected $likeRepo;
@@ -38,14 +34,12 @@ final class ShowTrick
     protected $commentRepo;
 
     public function __construct(
-        FormFactoryInterface $formFactory,
-        ResolverComment $resolver,
+        ResolverComment $resolverComment,
         TrickLikeRepository $likeRepo,
         Security $security,
         CommentRepository $commentRepo
     ) {
-        $this->formFactory = $formFactory;
-        $this->resolver = $resolver;
+        $this->resolverComment = $resolverComment;
         $this->likeRepo = $likeRepo;
         $this->security = $security;
         $this->commentRepo = $commentRepo;
@@ -59,7 +53,7 @@ final class ShowTrick
      */
     public function __invoke(ViewResponder $responder, Trick $trick, Request $request)
     {
-        $form = $this->resolver->getFormType($request);
+        $form = $this->resolverComment->getFormType($request);
 
         $like = null;
 
@@ -70,15 +64,13 @@ final class ShowTrick
             ]);
         }
 
-        $comments = $this->commentRepo->loadComments(0, Comment::LIMIT_PER_PAGE, $trick);
-
         return $responder(
             'trick/show.html.twig',
             [
                 'trick' => $trick,
                 'form'  => $form->createView(),
                 'like'  => $like,
-                'comments' => $comments,
+                'comments' => $this->commentRepo->loadComments(0, Comment::LIMIT_PER_PAGE, $trick),
                 'nextPage' => 2
             ]
         );

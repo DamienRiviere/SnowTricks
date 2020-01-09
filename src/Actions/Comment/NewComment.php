@@ -21,23 +21,23 @@ final class NewComment
 {
 
     /** @var ResolverComment */
-    protected $resolver;
+    protected $resolverComment;
 
     /** @var Environment */
     protected $templating;
 
-    public function __construct(ResolverComment $resolver, Environment $templating)
+    public function __construct(ResolverComment $resolverComment, Environment $templating)
     {
-        $this->resolver = $resolver;
+        $this->resolverComment = $resolverComment;
         $this->templating = $templating;
     }
 
     public function __invoke(Trick $trick, Request $request)
     {
-        $form = $this->resolver->getFormType($request);
+        $form = $this->resolverComment->getFormType($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $comment = $this->resolver->save($form->getData(), $trick);
+            $comment = $this->resolverComment->save($form->getData(), $trick);
 
             return new Response(
                 json_encode(

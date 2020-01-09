@@ -22,7 +22,7 @@ final class UpdateEmail
 {
 
     /** @var ResolverEmail */
-    protected $resolver;
+    protected $resolverEmail;
 
     /** @var Security */
     protected $security;
@@ -30,9 +30,9 @@ final class UpdateEmail
     /** @var TrickLikeRepository */
     protected $likeRepo;
 
-    public function __construct(ResolverEmail $resolver, Security $security, TrickLikeRepository $likeRepo)
+    public function __construct(ResolverEmail $resolverEmail, Security $security, TrickLikeRepository $likeRepo)
     {
-        $this->resolver = $resolver;
+        $this->resolverEmail = $resolverEmail;
         $this->security = $security;
         $this->likeRepo = $likeRepo;
     }
@@ -40,12 +40,11 @@ final class UpdateEmail
     public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
     {
         $email = $this->security->getUser()->getEmail();
-        $form = $this->resolver->getFormType($request, $email);
+        $form = $this->resolverEmail->getFormType($request, $email);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->resolver->update($form->getData(), $this->security->getUser());
-
-            $this->resolver->getFlashMessage();
+            $this->resolverEmail->update($form->getData(), $this->security->getUser());
+            $this->resolverEmail->getFlashMessage();
 
             return $redirectResponder(
                 'account_index'
@@ -53,7 +52,7 @@ final class UpdateEmail
         }
 
         return $responder(
-            'account/edit_email.html.twig',
+            'account/update_email.html.twig',
             [
                 'form'  =>  $form->createView(),
                 'likes' =>  $this->likeRepo->findBy(

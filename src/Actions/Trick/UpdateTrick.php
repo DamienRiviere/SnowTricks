@@ -14,31 +14,31 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class UpdateTrick
  * @package App\Actions\Trick
  *
- * @Route("/trick/edit/{slug}", name="trick_update")
+ * @Route("/trick/update/{slug}", name="trick_update")
  * @IsGranted("ROLE_USER")
  */
 final class UpdateTrick
 {
 
     /** @var ResolverTrick */
-    protected $resolver;
+    protected $resolverTrick;
 
     /** @var TrickRepository */
     protected $trickRepo;
 
-    public function __construct(ResolverTrick $resolver, TrickRepository $trickRepo)
+    public function __construct(ResolverTrick $resolverTrick, TrickRepository $trickRepo)
     {
-        $this->resolver = $resolver;
+        $this->resolverTrick = $resolverTrick;
         $this->trickRepo = $trickRepo;
     }
 
     public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
     {
         $trick = $this->trickRepo->findOneBy(['slug' => $request->attributes->get('slug')]);
-        $form = $this->resolver->getFormType($request, $trick);
+        $form = $this->resolverTrick->getFormType($request, $trick);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trick = $this->resolver->update($form->getData(), $trick);
+            $trick = $this->resolverTrick->update($form->getData(), $trick);
 
             return $redirectResponder(
                 'trick_show',

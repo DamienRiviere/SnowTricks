@@ -20,19 +20,19 @@ final class NewTrick
 {
 
     /** @var ResolverTrick */
-    protected $resolver;
+    protected $resolverTrick;
 
-    public function __construct(ResolverTrick $resolver)
+    public function __construct(ResolverTrick $resolverTrick)
     {
-        $this->resolver = $resolver;
+        $this->resolverTrick = $resolverTrick;
     }
 
     public function __invoke(Request $request, ViewResponder $responder, RedirectResponder $redirectResponder)
     {
-        $form = $this->resolver->getFormType($request);
+        $form = $this->resolverTrick->getFormType($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trick = $this->resolver->save($form->getData());
+            $trick = $this->resolverTrick->save($form->getData());
 
             return $redirectResponder(
                 'trick_show',

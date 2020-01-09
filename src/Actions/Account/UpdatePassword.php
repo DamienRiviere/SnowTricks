@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Security;
 final class UpdatePassword
 {
     /** @var ResolverPassword  */
-    protected $resolver;
+    protected $resolverPassword;
 
     /** @var Security */
     protected $security;
@@ -29,21 +29,20 @@ final class UpdatePassword
     /** @var TrickLikeRepository */
     protected $likeRepo;
 
-    public function __construct(ResolverPassword $resolver, Security $security, TrickLikeRepository $likeRepo)
+    public function __construct(ResolverPassword $resolverPassword, Security $security, TrickLikeRepository $likeRepo)
     {
-        $this->resolver = $resolver;
+        $this->resolverPassword = $resolverPassword;
         $this->security = $security;
         $this->likeRepo = $likeRepo;
     }
 
     public function __invoke(ViewResponder $responder, Request $request, RedirectResponder $redirectResponder)
     {
-        $form = $this->resolver->getFormType($request);
+        $form = $this->resolverPassword->getFormType($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->resolver->update($form->getData(), $this->security->getUser());
-
-            $this->resolver->getFlashMessage();
+            $this->resolverPassword->update($form->getData(), $this->security->getUser());
+            $this->resolverPassword->getFlashMessage();
 
             return $redirectResponder(
                 'account_index'
@@ -51,7 +50,7 @@ final class UpdatePassword
         }
 
         return $responder(
-            'account/edit_password.html.twig',
+            'account/update_password.html.twig',
             [
                 'form'  => $form->createView(),
                 'likes' =>  $this->likeRepo->findBy(
