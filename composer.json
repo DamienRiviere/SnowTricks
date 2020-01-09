@@ -31,11 +31,11 @@
         "symfony/web-link": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "4.3.*",
-        "doctrine/doctrine-fixtures-bundle": "^3.3"
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "cocur/slugify": "^3.2",
+        "fzaninotto/faker": "^1.9"
     },
     "require-dev": {
-        "cocur/slugify": "^3.2",
-        "fzaninotto/faker": "^1.9",
         "squizlabs/php_codesniffer": "*",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
