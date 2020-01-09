@@ -30,11 +30,11 @@
         "symfony/validator": "4.3.*",
         "symfony/web-link": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.7",
-        "symfony/yaml": "4.3.*"
+        "symfony/yaml": "4.3.*",
+        "doctrine/doctrine-fixtures-bundle": "^3.3"
     },
     "require-dev": {
         "cocur/slugify": "^3.2",
-        "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fzaninotto/faker": "^1.9",
         "squizlabs/php_codesniffer": "*",
         "symfony/debug-pack": "*",
@@ -78,6 +78,10 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "compile": [
+            "php bin/console doctrine:migrations:migrate",
+            "php bin/console doctrine:fixtures:load --no-interaction --env=PROD"
         ]
     },
     "conflict": {
