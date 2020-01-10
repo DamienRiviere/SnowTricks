@@ -5,15 +5,10 @@ namespace App\Domain\Recovery;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PHPMailer\PHPMailer\PHPMailer;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Swift_Mailer;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mailer\Transport;
-use Symfony\Component\Mime\Address;
 use Twig\Environment;
 
 final class ResolverSendEmail
@@ -34,18 +29,23 @@ final class ResolverSendEmail
     /** @var Environment */
     protected $templating;
 
+    /** @var Swift_Mailer */
+    protected $mailer;
+
     public function __construct(
         FormFactoryInterface $formFactory,
         UserRepository $userRepo,
         EntityManagerInterface $em,
         FlashBagInterface $flash,
-        Environment $templating
+        Environment $templating,
+        Swift_Mailer $mailer
     ) {
         $this->formFactory = $formFactory;
         $this->userRepo = $userRepo;
         $this->em = $em;
         $this->flash = $flash;
         $this->templating = $templating;
+        $this->mailer = $mailer;
     }
 
     public function getFormType(Request $request)
@@ -69,7 +69,7 @@ final class ResolverSendEmail
         return $user;
     }
 
-    public function sendEmail(SendEmailDTO $email, User $user, \Swift_Mailer $mailer)
+    public function sendEmail(SendEmailDTO $email, User $user)
     {
         $message = (new \Swift_message('Récupération du mot de passe !'))
             ->setFrom("damien@d-riviere.fr")
@@ -85,7 +85,7 @@ final class ResolverSendEmail
             )
         ;
 
-        $mailer->send($message);
+        $this->mailer->send($message);
     }
 
     public function checkUserAndSendEmail(?User $user, SendEmailDTO $email)
