@@ -7,7 +7,7 @@
 
         $.ajax({
             url: "/trick/" + id + "/unlike",
-            type: 'POST'
+            type: "POST"
         });
 
         window.location.replace("/account");

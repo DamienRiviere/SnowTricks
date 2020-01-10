@@ -18,7 +18,7 @@
 
         $.ajax({
             url: "/trick/" + id + "/" + like,
-            type: 'POST'
+            type: "POST"
         });
 
         window.location.replace("/trick/" + slug);

@@ -33,10 +33,9 @@ final class Home
 
     /**
      * @param ViewResponder $responder
-     * @param Request $request
      * @return Response
      */
-    public function __invoke(ViewResponder $responder, Request $request)
+    public function __invoke(ViewResponder $responder)
     {
         return $responder(
             'home/index.html.twig',

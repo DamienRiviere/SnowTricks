@@ -10,7 +10,7 @@ $(document).ready(function () {
             $.ajax({
                 method: "GET",
                 url: "/trick/" + slug + "/comment?page=" + nextPage++,
-                success: function (response) {
+                success(response) {
                     container.append(response.html);
 
                     if (nextPage > response.pages) {

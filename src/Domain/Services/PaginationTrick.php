@@ -18,7 +18,7 @@ final class PaginationTrick
 
     public function getOffset(int $page): int
     {
-        return $offset = is_null($page) || (int) $page === 1 ? 0 : ((int) $page - 1) * Trick::LIMIT_PER_PAGE;
+        return is_null($page) || (int) $page === 1 ? 0 : ((int) $page - 1) * Trick::LIMIT_PER_PAGE;
     }
 
     public function getPages(): int
@@ -26,6 +26,6 @@ final class PaginationTrick
         $tricks = $this->trickRepo->findAll();
         $total = count($tricks);
 
-        return $pages = ceil($total / Trick::LIMIT_PER_PAGE);
+        return ceil($total / Trick::LIMIT_PER_PAGE);
     }
 }

@@ -1,6 +1,6 @@
-const head_trick = document.getElementById("headtricks");
+const headTrick = document.getElementById("headtricks");
 
 if (window.innerWidth <= 425) {
-    head_trick.classList.remove("headtricks");
-    head_trick.classList.add("headtricks-responsive");
+    headTrick.classList.remove("headtricks");
+    headTrick.classList.add("headtricks-responsive");
 }
