@@ -1,6 +1,6 @@
 <h1>Bonjour {{ user.name }},</h1>
 
 <p>Vous recevez cette email pour réinitialiser votre mot de passe. Rendez-vous sur ce
-    <a href="{{ path('recovery_password', {'token': user.recoveryToken}) }}">lien</a>
+    <a href="http://snowtricks-dre.herokuapp.com/{{ path('recovery_password', {'token': user.recoveryToken}) }}">lien</a>
     pour créer un nouveau mot de passe.
 </p>
