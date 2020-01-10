@@ -9,11 +9,11 @@ if (btn != null) {
 
         $.ajax({
             url: url,
-            type: 'POST',
-            data: $('form').serialize(),
-            success: function (response) {
-                if ($('.alert-danger').length > 0) {
-                    $('.alert-danger').addClass("d-none");
+            type: "POST",
+            data: $("form").serialize(),
+            success(response) {
+                if ($(".alert-danger").length > 0) {
+                    $(".alert-danger").addClass("d-none");
                 }
 
                 container.prepend(response.html);

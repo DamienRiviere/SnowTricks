@@ -1,3 +1,19 @@
+function handleDeleteButtons()
+{
+    $("button[data-action='delete']").click(function () {
+        const target = this.dataset.target;
+        $(target).remove();
+    });
+}
+
+function updateCounter()
+{
+    const count = +$("#trick_videos div.form-group").length;
+
+    $("#widget-counter").val(count);
+}
+
+
 $("#add-video").click(function () {
     // Index of future fields that will be created
     const index = +$("#widget-counter").val();
@@ -13,21 +29,6 @@ $("#add-video").click(function () {
     // Manages the delete button
     handleDeleteButtons();
 });
-
-function handleDeleteButtons()
-{
-    $("button[data-action='delete']").click(function () {
-        const target = this.dataset.target;
-        $(target).remove();
-    });
-}
-
-function updateCounter()
-{
-    const count = +$("#trick_videos div.form-group").length;
-
-    $("#widget-counter").val(count);
-}
 
 updateCounter();
 handleDeleteButtons();

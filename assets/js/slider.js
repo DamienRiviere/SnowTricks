@@ -1,12 +1,12 @@
 const btnDisplay = document.getElementById("display-media");
 
 btnDisplay.addEventListener("click", function () {
-    $("#slider").attr('style', 'display: block !important');
+    $("#slider").attr("style", "display: block !important");
 });
 
-$('.slider').slick({
+$(".slider").slick({
     centerMode: true,
-    centerPadding: '60px',
+    centerPadding: "60px",
     slidesToShow: 3,
     variableWidth: true,
     responsive: [
