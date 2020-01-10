@@ -73,7 +73,7 @@ final class ResolverSendEmail
     public function sendEmail(SendEmailDTO $email, User $user)
     {
         $message = (new Swift_Message('Récupération du mot de passe !'))
-            ->setFrom("damien@d-riviere.fr")
+            ->setFrom("ea67a3ccb1-e4a68f@inbox.mailtrap.io")
             ->setTo($email->getEmail())
             ->setBody(
                 $this->templating->render(
