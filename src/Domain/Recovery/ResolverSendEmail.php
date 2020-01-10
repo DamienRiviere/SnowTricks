@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Swift_Mailer;
+use Swift_Message;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -71,7 +72,7 @@ final class ResolverSendEmail
 
     public function sendEmail(SendEmailDTO $email, User $user)
     {
-        $message = (new \Swift_message('Récupération du mot de passe !'))
+        $message = (new Swift_Message('Récupération du mot de passe !'))
             ->setFrom("damien@d-riviere.fr")
             ->setTo($email->getEmail())
             ->setBody(
