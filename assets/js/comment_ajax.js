@@ -11,7 +11,7 @@ if (btn != null) {
             url: url,
             type: "POST",
             data: $("form").serialize(),
-            success: function (response) {
+            success(response) {
                 if ($(".alert-danger").length > 0) {
                     $(".alert-danger").addClass("d-none");
                 }

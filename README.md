@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f5099efc4e5540bbbb28b677f5a1bd58)](https://www.codacy.com/manual/DamienRiviere/SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DamienRiviere/SnowTricks&amp;utm_campaign=Badge_Grade)
+
 # Développez de A à Z le site communautaire SnowTricks
 
 ## Installation du projet
@@ -33,6 +35,17 @@ Vous pourrez ensuite renseigner les identifiants de votre base de données en su
 Créez la base de données de l'application en tapant la commande ci-dessous : 
 
     - php bin/console doctrine:database:create
+    
+Puis lancer la migration pour créer les tables dans la base de données :
+
+    - php bin/console doctrine:migrations:migrate    
+
+## Gestion des assets
+
+Vous pouvez générer à l'aide de Webpack vos assets Javascript et CSS avec NPM en tapant la commande ci-dessous :
+
+    - npm run dev (en dev)
+    - npm run build (en prod)
     
 ## Lancement du serveur
 

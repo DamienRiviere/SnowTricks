@@ -4,7 +4,7 @@ btnDisplay.addEventListener("click", function () {
     $("#slider").attr("style", "display: block !important");
 });
 
-$('.slider').slick({
+$(".slider").slick({
     centerMode: true,
     centerPadding: "60px",
     slidesToShow: 3,
