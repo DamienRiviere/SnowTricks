@@ -5,13 +5,16 @@ namespace App\Domain\Recovery;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Address;
+use Twig\Environment;
 
 final class ResolverSendEmail
 {
@@ -28,21 +31,21 @@ final class ResolverSendEmail
     /** @var FlashBagInterface */
     protected $flash;
 
-    /** @var MailerInterface */
-    protected $mailer;
+    /** @var Environment */
+    protected $templating;
 
     public function __construct(
         FormFactoryInterface $formFactory,
         UserRepository $userRepo,
         EntityManagerInterface $em,
         FlashBagInterface $flash,
-        MailerInterface $mailer
+        Environment $templating
     ) {
         $this->formFactory = $formFactory;
         $this->userRepo = $userRepo;
         $this->em = $em;
         $this->flash = $flash;
-        $this->mailer = $mailer;
+        $this->templating = $templating;
     }
 
     public function getFormType(Request $request)
@@ -68,19 +71,22 @@ final class ResolverSendEmail
 
     public function sendEmail(SendEmailDTO $email, User $user)
     {
-        $email = (new TemplatedEmail())
-            ->from('damien@d-riviere.fr')
-            ->to(new Address($email->getEmail()))
-            ->subject('Récupération du mot de passe !')
-            ->htmlTemplate('recovery/recovery_email.html.twig')
-            ->context(
-                [
-                    'user' => $user
-                ]
-            )
-        ;
+        $mail = new PHPMailer();
+        $mail->CharSet = 'UTF-8';
+        $mail->setFrom("damien@d-riviere.fr", 'Damien RIVIERE');
+        $mail->addAddress($email->getEmail());
+        $mail->addReplyTo("damien@d-riviere.fr", 'Damien RIVIERE');
 
-        $this->mailer->send($email);
+        $mail->isHTML(true);
+        $mail->Subject = 'Récupération du mot de passe !';
+        $mail->Body = $this->templating->render(
+            'recovery/recovery_email.html.twig',
+            [
+                'user' => $user
+            ]
+        );
+
+        $mail->send();
     }
 
     public function checkUserAndSendEmail(?User $user, SendEmailDTO $email)
