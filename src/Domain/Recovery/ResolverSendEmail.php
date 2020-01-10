@@ -69,24 +69,23 @@ final class ResolverSendEmail
         return $user;
     }
 
-    public function sendEmail(SendEmailDTO $email, User $user)
+    public function sendEmail(SendEmailDTO $email, User $user, \Swift_Mailer $mailer)
     {
-        $mail = new PHPMailer();
-        $mail->CharSet = 'UTF-8';
-        $mail->setFrom("damien@d-riviere.fr", 'Damien RIVIERE');
-        $mail->addAddress($email->getEmail());
-        $mail->addReplyTo("damien@d-riviere.fr", 'Damien RIVIERE');
+        $message = (new \Swift_message('Récupération du mot de passe !'))
+            ->setFrom("damien@d-riviere.fr")
+            ->setTo($email->getEmail())
+            ->setBody(
+                $this->templating->render(
+                    'recovery/recovery_email.html.twig',
+                    [
+                        'user' => $user
+                    ]
+                ),
+                'text/html'
+            )
+        ;
 
-        $mail->isHTML(true);
-        $mail->Subject = 'Récupération du mot de passe !';
-        $mail->Body = $this->templating->render(
-            'recovery/recovery_email.html.twig',
-            [
-                'user' => $user
-            ]
-        );
-
-        $mail->send();
+        $mailer->send($message);
     }
 
     public function checkUserAndSendEmail(?User $user, SendEmailDTO $email)
