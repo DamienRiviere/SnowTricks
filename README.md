@@ -1,5 +1,3 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f5099efc4e5540bbbb28b677f5a1bd58)](https://www.codacy.com/manual/DamienRiviere/SnowTricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DamienRiviere/SnowTricks&amp;utm_campaign=Badge_Grade)
-
 # Développez de A à Z le site communautaire SnowTricks
 
 ## Installation du projet
